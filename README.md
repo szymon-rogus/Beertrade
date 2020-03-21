@@ -14,7 +14,7 @@ Beertrade
 ### Temat
 Aplikacja webowa do zamawiania produktów (np. piwa), która zakłada dynamiczną zmianę cen w zależności od popytu.
 ### Kto jest klientem
-Klientem jest właściciel baru kraftowego, który ma zamiar w swoim barze wprowadzić model biznesowy sprzedaży piw i ustalania ich cen oparty o system działania rynku.
+Klientem jest właściciel baru kraftowego, który ma zamiar w swoim barze wprowadzić model biznesowy sprzedaży piw, których cena zmienia się dynamicznie poprzez system działania rynku.
 
 
 
@@ -63,18 +63,23 @@ Model systemu, który zastosujemy to MVC.
 ## 5.  Koncepcja interfejsu użytkownika
 
 - Logowanie
+
 ![](https://i.imgur.com/j6Y4CLV.png)
 
 - Wybór stolika
+
 ![](https://i.imgur.com/BmSzEmh.png)
 
 - Widok listy produktów do zamówienia
+
 ![](https://i.imgur.com/7yDmUEJ.png)
 
 - Szczegóły produktu
+
 ![](https://i.imgur.com/SfypxVz.png)
 
 - Stan stolików
+
 ![](https://i.imgur.com/ivBcu71.png)
 
 
@@ -82,7 +87,6 @@ Model systemu, który zastosujemy to MVC.
 
 
 ## 6. Wymagania niefunkcjonalne:
-### czy realnie są jakieś (np. technologiczne) - nie należy mylić z decyzjami projektowymi!
 
 - Możliwość obsługi wielu klientów w czasie rzeczywistym
 - Możliwość rozszerzenia aplikacji dla nowego użytkownika - kelnera
