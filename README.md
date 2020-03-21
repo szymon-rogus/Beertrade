@@ -14,7 +14,7 @@ Beertrade
 ### Temat
 Aplikacja webowa do zamawiania produktów (np. piwa), która zakłada dynamiczną zmianę cen w zależności od popytu.
 ### Kto jest klientem
-Klientem jest właściciel baru kraftowego, który ma zamiar w swoim barze wprowadzić model biznesowy sprzedaży piw, których cena zmienia się dynamicznie poprzez system działania rynku.
+Klientem jest właściciel baru kraftowego, który ma zamiar w swoim barze wprowadzić model biznesowy sprzedaży piw, których cena zmienia się dynamicznie w zależności od popytu, poprzez system symulujący zachowanie rynku. 
 
 
 
