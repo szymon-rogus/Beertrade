@@ -10,6 +10,6 @@ export class HelloWorldService {
   constructor(private http: HttpClient) {
   }
   executeHelloWorldService() {
-      return this.http.get<MessageModel>('http://localhost:8080/greeting');
+      return this.http.get<MessageModel>('/greeting');
   }
 }
