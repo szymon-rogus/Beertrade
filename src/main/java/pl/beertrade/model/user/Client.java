@@ -17,7 +17,6 @@ import javax.persistence.Entity;
 public class Client extends User {
 
     @Nullable
-    @Column(name = "TABLE_NUMBER")
     private Integer tableNumber;
 
     //TODO in #10
