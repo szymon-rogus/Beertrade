@@ -1,45 +1,43 @@
 package pl.beertrade.model.user;
 
-import lombok.NonNull;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
 @Table(name = "APP_USER")
 @DiscriminatorColumn(name = "USER_TYPE", discriminatorType = DiscriminatorType.STRING)
+@ToString
+@EqualsAndHashCode
 public abstract class User {
 
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "ID", updatable = false)
+    @Column(updatable = false)
     private UUID id;
 
-    @NonNull
-    @Column(name = "LOGIN", unique = true)
+    @NotNull
+    @Column(unique = true)
     private String login;
 
-    @NonNull
-    @Column(name = "PASSWORD")
+    @NotNull
     private String password;
 
-
-    @NonNull
-    @Column(name = "FIRST_NAME")
+    @NotNull
     private String firstName;
 
-    @NonNull
-    @Column(name = "SURNAME")
+    @NotNull
     private String surname;
 
-    @NonNull
-    @Column(name = "EMAIL")
+    @NotNull
     private String email;
 
-    @NonNull
-    @Column(name = "PHONE_NUMBER")
+    @NotNull
     private String phoneNumber;
 
 }
