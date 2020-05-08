@@ -3,7 +3,6 @@ package pl.beertrade.model.user;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
