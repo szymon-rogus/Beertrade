@@ -1,9 +1,6 @@
 package pl.beertrade.model.beer;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,7 +9,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "BEER")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@EqualsAndHashCode
 @ToString
 public class Beer {
 
@@ -26,13 +24,13 @@ public class Beer {
     private String name;
 
     @NotNull
-    private String type; //TODO create some enum for type
+    private String type; //TODO possible some enum
 
     @NotNull
     private float alcoholPercentage;
 
     @NotNull
-    private String brand; //TODO also some enum would be nice
+    private String brand; //TODO possible some enum
 
     private String color;
 

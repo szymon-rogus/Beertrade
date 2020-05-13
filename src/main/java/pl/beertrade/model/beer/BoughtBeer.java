@@ -1,9 +1,6 @@
 package pl.beertrade.model.beer;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,7 +9,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "BOUGHT_BEER")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@EqualsAndHashCode
 @ToString
 public class BoughtBeer {
 
