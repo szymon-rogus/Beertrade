@@ -8,8 +8,10 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
+@Builder
 @Table(name = "BOUGHT_BEER")
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @ToString
 public class BoughtBeer {
