@@ -4,14 +4,13 @@ import { HttpClientModule } from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HelloWorldService } from './service/hello-world.service'
-import { HelloWorldComponent } from './hello-world/hello-world.component';
+import { LoginComponent } from './login/login.component';
 import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HelloWorldComponent,
+    LoginComponent,
     MenuComponent
   ],
   imports: [
@@ -20,7 +19,6 @@ import { MenuComponent } from './menu/menu.component';
     HttpClientModule
   ],
   providers: [
-    HelloWorldService
   ],
   bootstrap: [AppComponent]
 })
