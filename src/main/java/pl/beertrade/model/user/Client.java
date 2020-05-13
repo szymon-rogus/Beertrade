@@ -2,14 +2,15 @@ package pl.beertrade.model.user;
 
 import lombok.*;
 import org.springframework.lang.Nullable;
+import pl.beertrade.model.beer.BoughtBeer;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Builder
 @DiscriminatorValue("CLIENT")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode(callSuper = true)
@@ -18,8 +19,7 @@ public class Client extends User {
     @Nullable
     private Integer tableNumber;
 
-    //TODO in #10
-    //@OneToMany
-    //private List<BoughtBeer> boughtBeerList;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BoughtBeer> boughtBeerList;
 
 }

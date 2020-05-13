@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 @Entity
 @Builder
 @DiscriminatorValue("OWNER")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
 public class Owner extends User {

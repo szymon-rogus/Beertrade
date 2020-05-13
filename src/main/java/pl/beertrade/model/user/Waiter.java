@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 @Entity
 @Builder
 @DiscriminatorValue("WAITER")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
 public class Waiter extends User {
