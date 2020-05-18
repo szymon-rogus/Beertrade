@@ -1,7 +1,6 @@
 package pl.beertrade.model.user;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,7 +12,9 @@ import java.util.UUID;
 @DiscriminatorColumn(name = "USER_TYPE", discriminatorType = DiscriminatorType.STRING)
 @ToString
 @EqualsAndHashCode
-public abstract class User {
+@Getter
+@Setter
+public class User {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -32,7 +33,7 @@ public abstract class User {
     private String firstName;
 
     @NotNull
-    private String surname;
+    private String lastName;
 
     @NotNull
     private String email;
