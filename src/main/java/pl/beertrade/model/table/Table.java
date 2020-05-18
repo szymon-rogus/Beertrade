@@ -5,7 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 import pl.beertrade.model.beer.Beer;
 import pl.beertrade.model.user.Client;
 
-import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -25,7 +24,7 @@ public class Table {
     @Column(updatable = false)
     private UUID id;
 
-    @NonNull
+    @NotNull
     private int tableNumber;
 
     @NotNull
