@@ -27,7 +27,6 @@ export class RegisterComponent implements OnInit {
   }
 
   handleRegister() {
-    console.log('Registering handled')
     this.registerService.handleRegister(this.login, this.password, this.firstName, this.lastName, this.email, this.phoneNumber)
       .subscribe()
   }

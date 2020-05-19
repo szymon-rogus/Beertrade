@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   }
 
   handleRegister() {
-    this.router.navigate(['login'])
+    this.router.navigate(['register'])
   }
 
   handleLogin() {
