@@ -13,13 +13,13 @@ export class RegisterService {
   constructor(private http: HttpClient) { }
 
   handleRegister(login, password, firstName, lastName, email, phoneNumber) {
-    login = btoa(login)
+    login = btoa(login);
     const salt = bcrypt.genSaltSync(10);
-    password = btoa(bcrypt.hashSync(password, salt))
-    firstName = btoa(firstName)
-    lastName = btoa(lastName)
-    email = btoa(email)
-    phoneNumber = btoa(phoneNumber)
+    password = btoa(bcrypt.hashSync(password, salt));
+    firstName = btoa(firstName);
+    lastName = btoa(lastName);
+    email = btoa(email);
+    phoneNumber = btoa(phoneNumber);
 
     this.user = new User(login, password, firstName, lastName, email, phoneNumber);
 

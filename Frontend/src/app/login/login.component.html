@@ -3,15 +3,16 @@
   <H2>Login</H2>
 </div>
 <br/>
-Username:
+Login:
 <br/>
-<input type="text" name="username" />
+<input type="text" name="login" [(ngModel)]="login" />
 <br/>
 Password:
 <br/>
-<input type="password" name="password" />
+<input type="password" name="password" [(ngModel)]="password" />
   <br/><br/>
   <button class="btn btn-success" (click)="handleRegister()">Register</button>&nbsp;
   <button class="btn btn-success" (click)="handleLogin()">Login</button>
+  <button class="btn btn-success" (click)="handleClick()">Click</button>
 </div>
 

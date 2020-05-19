@@ -2,6 +2,7 @@ package pl.beertrade.model.user;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import pl.beertrade.auth.JwtUserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -40,5 +41,9 @@ public class User {
 
     @NotNull
     private String phoneNumber;
+
+    public JwtUserDetails toJwtUserDetails() {
+        return new JwtUserDetails(id, login, password, this.getClass().getCanonicalName());
+    }
 
 }
