@@ -13,12 +13,12 @@ public class Decoder {
 
     public Client decodeClient(User user) {
         return Client.builder()
-                .login(decode(user.getLogin()))
-                .password(decode(user.getPassword()))
-                .firstName(decode(user.getFirstName()))
-                .lastName(decode(user.getLastName()))
-                .email(decode(user.getEmail()))
-                .phoneNumber(decode(user.getPhoneNumber()))
+                .login(user.getLogin())
+                .password(user.getPassword())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
                 .boughtBeerList(new ArrayList<>())
                 .build();
     }
