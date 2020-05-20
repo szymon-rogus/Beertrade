@@ -10,8 +10,8 @@ import {LoginService} from "../services/login.service";
 export class LoginComponent implements OnInit {
 
   login: string;
-
   password: string;
+  showErrorMessage = false;
 
   constructor(private router: Router, private loginService: LoginService) { }
 
@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit {
     this.loginService.handleLogin(this.login, this.password).subscribe(data => {
         this.router.navigate(['home'])
       }, error => {
-      console.log(error)
+      if(error.error == "Invalid credentials")
+        this.showErrorMessage = true;
     });
   }
 

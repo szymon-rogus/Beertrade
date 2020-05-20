@@ -2,15 +2,19 @@ import { Injectable } from '@angular/core';
 import * as bcrypt from 'bcryptjs';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { User } from '../model/user';
+import { AbstractService } from './abstract.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RegisterService {
+export class RegisterService extends AbstractService{
 
   user : User;
+  private static URL = "register";
 
-  constructor(private http: HttpClient) { }
+  constructor(protected http: HttpClient) {
+    super(http, RegisterService.URL)
+  }
 
   handleRegister(login, password, firstName, lastName, email, phoneNumber) {
     login = btoa(login);
@@ -23,13 +27,7 @@ export class RegisterService {
 
     this.user = new User(login, password, firstName, lastName, email, phoneNumber);
 
-    return this.http.post<User>(
-      'http://localhost:8080/register',this.user, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        })
-
-      });
+    return this.http.post<User>(this.url,this.user, this.httpOptions);
   }
 
 }

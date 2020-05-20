@@ -4,6 +4,7 @@ import {Credentials} from "../model/credentials";
 import * as bcrypt from 'bcryptjs';
 import {map} from 'rxjs/operators';
 import {HelloBean} from "../model/hellobean";
+import { AbstractService } from './abstract.service';
 
 export const TOKEN = 'token'
 export const AUTHENTICATED_USER = 'authenticaterUser'
@@ -11,11 +12,13 @@ export const AUTHENTICATED_USER = 'authenticaterUser'
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class LoginService extends AbstractService {
 
   credentials: Credentials;
+  private static URL = "login";
 
-  constructor(private http: HttpClient) {
+  constructor(protected http: HttpClient) {
+    super(http, LoginService.URL);
   }
 
   handleLogin(login, password) {
@@ -23,7 +26,7 @@ export class LoginService {
     this.credentials = new Credentials(login, password);
 
     return this.http.post<any>(
-      'http://localhost:8080/login', this.credentials).pipe(map(data => {
+      this.url, this.credentials, this.httpOptions).pipe(map(data => {
           sessionStorage.setItem(AUTHENTICATED_USER, login);
           sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
           return data;
@@ -31,7 +34,7 @@ export class LoginService {
   }
 
   checkLogin() {
-    return this.http.get<HelloBean>('http://localhost:8080/login');
+    return this.http.get<HelloBean>(this.url);
   }
 
   getAuthenticatedUser() {

@@ -10,7 +10,11 @@ Login:
 Password:
 <br/>
 <input type="password" name="password" [(ngModel)]="password" />
-  <br/><br/>
+  <br/>
+  <div *ngIf="showErrorMessage">
+    <a id="errorMessage">Invalid username or password!<br/> Please try again</a>
+  </div>
+  <br/>
   <button class="btn btn-success" (click)="handleRegister()">Register</button>&nbsp;
   <button class="btn btn-success" (click)="handleLogin()">Login</button>
   <button class="btn btn-success" (click)="handleClick()">Click</button>
