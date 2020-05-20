@@ -27,7 +27,7 @@ export class RegisterService extends AbstractService{
 
     this.user = new User(login, password, firstName, lastName, email, phoneNumber);
 
-    return this.http.post<User>(this.url,this.user, this.httpOptions);
+    return this.http.post<User>(this.url, this.user);
   }
 
 }

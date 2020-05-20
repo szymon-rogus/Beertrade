@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {RegisterService} from "../services/register.service";
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -21,6 +22,9 @@ export class RegisterComponent implements OnInit {
 
   phoneNumber : string;
 
+  showErrorMessage = false;
+  showSuccessMessage = false;
+
   constructor(private router: Router, private registerService : RegisterService) { }
 
   ngOnInit(): void {
@@ -28,7 +32,13 @@ export class RegisterComponent implements OnInit {
 
   handleRegister() {
     this.registerService.handleRegister(this.login, this.password, this.firstName, this.lastName, this.email, this.phoneNumber)
-      .subscribe()
+      .subscribe(data => {
+        console.log(data);
+        this.showSuccessMessage = true;
+      }, error => {
+        console.log(error);
+        this.showErrorMessage = true;
+    });
   }
 
   handleBack() {
