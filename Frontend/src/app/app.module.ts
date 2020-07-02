@@ -1,26 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HelloWorldService } from './service/hello-world.service'
-import { HelloWorldComponent } from './hello-world/hello-world.component';
+import { LoginComponent } from './login/login.component';
 import { MenuComponent } from './menu/menu.component';
+import { RegisterComponent } from './register/register.component';
+import {HttpAuthInterceptorService} from "./services/http-auth-interceptor.service";
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HelloWorldComponent,
-    MenuComponent
+    LoginComponent,
+    MenuComponent,
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
-    HelloWorldService
+    {
+      provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptorService, multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
