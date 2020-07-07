@@ -29,4 +29,27 @@ public class BoughtBeer {
 
     @NotNull
     private float price;
+
+    public ProductListItemJTO toProductListItemJTO() {
+        return ProductListItemJTO.builder()
+                .name(beer.getName())
+                .type(beer.getType())
+                .brand(beer.getBrand())
+                .price(price)
+                .build();
+    }
+
+    public ProductDetailsJTO toProductDetailsJTO() {
+        return ProductDetailsJTO.builder()
+                .name(beer.getName())
+                .type(beer.getType())
+                .alcoholPercentage(beer.getAlcoholPercentage())
+                .brand(beer.getBrand())
+                .color(beer.getColor())
+                .description(beer.getDescription())
+                .onStore(beer.isOnStore())
+                .price(price)
+                .build();
+    }
+
 }
