@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode(callSuper = true)
+@Setter
 public class Client extends User {
 
     @Nullable

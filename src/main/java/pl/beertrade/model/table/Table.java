@@ -2,6 +2,10 @@ package pl.beertrade.model.table;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import pl.beertrade.exception.ClientAlreadyInTableException;
+import pl.beertrade.exception.ClientNotInTableException;
+import pl.beertrade.exception.TableException;
+import pl.beertrade.exception.TableFullException;
 import pl.beertrade.model.beer.Beer;
 import pl.beertrade.model.user.Client;
 
@@ -15,6 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
+@Getter
 @javax.persistence.Table(name = "APP_TABLE")
 public class Table {
 
@@ -38,4 +43,22 @@ public class Table {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Beer> orderList;
+
+    public void addClientToTable(Client client) throws TableException {
+        if (actualClients.size() == seats) {
+            throw new TableFullException();
+        }
+        if (actualClients.contains(client)) {
+            throw new ClientAlreadyInTableException();
+        }
+        actualClients.add(client);
+    }
+
+    public void removeClientFromTable(Client client) throws ClientNotInTableException {
+        if (actualClients.size() == 0 || !actualClients.contains(client)) {
+            throw new ClientNotInTableException();
+        }
+        actualClients.remove(client);
+    }
+
 }
