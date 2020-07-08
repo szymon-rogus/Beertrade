@@ -7,7 +7,7 @@ import lombok.NonNull;
 import java.util.UUID;
 
 @Builder
-public class ProductListItemJTO {
+public class OrderedProductListItemJTO {
 
     @JsonProperty
     @NonNull

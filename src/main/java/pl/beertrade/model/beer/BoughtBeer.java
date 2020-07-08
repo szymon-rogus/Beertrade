@@ -2,6 +2,7 @@ package pl.beertrade.model.beer;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import pl.beertrade.model.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,28 +29,26 @@ public class BoughtBeer {
     private Beer beer;
 
     @NotNull
+    @OneToOne
+    private User user;
+
+    @NotNull
     private float price;
 
-    public ProductListItemJTO toProductListItemJTO() {
-        return ProductListItemJTO.builder()
+    @NotNull
+    private long boughtTime;
+
+    public OrderedProductListItemJTO toOrderedProductListItemJTO() {
+        return OrderedProductListItemJTO.builder()
                 .name(beer.getName())
                 .type(beer.getType())
                 .brand(beer.getBrand())
                 .price(price)
+                .id(id)
                 .build();
     }
 
-    public ProductDetailsJTO toProductDetailsJTO() {
-        return ProductDetailsJTO.builder()
-                .name(beer.getName())
-                .type(beer.getType())
-                .alcoholPercentage(beer.getAlcoholPercentage())
-                .brand(beer.getBrand())
-                .color(beer.getColor())
-                .description(beer.getDescription())
-                .onStore(beer.isOnStore())
-                .price(price)
-                .build();
+    public UUID getId(){
+        return id;
     }
-
 }
