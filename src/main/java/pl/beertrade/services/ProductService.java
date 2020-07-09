@@ -36,10 +36,7 @@ public class ProductService {
 
     public Optional<BoughtBeer> order(UUID id, User client) {
         Optional<BoughtBeer> bb = productRepository.findById(id).map((b) -> BoughtBeer.builder().user(client).beer(b).price(10).boughtTime(System.currentTimeMillis()).build());
-        if (bb.isPresent()) {
-            boughtProductRepository.save(bb.get());
-
-        }
+        bb.ifPresent(boughtBeer -> boughtProductRepository.save(boughtBeer));
         return bb;
     }
 
@@ -48,5 +45,10 @@ public class ProductService {
                 .stream()
                 .map(BoughtBeer::toOrderedProductListItemJTO)
                 .collect(Collectors.toList());
+    }
+
+
+    public Optional<ProductDetailsJTO> getProductDetails(UUID id) {
+        return productRepository.findById(id).map(Beer::toProductDetailsJTO);
     }
 }

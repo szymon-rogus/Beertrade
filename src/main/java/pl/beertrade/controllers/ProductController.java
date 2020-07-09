@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.beertrade.exception.UserNotClientException;
-import pl.beertrade.model.beer.Beer;
-import pl.beertrade.model.beer.BoughtBeer;
-import pl.beertrade.model.beer.OrderedProductListItemJTO;
-import pl.beertrade.model.beer.ProductListItemJTO;
+import pl.beertrade.model.beer.*;
 import pl.beertrade.services.ProductService;
 import pl.beertrade.util.UserContextProvider;
 
@@ -27,6 +24,11 @@ public class ProductController {
     @RequestMapping("/list")
     public List<ProductListItemJTO> getAllProducts() {
         return productService.getAllProductList();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDetailsJTO> getProductDetails(@PathVariable UUID id) {
+        return ResponseEntity.of(productService.getProductDetails(id));
     }
 
     @PostMapping

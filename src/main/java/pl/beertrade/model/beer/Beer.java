@@ -28,14 +28,9 @@ public class Beer {
 
     @NotNull
     private String type; //TODO possible some enum
-//
-//    @NotNull
-//    private float alcoholPercentage;
 
     @NotNull
     private String brand; //TODO possible some enum
-
-    private String color;
 
     private String description;
 
@@ -53,4 +48,15 @@ public class Beer {
                 .id(id)
                 .build();
     }
+
+    public ProductDetailsJTO toProductDetailsJTO() {
+        return ProductDetailsJTO.builder()
+                .name(name)
+                .type(type)
+                .brand(brand)
+                .description(description)
+                .onStore(onStore)
+                .build();
+    }
+
 }
