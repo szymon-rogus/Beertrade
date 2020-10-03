@@ -20,7 +20,7 @@ for item in list(enumerate(init_prices)):
 print_sorted_dict(indexed_init_prices)
 
 '''
-Version 2
+Version 3
 
 TODO:
 [] add floor and ceil
@@ -93,6 +93,7 @@ print_reprs(sorted_indexed_buys_with_sums)
 
 all_buys = sum(buys)
 half_buys = all_buys / 2
+# todo coefficient of this sum
 to_distribute = len(buys) * 1
 
 
@@ -103,6 +104,9 @@ to_increase = [x for x in sorted_indexed_buys_with_sums if x.sum_pref >= half_bu
 to_decrease = set(sorted_indexed_buys_with_sums) - set(to_increase)
 
 # 3.2. Check if half of the buys splits equal values. If yes -> move all of them to to_increase
+# todo solution
+# 1. create the third set with the same values
+# 2. decide where do the values go - to the right or to the left?
 
 to_decrease_biggest = sorted([x.buys for x in to_decrease])[-1]
 to_increase_smallest = sorted([x.buys for x in to_increase])[0]
