@@ -92,7 +92,9 @@ print_reprs(sorted_indexed_buys_with_sums)
 # prices of most wanted and subtract half of it from the least wanted products.
 
 all_buys = sum(buys)
-#  todo the problem with half_buys as splitting value is that when there are many products with the same buys and half_buys points in the middle of it, I should take all with the same buys to either to_increase or to_decrease, so that every product with the same buys is treated in the same way (actually should it) ?
+#  todo the problem with half_buys as splitting value is that when there are many products with the same buys and
+#   half_buys points in the middle of it, I should take all with the same buys to either to_increase or to_decrease,
+#   so that every product with the same buys is treated in the same way (actually should it) ?
 half_buys = all_buys / 2
 to_distribute = len(buys) * 1
 
