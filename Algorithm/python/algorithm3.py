@@ -93,6 +93,7 @@ print_reprs(sorted_indexed_buys_with_sums)
 
 all_buys = sum(buys)
 half_buys = all_buys / 2
+print(half_buys)
 # todo coefficient of this sum
 to_distribute = len(buys) * 1
 
@@ -100,22 +101,56 @@ to_distribute = len(buys) * 1
 # 3.1. I need to determine which products' prices will be increased and which will be decreased. I count amounts,
 # not just products. So I determine how many of the highest products will be half of the amounts.
 
+def find_border_set(sorted_indexed_buys_with_sums_b, x):
+    b_set = []
+    for i in range(x + 1, len(sorted_indexed_buys_with_sums_b)):
+        if sorted_indexed_buys_with_sums_b[i].buys == sorted_indexed_buys_with_sums_b[x].buys:
+            b_set.append(sorted_indexed_buys_with_sums_b[i])
+        else:
+            break
+    for i in range(x - 1, -1, -1):
+        if sorted_indexed_buys_with_sums_b[i].buys == sorted_indexed_buys_with_sums_b[x].buys:
+            b_set.append(sorted_indexed_buys_with_sums_b[i])
+        else:
+            break
+    if len(b_set) != 0:
+        b_set.append(sorted_indexed_buys_with_sums_b[x])
+    return b_set
+
+
 to_increase = [x for x in sorted_indexed_buys_with_sums if x.sum_pref >= half_buys]
-to_decrease = set(sorted_indexed_buys_with_sums) - set(to_increase)
+print_reprs(to_increase)
+border_set = []
+for x in range (0, len(sorted_indexed_buys_with_sums)):
+    if x != len(sorted_indexed_buys_with_sums):
+        if sorted_indexed_buys_with_sums[x].sum_pref < half_buys <= sorted_indexed_buys_with_sums[x + 1].sum_pref:
+            border_set = find_border_set(sorted_indexed_buys_with_sums, x)
+            break
+
+to_increase = set(to_increase) - set(border_set)
+to_decrease = (set(sorted_indexed_buys_with_sums) - set(to_increase)) - set(border_set)
+
+is_border_left = 0
+is_border_right = 0
+
+if len(to_increase) == 0:
+    if len(to_decrease) == 0:
+        print(init_prices)
+        exit(1)
+    else:
+        to_increase = border_set
+        is_border_right = 1
+else:
+    if len(to_decrease) == 0:
+        to_decrease = border_set
+        is_border_left = 1
+
+final_prices = []
 
 # 3.2. Check if half of the buys splits equal values. If yes -> move all of them to to_increase
 # todo solution
 # 1. create the third set with the same values
 # 2. decide where do the values go - to the right or to the left?
-
-to_decrease_biggest = sorted([x.buys for x in to_decrease])[-1]
-to_increase_smallest = sorted([x.buys for x in to_increase])[0]
-
-if to_increase_smallest == to_decrease_biggest:
-    equal_to_move = [x for x in to_decrease if x.buys == to_decrease_biggest]
-    # put equal_to_move to to_increase and remove it from to_decrease
-    to_increase += equal_to_move
-    to_decrease = [x for x in to_decrease if x.buys != to_decrease_biggest]
 
 # Print sets of the values
 
@@ -123,36 +158,80 @@ print('\nto_decrease:')
 print_reprs(to_decrease)
 print('\nto_increase:')
 print_reprs(to_increase)
+print('\nborder_set:')
+print_reprs(border_set)
+
+
+def count_new_prices(to_increase_f, to_decrease_f):
+    to_decrease_biggest = sorted([x.buys for x in to_decrease_f])[-1]
+    to_increase_smallest = sorted([x.buys for x in to_increase_f])[0]
 
 # 4. I need to compare how much the prices where increased so
 # I calculate the compare_number which is the number between biggest from do_decrease and smallest from to_increase
 
-to_decrease_biggest = sorted([x.buys for x in to_decrease])[-1]
-to_increase_smallest = sorted([x.buys for x in to_increase])[0]
-compare_value = to_decrease_biggest + (to_increase_smallest - to_decrease_biggest) / 2
-print('\ncompare_value = {}'.format(compare_value))
+    compare_value = to_decrease_biggest + (to_increase_smallest - to_decrease_biggest) / 2
+    print('\ncompare_value = {}'.format(compare_value))
 
-if to_decrease:
-    to_decrease_distance = sum([compare_value - x.buys for x in to_decrease])
-    to_decrease_unit = (to_distribute / 2) / to_decrease_distance
-    print('to_decrease_unit = {}'.format(to_decrease_unit))
-else:
-    raise Exception("nothing to decrease")
+    if to_decrease_f:
+        to_decrease_distance = sum([compare_value - x.buys for x in to_decrease_f])
+        to_decrease_unit = (to_distribute / 2) / to_decrease_distance
+        print('to_decrease_unit = {}'.format(to_decrease_unit))
+    else:
+        raise Exception("nothing to decrease")
 
-if to_increase:
-    to_increase_distance = sum([x.buys - compare_value for x in to_increase])
-    to_increase_unit = (to_distribute / 2) / to_increase_distance
-    print('to_decrease_unit = {}'.format(to_increase_unit))
-else:
-    raise Exception("nothing to increase")
+    if to_increase_f:
+        to_increase_distance = sum([x.buys - compare_value for x in to_increase_f])
+        to_increase_unit = (to_distribute / 2) / to_increase_distance
+        print('to_decrease_unit = {}'.format(to_increase_unit))
+    else:
+        raise Exception("nothing to increase")
 
 # 5. I increase and decrease prices by the actual delta
 
-new_prices = {}  # product_id -> new_price
+    new_prices = {}  # product_id -> new_price
 
-for item in to_decrease:
-    new_prices[item.product_id] = init_prices[item.product_id] - to_decrease_unit * (compare_value - item.buys)
-for item in to_increase:
-    new_prices[item.product_id] = init_prices[item.product_id] + to_increase_unit * (item.buys - compare_value)
+    for item in to_decrease_f:
+        new_prices[item.product_id] = init_prices[item.product_id] - to_decrease_unit * (compare_value - item.buys)
+    for item in to_increase_f:
+        new_prices[item.product_id] = init_prices[item.product_id] + to_increase_unit * (item.buys - compare_value)
+    return new_prices
 
-print_sorted_dict(new_prices)
+
+if is_border_left or is_border_right:
+    final_prices = count_new_prices(to_increase, to_decrease)
+    print_sorted_dict(final_prices)
+    exit(1)
+
+prices_if_left = count_new_prices(to_increase, set(to_decrease).union(border_set))
+prices_if_right = count_new_prices(set(to_increase).union(border_set), to_decrease)
+
+#counting plain
+sum_plain = 0
+for item in border_set:
+    sum_plain = sum_plain + indexed_init_prices[item.product_id]
+
+#counting delta if border left
+sum_left = 0
+for item in border_set:
+    sum_left = sum_left + prices_if_left[item.product_id]
+
+delta_left = abs(sum_plain - sum_left)
+
+#counting delta if border right
+sum_right = 0
+for item in border_set:
+    sum_right = sum_right + prices_if_right[item.product_id]
+
+delta_right = abs(sum_plain - sum_right)
+
+if delta_left >= delta_right:
+    print('Chosen right')
+    print_sorted_dict(prices_if_right)
+else:
+    print('Chosen left')
+    print_sorted_dict(prices_if_left)
+
+
+
+
+
