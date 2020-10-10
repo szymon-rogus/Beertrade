@@ -2,6 +2,7 @@ import React, { Component }  from 'react';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { http, setAuthorizationToken } from '../Global.js'
 import { styles, fontColor, bgColor } from './LoginPageStyles.js'
+import { globalStyles} from "../GlobalStyles";
 
 export default class LoginPage extends Component {
     
@@ -50,16 +51,16 @@ export default class LoginPage extends Component {
 
     render() {
         return (
-            <View style = { styles.mainContainer }>
-                <Text style = { styles.title }>Beertrade</Text>
-                <TextInput style = { styles.input } 
+            <View style = { globalStyles.mainContainer }>
+                <Text style = { globalStyles.title }>Beertrade</Text>
+                <TextInput style = { globalStyles.input }
                 underlineColorAndroid = 'transparent'
                 placeholder = 'Login'
                 placeholderTextColor = { fontColor }
                 autoCapitalize = 'none'
                 onChangeText = { this.handleLogin }
                 />
-                <TextInput style = { styles.input } 
+                <TextInput style = { globalStyles.input }
                 secureTextEntry={ true }
                 underlineColorAndroid = 'transparent'
                 placeholder = 'Password'
@@ -67,7 +68,7 @@ export default class LoginPage extends Component {
                 autoCapitalize = 'none'
                 onChangeText = { this.handlePassword }
                 />
-                <View style = { styles.buttonContainer }>
+                <View style = { globalStyles.buttonContainer }>
                     <TouchableOpacity onPress={ this.handleAuth } style={ styles.logInPageButton }>
                         <Text style={ { color: bgColor } }>Log in</Text>
                     </TouchableOpacity>

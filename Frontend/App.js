@@ -1,10 +1,10 @@
 import React from 'react';
-import LoginPage from './LoginPage/LoginPage.js'
+import Prices from './Prices/Prices.js'
 
 export default class App extends React.Component {
   render() {
     return (
-      <LoginPage />
+      <Prices />
   );
 }
 }
