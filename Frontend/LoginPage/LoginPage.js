@@ -33,10 +33,6 @@ export default class LoginPage extends Component {
         }
     }
 
-    handleRegister = () => {
-        
-    }
-
     handleForgottenPassword = () => {
         
     }
@@ -71,7 +67,7 @@ export default class LoginPage extends Component {
                     <TouchableOpacity onPress={ this.handleAuth } style={ styles.logInPageButton }>
                         <Text style={ { color: bgColor } }>Log in</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={ this.handleRegister } style={ styles.logInPageButton }>
+                    <TouchableOpacity onPress={ () => this.props.navigation.navigate('registration') } style={ styles.logInPageButton }>
                         <Text style={ { color: bgColor } }>Register</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={ this.checkAuth } style={ styles.logInPageButton }>
