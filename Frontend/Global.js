@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { createStackNavigator } from '@react-navigation/stack';
 
 export var http = axios.create({
     baseURL: 'http://10.0.2.2:8080/',
@@ -8,6 +9,8 @@ export var http = axios.create({
         'Accept' : 'application/json'
     }
 })
+
+export default stack = createStackNavigator();
 
 export var setAuthorizationToken = (token) => {
     http.defaults.headers['Authorization'] = 'Bearer ' + token;
