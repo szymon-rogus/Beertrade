@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity} from "react-native";
+import {globalStyles} from "../GlobalStyles";
 
 const DATA = [
     {
@@ -39,7 +40,7 @@ const Prices = () => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={globalStyles.mainContainer}>
             <FlatList
                 data={DATA}
                 renderItem={renderItem}

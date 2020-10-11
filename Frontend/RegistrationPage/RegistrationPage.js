@@ -2,6 +2,7 @@ import React, { Component }  from 'react';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { http } from '../Global.js'
 import { styles, fontColor, bgColor } from './RegistrationPageStyles.js'
+import { globalStyles} from "../GlobalStyles";
 import base64 from 'react-native-base64'
 
 export default class RegistrationPage extends Component {
@@ -33,15 +34,15 @@ export default class RegistrationPage extends Component {
 
     render() {
         return (
-            <View style = { styles.mainContainer }>
-                <TextInput style = { styles.input } 
+            <View style = { globalStyles.mainContainer }>
+                <TextInput style = { globalStyles.input }
                 underlineColorAndroid = 'transparent'
                 placeholder = 'Login'
                 placeholderTextColor = { fontColor }
                 autoCapitalize = 'none'
                 onChangeText = { (text) => { this.setState({ login: text }) } }
                 />
-                <TextInput style = { styles.input } 
+                <TextInput style = { globalStyles.input }
                 underlineColorAndroid = 'transparent'
                 placeholder = 'Password'
                 secureTextEntry={ true }
@@ -49,35 +50,35 @@ export default class RegistrationPage extends Component {
                 autoCapitalize = 'none'
                 onChangeText = { (text) => { this.setState({ password: text }) } }
                 />
-                <TextInput style = { styles.input } 
+                <TextInput style = { globalStyles.input }
                 underlineColorAndroid = 'transparent'
                 placeholder = 'First name'
                 placeholderTextColor = { fontColor }
                 autoCapitalize = 'none'
                 onChangeText = { (text) => { this.setState({ firstName: text }) } }
                 />
-                <TextInput style = { styles.input } 
+                <TextInput style = { globalStyles.input }
                 underlineColorAndroid = 'transparent'
                 placeholder = 'Last name'
                 placeholderTextColor = { fontColor }
                 autoCapitalize = 'none'
                 onChangeText = { (text) => { this.setState({ lastName: text }) } }
                 />
-                <TextInput style = { styles.input } 
+                <TextInput style = { globalStyles.input }
                 underlineColorAndroid = 'transparent'
                 placeholder = 'Email'
                 placeholderTextColor = { fontColor }
                 autoCapitalize = 'none'
                 onChangeText = { (text) => { this.setState({ email: text }) } }
                 />
-                <TextInput style = { styles.input } 
+                <TextInput style = { globalStyles.input }
                 underlineColorAndroid = 'transparent'
                 placeholder = 'Phone number'
                 placeholderTextColor = { fontColor }
                 autoCapitalize = 'none'
                 onChangeText = { (text) => { this.setState({ phoneNumber: text }) } }
                 />
-                <View style = { styles.buttonContainer }>
+                <View style = { globalStyles.buttonContainer }>
                     <TouchableOpacity onPress={ this.handleRegister } style={ styles.registerPageButton }>
                         <Text style={ { color: bgColor } }>Register</Text>
                     </TouchableOpacity>
