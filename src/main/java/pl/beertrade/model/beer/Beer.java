@@ -30,12 +30,7 @@ public class Beer {
     private String type; //TODO possible some enum
 
     @NotNull
-    private float alcoholPercentage;
-
-    @NotNull
     private String brand; //TODO possible some enum
-
-    private String color;
 
     private String description;
 
@@ -44,5 +39,24 @@ public class Beer {
 
     @NotNull
     private boolean onSystem;
+
+    public ProductListItemJTO toProductListItemJTO() {
+        return ProductListItemJTO.builder()
+                .name(name)
+                .type(type)
+                .brand(brand)
+                .id(id)
+                .build();
+    }
+
+    public ProductDetailsJTO toProductDetailsJTO() {
+        return ProductDetailsJTO.builder()
+                .name(name)
+                .type(type)
+                .brand(brand)
+                .description(description)
+                .onStore(onStore)
+                .build();
+    }
 
 }
