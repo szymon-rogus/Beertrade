@@ -46,17 +46,17 @@ public class Table {
 
     public void addClientToTable(Client client) throws TableException {
         if (actualClients.size() == seats) {
-            throw new TableFullException();
+            throw new TableFullException(String.format("Table %s is full.", name));
         }
         if (actualClients.contains(client)) {
-            throw new ClientAlreadyInTableException();
+            throw new ClientAlreadyInTableException(String.format("Client %s is already registered in the table %s", client.getLogin(), name));
         }
         actualClients.add(client);
     }
 
     public void removeClientFromTable(Client client) throws ClientNotInTableException {
         if (actualClients.size() == 0 || !actualClients.contains(client)) {
-            throw new ClientNotInTableException();
+            throw new ClientNotInTableException(String.format("Client %s is not registered in the table %s", client.getLogin(), name));
         }
         actualClients.remove(client);
     }

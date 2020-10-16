@@ -2,7 +2,7 @@ package pl.beertrade.util;
 
 import lombok.experimental.UtilityClass;
 import pl.beertrade.model.table.Table;
-import pl.beertrade.model.table.TableClientViewJTO;
+import pl.beertrade.model.table.jto.TableClientViewJTO;
 
 @UtilityClass
 public class TableAssembler {

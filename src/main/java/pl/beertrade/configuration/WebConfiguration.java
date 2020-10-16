@@ -94,6 +94,7 @@ public class WebConfiguration extends WebSecurityConfigurerAdapter {
         webSecurity.ignoring()
                 .antMatchers(HttpMethod.POST, "/register")
                 .antMatchers(HttpMethod.POST, "/login")
+                .antMatchers(HttpMethod.POST, "/forgottenpass")
                 .antMatchers(HttpMethod.OPTIONS, "/**");
     }
 

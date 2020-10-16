@@ -1,4 +1,4 @@
-package pl.beertrade.model.beer;
+package pl.beertrade.model.beer.jto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -8,6 +8,9 @@ import java.util.UUID;
 
 @Builder
 public class OrderedProductListItemJTO {
+
+    @JsonProperty
+    private final UUID id;
 
     @JsonProperty
     @NonNull
@@ -24,6 +27,4 @@ public class OrderedProductListItemJTO {
     @JsonProperty
     private final double price;
 
-    @JsonProperty
-    private final UUID id;
 }

@@ -13,7 +13,7 @@ public interface ProductRepository extends CrudRepository<Beer, UUID> {
 
     List<Beer> findAll();
 
-    Beer findByName(String beerName);
+    Optional<Beer> findByName(String beerName);
 
     Optional<Beer> findById(UUID id);
 

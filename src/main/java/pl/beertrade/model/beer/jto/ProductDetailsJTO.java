@@ -1,29 +1,34 @@
-package pl.beertrade.model.beer;
+package pl.beertrade.model.beer.jto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.NonNull;
 
-import java.util.UUID;
 
 @Builder
-public class ProductListItemJTO {
+public class ProductDetailsJTO {
 
-    @JsonProperty
     @NonNull
+    @JsonProperty
     private final String name;
 
-    @JsonProperty
     @NonNull
+    @JsonProperty
     private final String type;
 
-    @JsonProperty
     @NonNull
+    @JsonProperty
     private final String brand;
+
+    @NonNull
+    @JsonProperty
+    private final String description;
+
+    @NonNull
+    @JsonProperty
+    private final boolean onStore;
 
     @JsonProperty
     private final double price;
 
-    @JsonProperty
-    private final UUID id;
 }
