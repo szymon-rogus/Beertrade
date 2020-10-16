@@ -1,4 +1,4 @@
-package pl.beertrade.model.beer;
+package pl.beertrade.model.beer.jto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -16,10 +16,18 @@ public class ProductDetailsJTO {
     @JsonProperty
     private final String type;
 
+    @JsonProperty
+    private final float alcoholPercentage;
+
     @NonNull
     @JsonProperty
     private final String brand;
 
+    @NonNull
+    @JsonProperty
+    private final String color;
+
+    @NonNull
     @JsonProperty
     private final String description;
 
