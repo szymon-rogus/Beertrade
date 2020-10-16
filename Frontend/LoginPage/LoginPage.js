@@ -4,6 +4,8 @@ import { http, setAuthorizationToken } from '../Global.js'
 import { styles, fontColor, bgColor } from './LoginPageStyles.js'
 import { globalStyles} from "../GlobalStyles";
 
+
+
 export default class LoginPage extends Component {
     
     state = {
@@ -26,9 +28,9 @@ export default class LoginPage extends Component {
                 login: this.state.login,
                 password: this.state.password
             }).then((response) => {
-                responseJson = response.data;
-                setAuthorizationToken(responseJson.token);
+                setAuthorizationToken(response.data.token);
                 this.setState({ loggedIn: true });
+                this.props.navigation.navigate('prices')
             })
             .catch(err => alert("Invalid login or password!"));
         }

@@ -24,7 +24,7 @@ const Item = ({item, onPress, style}) => (
     </TouchableOpacity>
 );
 
-const Prices = () => {
+const PricesPage = () => {
     const [selectedId, setSelectedId] = useState(null);
 
     const renderItem = ({item}) => {
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Prices;
+export default PricesPage;
