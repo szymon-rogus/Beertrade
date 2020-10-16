@@ -33,6 +33,10 @@ export default class LoginPage extends Component {
         }
     }
 
+    handleForgottenPassword = () => {
+        
+    }
+
     checkAuth = () => {
         http.get('/login')
         .then((response) => response.data)
@@ -70,7 +74,7 @@ export default class LoginPage extends Component {
                         <Text style={ { color: bgColor } }>Check auth</Text>
                     </TouchableOpacity>
                 </View>
-                <Text style = { styles.forgottenPasswordText } onPress={ () => this.props.navigation.navigate('forgottenpass') }>Forgotten password</Text>
+                <Text style = { styles.forgottenPasswordText } onPress={ this.handleForgottenPassword }>Forgotten password</Text>
             </View>
         )
     }
