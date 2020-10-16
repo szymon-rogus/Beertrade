@@ -1,4 +1,4 @@
-package pl.beertrade.model.table.jto;
+package pl.beertrade.model.table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
