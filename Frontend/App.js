@@ -1,9 +1,9 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import LoginPage from './LoginPage/LoginPage.js'
-import RegistrationPage from './RegistrationPage/RegistrationPage.js'
-import ForgottenPasswordPage from './ForgottenPasswordPage/ForgottenPasswordPage.js'
-import PricesPage from "./Prices/PricesPage";
+import LoginPage from './src/Login/LoginPage.js'
+import RegistrationPage from './src/Registration/RegistrationPage.js'
+import ForgottenPasswordPage from './src/ForgottenPassword/ForgottenPasswordPage.js'
+import PricesPage from "./src/Prices/PricesPage";
 import { NavigationContainer } from '@react-navigation/native';
 import stack from './Global.js'
 
