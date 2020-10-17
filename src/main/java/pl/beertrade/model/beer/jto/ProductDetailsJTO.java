@@ -20,7 +20,6 @@ public class ProductDetailsJTO {
     @JsonProperty
     private final String brand;
 
-    @NonNull
     @JsonProperty
     private final String description;
 
