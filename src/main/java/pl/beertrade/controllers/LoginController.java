@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.beertrade.model.HelloBean;
 
 @RestController
-public class LoginService {
+public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public HelloBean loginPage() {

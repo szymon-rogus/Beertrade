@@ -2,10 +2,7 @@ package pl.beertrade.model.table;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import pl.beertrade.exception.ClientAlreadyInTableException;
-import pl.beertrade.exception.ClientNotInTableException;
 import pl.beertrade.exception.TableException;
-import pl.beertrade.exception.TableFullException;
 import pl.beertrade.model.beer.Beer;
 import pl.beertrade.model.user.Client;
 
@@ -46,17 +43,17 @@ public class Table {
 
     public void addClientToTable(Client client) throws TableException {
         if (actualClients.size() == seats) {
-            throw new TableFullException();
+            throw new TableException(String.format("Table %s is full.", name));
         }
         if (actualClients.contains(client)) {
-            throw new ClientAlreadyInTableException();
+            throw new TableException(String.format("Client %s is already registered in the table %s", client.getLogin(), name));
         }
         actualClients.add(client);
     }
 
-    public void removeClientFromTable(Client client) throws ClientNotInTableException {
+    public void removeClientFromTable(Client client) throws TableException {
         if (actualClients.size() == 0 || !actualClients.contains(client)) {
-            throw new ClientNotInTableException();
+            throw new TableException(String.format("Client %s is not registered in the table %s", client.getLogin(), name));
         }
         actualClients.remove(client);
     }

@@ -2,10 +2,13 @@ package pl.beertrade.model.beer;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import pl.beertrade.model.beer.jto.OrderedProductListItemJTO;
 import pl.beertrade.model.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -36,7 +39,7 @@ public class BoughtBeer {
     private float price;
 
     @NotNull
-    private long boughtTime;
+    private Date boughtTime;
 
     public OrderedProductListItemJTO toOrderedProductListItemJTO() {
         return OrderedProductListItemJTO.builder()
@@ -48,7 +51,8 @@ public class BoughtBeer {
                 .build();
     }
 
-    public UUID getId(){
+    public UUID getId() {
         return id;
     }
+
 }
