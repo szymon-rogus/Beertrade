@@ -15,6 +15,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @Setter
+@Getter
 public class Client extends User {
 
     @Nullable
