@@ -10,8 +10,14 @@ export var http = axios.create({
     }
 })
 
+// uncomment below to see all requests:
+// http.interceptors.request.use(request => {
+//       console.log('Starting Request', JSON.stringify(request, null, 2))
+//       return request
+//   })
+
 export default stack = createStackNavigator();
 
 export var setAuthorizationToken = (token) => {
-    http.defaults.headers['Authorization'] = 'Bearer ' + token;
+    http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 }

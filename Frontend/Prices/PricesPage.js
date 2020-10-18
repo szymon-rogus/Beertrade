@@ -1,69 +1,54 @@
-import React, {useState} from 'react';
-import {FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity} from "react-native";
+import React, {Component, useState} from 'react';
+import {FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {globalStyles} from "../GlobalStyles";
-
-const DATA = [
-    {
-        id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-        title: "Dunkel 12.43",
-    },
-    {
-        id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-        title: "Pilsner 54.32",
-    },
-    {
-        id: "58694a0f-3da1-471f-bd96-145571e29d72",
-        title: "Tyskie 13.45",
-    },
-];
+import { http } from '../Global'
+import {styles} from './PricesPageStyles'
 
 
 const Item = ({item, onPress, style}) => (
-    <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-        <Text style={styles.title}>{item.title}</Text>
-    </TouchableOpacity>
+  <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+      <Text style={styles.title}>{item.name}</Text>
+      <Text style={styles.title}> {item.price} </Text>
+  </TouchableOpacity>
 );
 
-const PricesPage = () => {
-    const [selectedId, setSelectedId] = useState(null);
+export default class PricesPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedId : null,
+            products : []
+        };
+        http.get('/product/list').then(response => response.data).then(data => self.setState({products: data})).catch();
+        this.interval = setInterval((
+          function (self){
+              http.get('/product/list').then(response => response.data).then(data => self.setState({products: data})).catch();
+          }
+        ), 5000, this);
+    }
 
-    const renderItem = ({item}) => {
-        const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
+    renderItem = ({item}) => {
+        const backgroundColor = item.id === this.state.selectedId ? "#6e3b6e" : "#f9c2ff";
 
         return (
-            <Item
-                item={item}
-                onPress={() => setSelectedId(item.id)}
-                style={{backgroundColor}}
-            />
+          <Item
+            item={item}
+            onPress={() => this.setState({selectedId: item.id})}
+            style={{backgroundColor}}
+          />
         );
     };
-
-    return (
-        <SafeAreaView style={globalStyles.mainContainer}>
-            <FlatList
-                data={DATA}
-                renderItem={renderItem}
+    render() {
+        console.log(this.state)
+        return (
+          <SafeAreaView style={globalStyles.mainContainer}>
+              <FlatList
+                data={this.state.products}
+                renderItem={this.renderItem}
                 keyExtractor={(item) => item.id}
-                extraData={selectedId}
-            />
-        </SafeAreaView>
-    );
-};
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
-    },
-    item: {
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
-    },
-    title: {
-        fontSize: 32,
-    },
-});
-
-export default PricesPage;
+                extraData={this.selectedId}
+              />
+          </SafeAreaView>
+        );
+    }
+}

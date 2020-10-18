@@ -5,6 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.text.DecimalFormat;
+import java.util.Random;
 import java.util.UUID;
 
 @Entity
@@ -46,7 +48,14 @@ public class Beer {
                 .type(type)
                 .brand(brand)
                 .id(id)
+                .price(mockPrice())
                 .build();
+    }
+
+    private double mockPrice() {
+        Random r = new Random();
+        DecimalFormat df = new DecimalFormat("##.##");
+        return Double.parseDouble(df.format(r.nextDouble() * 10.0));
     }
 
     public ProductDetailsJTO toProductDetailsJTO() {
