@@ -1,13 +1,13 @@
 import axios from 'axios'
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 export var http = axios.create({
-    baseURL: 'http://10.0.2.2:8080/',
-    timeout: 1000,
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept' : 'application/json'
-    }
+  baseURL: 'http://10.0.2.2:8080/',
+  timeout: 1000,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
 })
 
 // uncomment below to see all requests:
