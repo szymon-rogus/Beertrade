@@ -1,8 +1,8 @@
 import React, { Component }  from 'react';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { http, setAuthorizationToken } from '../Global.js'
+import { http, setAuthorizationToken } from '../../Global.js'
 import { styles, fontColor, bgColor } from './LoginPageStyles.js'
-import { globalStyles} from "../GlobalStyles";
+import { globalStyles} from "../../GlobalStyles";
 
 
 
@@ -34,10 +34,6 @@ export default class LoginPage extends Component {
             })
             .catch(err => alert("Invalid login or password!"));
         }
-    }
-
-    handleForgottenPassword = () => {
-        
     }
 
     checkAuth = () => {
@@ -77,7 +73,7 @@ export default class LoginPage extends Component {
                         <Text style={ { color: bgColor } }>Check auth</Text>
                     </TouchableOpacity>
                 </View>
-                <Text style = { styles.forgottenPasswordText } onPress={ this.handleForgottenPassword }>Forgotten password</Text>
+                <Text style = { styles.forgottenPasswordText } onPress={ () => this.props.navigation.navigate('forgottenpass') }>Forgotten password</Text>
             </View>
         )
     }

@@ -2,6 +2,8 @@ package pl.beertrade.model.beer;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import pl.beertrade.model.beer.jto.ProductDetailsJTO;
+import pl.beertrade.model.beer.jto.ProductListItemJTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

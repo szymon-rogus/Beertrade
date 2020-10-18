@@ -1,7 +1,9 @@
-import {StyleSheet} from "react-native";
-import {bgColor, fontColor} from "./src/Login/LoginPageStyles";
+import { StyleSheet } from 'react-native';
 
-export const globalStyles = StyleSheet.create({
+export const fontColor = 'white'
+export const bgColor = 'darkorchid'
+
+export const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: bgColor,
@@ -14,12 +16,6 @@ export const globalStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    title: {
-        textAlign: 'center',
-        fontWeight: 'bold',
-        color: fontColor,
-        fontSize: 48
-    },
     input: {
         margin: 15,
         height: 40,
@@ -27,4 +23,16 @@ export const globalStyles = StyleSheet.create({
         borderColor: 'white',
         borderWidth: 1
     },
+    buttonStyle: {
+        backgroundColor: 'white',
+        elevation: 8,
+        paddingVertical: 10,
+        paddingHorizontal: 12,
+        margin: 15
+    },
+    textStyle: {
+        textAlign: 'center',
+        color: fontColor,
+        fontSize: 24
+    }
 })

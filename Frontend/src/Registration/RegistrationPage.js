@@ -1,8 +1,8 @@
 import React, { Component }  from 'react';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { http } from '../Global.js'
+import { http } from '../../Global.js'
 import { styles, fontColor, bgColor } from './RegistrationPageStyles.js'
-import { globalStyles} from "../GlobalStyles";
+import { globalStyles} from "../../GlobalStyles";
 import base64 from 'react-native-base64'
 
 export default class RegistrationPage extends Component {

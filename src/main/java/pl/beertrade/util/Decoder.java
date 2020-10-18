@@ -25,6 +25,10 @@ public class Decoder {
                 .build();
     }
 
+    public String encodeBcrypt(String value) {
+        return bcrypt.encode(value);
+    }
+
     private String decode(String encodedString) {
         return new String(Base64.decode(encodedString));
     }
