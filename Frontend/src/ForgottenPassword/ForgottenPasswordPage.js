@@ -1,6 +1,6 @@
 import React, { Component }  from 'react';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { http } from '../../Global.js'
+import { http } from '../Global.js'
 import { styles, fontColor, bgColor } from './ForgottenPasswordPageStyles.js'
 
 export default class ForgottenPasswordPage extends Component {
