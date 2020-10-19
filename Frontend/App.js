@@ -4,7 +4,7 @@ import LoginPage from './src/Login/LoginPage.js'
 import RegistrationPage from './src/Registration/RegistrationPage.js'
 import ForgottenPasswordPage from './src/ForgottenPassword/ForgottenPasswordPage.js'
 import PricesPage from "./src/Prices/PricesPage";
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import stack from './Global.js'
 import BartenderOrderPage from './src/BartenderOrderPage/BartenderOrderPage.js';
 
