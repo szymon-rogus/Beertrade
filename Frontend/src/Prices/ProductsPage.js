@@ -22,20 +22,29 @@ export default class ProductsPage extends Component {
 
   }
 
+  orderProduct(id) {
+    http.post('/product/order/' + id).catch(err => console.log(err));
+  }
+
   renderItem = ({item}) => {
     const backgroundColor = item.id === this.state.selectedId ? "#6e3b6e" : "#f9c2ff";
 
     return (
       <Item
         item={item}
-        onPress={() => this.setState({selectedId: item.id})}
+        onPress={() => {
+          this.setState({selectedId: item.id})
+          this.orderProduct(item.id)
+          alert("Product ordered.")
+        }}
         style={{backgroundColor}}
       />
     );
   };
 
   setProducts(context) {
-    http.get('/product/list').then(response => response.data).then(data => context.setState({products: data})).catch();
+    http.get('/product/list').then(response => response.data).then(data => context.setState({products: data}))
+      .catch(err => console.log(err));
   }
 
   componentDidMount() {
@@ -52,7 +61,6 @@ export default class ProductsPage extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <SafeAreaView style={globalStyles.mainContainer}>
         <FlatList
