@@ -2,12 +2,12 @@ package pl.beertrade.model.beer;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import pl.beertrade.model.beer.jto.BartenderOrderProductJTO;
 import pl.beertrade.model.beer.jto.OrderedProductListItemJTO;
-import pl.beertrade.model.user.User;
+import pl.beertrade.model.user.Client;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
 
@@ -33,7 +33,7 @@ public class BoughtBeer {
 
     @NotNull
     @OneToOne
-    private User user;
+    private Client client;
 
     @NotNull
     private float price;
@@ -48,6 +48,15 @@ public class BoughtBeer {
                 .brand(beer.getBrand())
                 .price(price)
                 .id(id)
+                .build();
+    }
+
+    public BartenderOrderProductJTO toBartenderOrderProductJTO() {
+        return BartenderOrderProductJTO.builder()
+                .id(id)
+                .name(beer.getName())
+                .userLogin(client.getLogin())
+                .tableNumber(client.getTableNumber())
                 .build();
     }
 
