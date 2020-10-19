@@ -2,7 +2,7 @@ import React, {Component, useState} from 'react';
 import {FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {globalStyles} from "../../GlobalStyles";
 import {http} from '../../Global'
-import {styles} from './PricesPageStyles'
+import {styles} from './ProductsPageStyles'
 
 
 const Item = ({item, onPress, style}) => (
@@ -12,19 +12,14 @@ const Item = ({item, onPress, style}) => (
   </TouchableOpacity>
 );
 
-export default class PricesPage extends Component {
+export default class ProductsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedId: null,
       products: []
     };
-    http.get('/product/list').then(response => response.data).then(data => self.setState({products: data})).catch();
-    this.interval = setInterval((
-      function (self) {
-        http.get('/product/list').then(response => response.data).then(data => self.setState({products: data})).catch();
-      }
-    ), 5000, this);
+
   }
 
   renderItem = ({item}) => {
@@ -38,6 +33,23 @@ export default class PricesPage extends Component {
       />
     );
   };
+
+  setProducts(context) {
+    http.get('/product/list').then(response => response.data).then(data => context.setState({products: data})).catch();
+  }
+
+  componentDidMount() {
+    this.setProducts(this)
+    this.interval = setInterval((
+      function (self) {
+        self.setProducts(self)
+      }
+    ), 5000, this);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
 
   render() {
     console.log(this.state)

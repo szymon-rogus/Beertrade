@@ -9,7 +9,8 @@ export const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
-    flex: 1, flexDirection: 'row'
+    flex: 1,
+    flexDirection: 'row'
   },
   title: {
     fontSize: 32,
