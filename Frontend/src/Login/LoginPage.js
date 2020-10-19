@@ -30,7 +30,12 @@ export default class LoginPage extends Component {
             }).then((response) => {
                 setAuthorizationToken(response.data.token);
                 this.setState({ loggedIn: true });
-                this.props.navigation.navigate('prices')
+                var role = response.data.role;
+                if (role == 'pl.beertrade.model.user.Bartender') {
+                    this.props.navigation.navigate('bartenderOrder');
+                } else {
+                    this.props.navigation.navigate('prices');
+                }
             })
             .catch(err => alert("Invalid login or password!"));
         }
