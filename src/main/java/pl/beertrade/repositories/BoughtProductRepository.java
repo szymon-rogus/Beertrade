@@ -15,4 +15,6 @@ public interface BoughtProductRepository extends CrudRepository<BoughtBeer, UUID
 
     List<BoughtBeer> findByClientOrderByBoughtTimeAsc(Client Client);
 
+    void deleteById(UUID id);
+
 }

@@ -63,7 +63,7 @@ public class ProductService {
         log.trace("EXIT - orderProduct - {}", boughtBeer);
     }
 
-    public List<OrderedProductListItemJTO> getUserOrderedProducts(Client client) {
+    public List<OrderedProductListItemJTO> getClientOrderedProducts(Client client) {
         log.trace("ENTRY - getUserOrderedProducts - {}", client);
         final List<OrderedProductListItemJTO> orderedProducts = boughtProductRepository.findByClientOrderByBoughtTimeAsc(client)
                 .stream()

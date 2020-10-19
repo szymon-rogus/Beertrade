@@ -18,18 +18,9 @@ public class BartenderOrderProductJTO {
 
     @JsonProperty
     @NonNull
-    private final String type;
-
-    @JsonProperty
-    @NonNull
-    private final String brand;
-
-    @JsonProperty
-    @NonNull
     private final String userLogin;
 
     @JsonProperty
-    @NonNull
     private final Integer tableNumber;
 
 }

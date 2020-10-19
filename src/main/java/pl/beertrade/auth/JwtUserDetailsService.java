@@ -2,7 +2,6 @@ package pl.beertrade.auth;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    public JwtUserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         log.trace("ENTRY - loadUserByUsername - {}", login);
         final Optional<User> user = userRepository.findByLogin(login);
         final JwtUserDetails userDetails = user.map(User::toJwtUserDetails)

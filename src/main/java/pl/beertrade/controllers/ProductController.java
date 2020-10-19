@@ -66,9 +66,9 @@ public class ProductController {
     }
 
     @GetMapping("/order")
-    public List<OrderedProductListItemJTO> getUserOrderedProducts() throws UserNotFoundException {
+    public List<OrderedProductListItemJTO> getClientOrderedProducts() throws UserNotFoundException {
         log.trace("ENTRY - getUserOrderedProducts");
-        final List<OrderedProductListItemJTO> orderedProductList = productService.getUserOrderedProducts(userContextProvider.getUserAsClient());
+        final List<OrderedProductListItemJTO> orderedProductList = productService.getClientOrderedProducts(userContextProvider.getUserAsClient());
         log.trace("EXIT - getUserOrderedProducts - {}", orderedProductList);
         return orderedProductList;
     }
