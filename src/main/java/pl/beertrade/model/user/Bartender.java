@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 
 @Entity
 @Builder
-@DiscriminatorValue("WAITER")
+@DiscriminatorValue("BARTENDER")
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class Waiter extends User {
+public class Bartender extends User {
 }

@@ -1,18 +1,18 @@
 package pl.beertrade.auth;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.io.Serializable;
 
+@AllArgsConstructor
+@Getter
 public class JwtTokenResponse implements Serializable {
 
     private static final long serialVersionUID = 8317676219297719109L;
 
     private final String token;
 
-    public JwtTokenResponse(String token) {
-        this.token = token;
-    }
+    private final String role;
 
-    public String getToken() {
-        return this.token;
-    }
 }

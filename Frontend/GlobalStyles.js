@@ -1,5 +1,5 @@
-import {StyleSheet} from "react-native";
-import {bgColor, fontColor} from "./src/Login/LoginPageStyles";
+import { StyleSheet } from "react-native";
+import { bgColor, fontColor } from "./src/Login/LoginPageStyles";
 
 export const globalStyles = StyleSheet.create({
   mainContainer: {

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.beertrade.exception.ProductNotFoundException;
 import pl.beertrade.exception.UserNotFoundException;
+import pl.beertrade.model.beer.jto.BartenderOrderProductJTO;
 import pl.beertrade.model.beer.jto.OrderedProductListItemJTO;
 import pl.beertrade.model.beer.jto.ProductDetailsJTO;
 import pl.beertrade.model.beer.jto.ProductListItemJTO;
@@ -59,13 +60,25 @@ public class ProductController {
     public ResponseEntity<?> orderProduct(@PathVariable UUID id) throws UserNotFoundException, ProductNotFoundException {
         log.trace("ENTRY - orderProduct - {}", id);
         productService.orderProduct(id, userContextProvider.getUserAsClient());
+        log.trace("EXIT - orderProduct");
         return ResponseEntity.ok()
                 .build();
     }
 
     @GetMapping("/order")
-    public List<OrderedProductListItemJTO> getOrderedProducts() throws UserNotFoundException {
-        return productService.getOrderedProducts(userContextProvider.getUserAsClient());
+    public List<OrderedProductListItemJTO> getClientOrderedProducts() throws UserNotFoundException {
+        log.trace("ENTRY - getUserOrderedProducts");
+        final List<OrderedProductListItemJTO> orderedProductList = productService.getClientOrderedProducts(userContextProvider.getUserAsClient());
+        log.trace("EXIT - getUserOrderedProducts - {}", orderedProductList);
+        return orderedProductList;
+    }
+
+    @GetMapping("/orders")
+    public List<BartenderOrderProductJTO> getAllOrderedProducts() {
+        log.trace("ENTRY - getAllOrderedProducts");
+        final List<BartenderOrderProductJTO> orderedProductList = productService.getAllOrderedProducts();
+        log.trace("EXIT - getAllOrderedProducts - {}", orderedProductList);
+        return orderedProductList;
     }
 
     @ExceptionHandler({Exception.class})
