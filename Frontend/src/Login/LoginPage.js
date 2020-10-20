@@ -17,37 +17,24 @@ export default class LoginPage extends Component {
     this.setState({login: text})
   }
 
-    handleAuth = () => {
-        if (this.state.login != '' && this.state.password != '') {
-            http.post('/login', {
-                login: this.state.login,
-                password: this.state.password
-            }).then((response) => {
-                setAuthorizationToken(response.data.token);
-                this.setState({ loggedIn: true });
-                var role = response.data.role;
-                if (role == 'pl.beertrade.model.user.Bartender') {
-                    this.props.navigation.navigate('bartenderOrder');
-                } else {
-                    this.props.navigation.navigate('prices');
-                }
-            })
-            .catch(err => alert("Invalid login or password!"));
-        }
-    }
-
   handleAuth = () => {
-    if (this.state.login != '' && this.state.password != '') {
-      http.post('/login', {
-        login: this.state.login,
-        password: this.state.password
-      }).then((response) => {
-        setAuthorizationToken(response.data.token);
-        this.setState({loggedIn: true});
-        this.props.navigation.navigate('prices')
-      })
-        .catch(err => alert("Invalid login or password!"));
-    }
+      if (this.state.login !== '' && this.state.password !== '') {
+          http.post('/login', {
+              login: this.state.login,
+              password: this.state.password
+          }).then((response) => {
+            console.log('trying to login')
+              setAuthorizationToken(response.data.token);
+              this.setState({ loggedIn: true });
+              var role = response.data.role;
+              if (role === 'pl.beertrade.model.user.Bartender') {
+                  this.props.navigation.navigate('bartenderOrder');
+              } else {
+                  this.props.navigation.navigate('prices');
+              }
+          })
+          .catch(err => alert("Invalid login or password!"));
+      }
   }
 
   checkAuth = () => {

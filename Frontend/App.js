@@ -13,10 +13,13 @@ export default class App extends React.Component {
     return (
       <NavigationContainer>
         <stack.Navigator>
-          <stack.Screen name='login' component={LoginPage} options={{ headerShown: false }} />
-          <stack.Screen name='registration' component={RegistrationPage} options={{ headerShown: false }} />
-          <stack.Screen name='forgottenpass' component={ForgottenPasswordPage} options={{ headerShown: false }} />
+          <stack.Screen name='login' component={LoginPage} options={{headerShown: false}}/>
+          <stack.Screen name='registration' component={RegistrationPage} options={{headerShown: false}}/>
+          <stack.Screen name='forgottenpass' component={ForgottenPasswordPage} options={{headerShown: false}}/>
           <stack.Screen name='prices' component={ProductsPage} options={{headerShown: false}}/>
-          <stack.Screen name='bartenderOrder' component={BartenderOrderPage} options={{ headerShown: false }} />
+          <stack.Screen name='bartenderOrder' component={BartenderOrderPage} options={{headerShown: false}}/>
         </stack.Navigator>
       </NavigationContainer>
+    )
+  }
+}
