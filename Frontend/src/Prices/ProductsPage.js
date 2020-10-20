@@ -3,12 +3,13 @@ import {FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, V
 import {globalStyles} from "../../GlobalStyles";
 import {http} from '../../Global'
 import {styles} from './ProductsPageStyles'
+import {listStyles} from "../../ListStyles";
 
 
 const Item = ({item, onPress, style}) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-    <Text style={styles.title}>{item.name}</Text>
-    <Text style={styles.title}> {item.price} </Text>
+  <TouchableOpacity onPress={onPress} style={[style]}>
+    <Text style={listStyles.itemText}>{item.name}</Text>
+    <Text style={listStyles.itemText}> Buy for {item.price} PLN </Text>
   </TouchableOpacity>
 );
 
@@ -27,8 +28,6 @@ export default class ProductsPage extends Component {
   }
 
   renderItem = ({item}) => {
-    const backgroundColor = item.id === this.state.selectedId ? "#6e3b6e" : "#f9c2ff";
-
     return (
       <Item
         item={item}
@@ -37,7 +36,7 @@ export default class ProductsPage extends Component {
           this.orderProduct(item.id)
           alert("Product ordered.")
         }}
-        style={{backgroundColor}}
+        style={ listStyles.item }
       />
     );
   };
