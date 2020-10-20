@@ -18,16 +18,19 @@ export default class LoginPage extends Component {
   }
 
   handleAuth = () => {
+    console.log('try login')
+    console.log(this.state.login)
+    console.log(this.state.password)
       if (this.state.login !== '' && this.state.password !== '') {
+        console.log('here')
           http.post('/login', {
               login: this.state.login,
               password: this.state.password
           }).then((response) => {
-            console.log('trying to login')
               setAuthorizationToken(response.data.token);
               this.setState({ loggedIn: true });
               var role = response.data.role;
-              if (role === 'pl.beertrade.model.user.Bartender') {
+              if (role == 'pl.beertrade.model.user.Bartender') {
                   this.props.navigation.navigate('bartenderOrder');
               } else {
                   this.props.navigation.navigate('prices');
@@ -42,6 +45,10 @@ export default class LoginPage extends Component {
       .then((response) => response.data)
       .then((responseJson) => alert(responseJson.message))
       .catch(err => alert("User not logged in!"));
+  }
+
+  handlePassword = (text) => {
+    this.setState({password: text})
   }
 
   render() {
