@@ -56,8 +56,8 @@ public class Beer {
 
     private double mockPrice() {
         Random r = new Random();
-        DecimalFormat df = new DecimalFormat("##.##");
-        return Double.parseDouble(df.format(r.nextDouble() * 10.0));
+        double randomValue = 10.0 * r.nextDouble();
+        return Math.round(randomValue*100.0)/100.0;
     }
 
     public ProductDetailsJTO toProductDetailsJTO() {
