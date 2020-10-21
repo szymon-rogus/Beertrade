@@ -18,11 +18,7 @@ export default class LoginPage extends Component {
   }
 
   handleAuth = () => {
-    console.log('try login')
-    console.log(this.state.login)
-    console.log(this.state.password)
       if (this.state.login !== '' && this.state.password !== '') {
-        console.log('here')
           http.post('/login', {
               login: this.state.login,
               password: this.state.password

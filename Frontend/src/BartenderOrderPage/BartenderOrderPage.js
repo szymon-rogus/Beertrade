@@ -3,11 +3,12 @@ import { http } from '../../Global.js'
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { globalStyles } from '../../GlobalStyles.js'
 import { styles } from './BartenderOrderPageStyles.js'
- 
+import { listStyles } from "../../ListStyles";
+
 const OrderItem = ({ item, onPressFunc }) => (
-  <TouchableOpacity onPress={ () => onPressFunc(item.id) } style={ styles.item }>
-    <Text style={ styles.itemText }>Name: { item.name }</Text>
-    <Text style={ styles.itemText }>User: { item.userLogin }</Text>
+  <TouchableOpacity onPress={ () => onPressFunc(item.id) } style={ listStyles.item }>
+    <Text style={ listStyles.itemText }>Name: { item.name }</Text>
+    <Text style={ listStyles.itemText }>User: { item.userLogin }</Text>
   </TouchableOpacity>
 )
 

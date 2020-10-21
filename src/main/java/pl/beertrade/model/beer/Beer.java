@@ -7,6 +7,8 @@ import pl.beertrade.model.beer.jto.ProductListItemJTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.text.DecimalFormat;
+import java.util.Random;
 import java.util.UUID;
 
 @Entity
@@ -48,7 +50,14 @@ public class Beer {
                 .type(type)
                 .brand(brand)
                 .id(id)
+                .price(mockPrice())
                 .build();
+    }
+
+    private double mockPrice() {
+        Random r = new Random();
+        double randomValue = 10.0 * r.nextDouble();
+        return Math.round(randomValue*100.0)/100.0;
     }
 
     public ProductDetailsJTO toProductDetailsJTO() {
