@@ -36,13 +36,6 @@ export default class LoginPage extends Component {
       }
   }
 
-  checkAuth = () => {
-    http.get('/login')
-      .then((response) => response.data)
-      .then((responseJson) => alert(responseJson.message))
-      .catch(err => alert("User not logged in!"));
-  }
-
   handlePassword = (text) => {
     this.setState({password: text})
   }
@@ -73,9 +66,6 @@ export default class LoginPage extends Component {
           <TouchableOpacity onPress={() => this.props.navigation.navigate('registration')}
                             style={styles.logInPageButton}>
             <Text style={{color: bgColor}}>Register</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.checkAuth} style={styles.logInPageButton}>
-            <Text style={{color: bgColor}}>Check auth</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.forgottenPasswordText} onPress={() => this.props.navigation.navigate('forgottenpass')}>Forgotten

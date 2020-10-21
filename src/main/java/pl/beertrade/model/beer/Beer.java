@@ -7,7 +7,6 @@ import pl.beertrade.model.beer.jto.ProductListItemJTO;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.UUID;
 
