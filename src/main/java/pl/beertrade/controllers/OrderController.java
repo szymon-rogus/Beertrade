@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.beertrade.exception.OrderNotFoundException;
+import pl.beertrade.exception.NotFoundException;
 import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.order.jto.BartenderOrderProductJTO;
 import pl.beertrade.model.order.jto.BartenderStatisticsJTO;
@@ -22,7 +22,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/cancel/{id}")
-    public ResponseEntity<?> cancelOrder(@PathVariable UUID id) throws OrderNotFoundException {
+    public ResponseEntity<?> cancelOrder(@PathVariable UUID id) throws NotFoundException {
         log.trace("ENTRY - deleteOrder - {}", id);
         orderService.processOrder(id, OrderState.CANCELLED);
         log.trace("EXIT - deleteOrder");
@@ -31,7 +31,7 @@ public class OrderController {
     }
 
     @PostMapping("/execute/{id}")
-    public ResponseEntity<?> executeOrder(@PathVariable UUID id) throws OrderNotFoundException {
+    public ResponseEntity<?> executeOrder(@PathVariable UUID id) throws NotFoundException {
         log.trace("ENTRY - executeOrder - {}", id);
         orderService.processOrder(id, OrderState.DONE);
         log.trace("EXIT - executeOrder");
@@ -40,7 +40,7 @@ public class OrderController {
     }
 
     @PostMapping("/restore/{id}")
-    public ResponseEntity<?> restoreOrder(@PathVariable UUID id) throws OrderNotFoundException {
+    public ResponseEntity<?> restoreOrder(@PathVariable UUID id) throws NotFoundException {
         log.trace("ENTRY - restoreOrder - {}", id);
         orderService.processOrder(id, OrderState.WAITING);
         log.trace("EXIT - restoreOrder");

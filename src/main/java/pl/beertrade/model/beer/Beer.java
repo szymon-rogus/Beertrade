@@ -1,7 +1,7 @@
 package pl.beertrade.model.beer;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import lombok.*;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.annotations.GenericGenerator;
 import pl.beertrade.model.beer.jto.ManageProductsListItemJTO;
 import pl.beertrade.model.beer.jto.ProductDetailsJTO;
@@ -40,19 +40,14 @@ public class Beer {
     @NotNull
     private Integer ibu;
 
-    @NotNull
     private Double blg;
 
-    @NotNull
     private Integer ebc;
 
-    @NotNull
     private String origin;
 
-    @NotNull
     private String brewery;
 
-    @NotNull
     private String year;
 
     private String description;
@@ -74,7 +69,6 @@ public class Beer {
     @NotNull
     private Double maxPrice;
 
-    @NotNull
     private Double amortizationFactor;
 
     public ProductListItemJTO toProductListItemJTO() {
@@ -107,8 +101,8 @@ public class Beer {
                 .name(name)
                 .type(type)
                 .alcoholPercentage(alcoholPercentage)
-                .ibu(ibu)
-                .encodedPhoto(Base64.encode(photo))
+                .encodedPhoto(Base64.encodeBase64String(photo))
+                .onStore(onStore)
                 .build();
     }
 

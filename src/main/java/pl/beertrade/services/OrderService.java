@@ -4,7 +4,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.beertrade.exception.OrderNotFoundException;
+import pl.beertrade.exception.NotFoundException;
 import pl.beertrade.model.order.Order;
 import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.order.jto.BartenderOrderProductJTO;
@@ -22,10 +22,10 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public void processOrder(@NonNull UUID id, @NonNull OrderState state) throws OrderNotFoundException {
+    public void processOrder(@NonNull UUID id, @NonNull OrderState state) throws NotFoundException {
         log.trace("ENTRY - processOrder - {}", id);
         final Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException(id));
+                .orElseThrow(() -> new NotFoundException(Order.class.getName(), id.toString()));
         order.setOrderState(state);
         orderRepository.save(order);
         log.trace("EXIT - processOrder");
