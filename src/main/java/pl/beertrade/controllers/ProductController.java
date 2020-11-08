@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.beertrade.exception.ProductNotFoundException;
 import pl.beertrade.exception.UserNotFoundException;
-import pl.beertrade.model.beer.jto.BartenderOrderProductJTO;
+import pl.beertrade.model.beer.jto.ManageProductsListItemJTO;
 import pl.beertrade.model.beer.jto.OrderedProductListItemJTO;
 import pl.beertrade.model.beer.jto.ProductDetailsJTO;
 import pl.beertrade.model.beer.jto.ProductListItemJTO;
@@ -33,12 +33,42 @@ public class ProductController {
     @Autowired
     private UserContextProvider userContextProvider;
 
-    @RequestMapping("/list")
-    public List<ProductListItemJTO> getAllProducts() {
+    @GetMapping("/onStore")
+    public List<ProductListItemJTO> getAllProductsOnStore() {
         log.trace("ENTRY - getAllProducts");
-        final List<ProductListItemJTO> productList = productService.getAllProductList();
+        final List<ProductListItemJTO> productList = productService.getAllProductOnStoreList();
         log.trace("EXIT - getAllProducts - {}", productList);
         return productList;
+    }
+
+    @GetMapping("/manage/remove/all")
+    public List<ManageProductsListItemJTO> getManageRemoveProductsList() {
+        log.trace("ENTRY - getAllProducts");
+        final List<ManageProductsListItemJTO> productList = productService.getManageRemoveProductsList();
+        log.trace("EXIT - getAllProducts - {}", productList);
+        return productList;
+    }
+
+    @GetMapping("/manage/add/all")
+    public List<ManageProductsListItemJTO> getManageAddProductsList() {
+        log.trace("ENTRY - getManageAddProductsList");
+        final List<ManageProductsListItemJTO> productList = productService.getManageAddProductsList();
+        log.trace("EXIT - getManageAddProductsList - {}", productList);
+        return productList;
+    }
+
+    @PostMapping("/enable/{id}")
+    public void enableProduct(@PathVariable UUID id) throws ProductNotFoundException {
+        log.trace("ENTRY - enableProduct");
+        productService.setProductOnStore(id, true);
+        log.trace("EXIT - enableProduct");
+    }
+
+    @PostMapping("/disable/{id}")
+    public void disableProduct(@PathVariable UUID id) throws ProductNotFoundException {
+        log.trace("ENTRY - disableProduct");
+        productService.setProductOnStore(id, false);
+        log.trace("EXIT - disableProduct");
     }
 
     @GetMapping("/{id}")
@@ -70,14 +100,6 @@ public class ProductController {
         log.trace("ENTRY - getUserOrderedProducts");
         final List<OrderedProductListItemJTO> orderedProductList = productService.getClientOrderedProducts(userContextProvider.getUserAsClient());
         log.trace("EXIT - getUserOrderedProducts - {}", orderedProductList);
-        return orderedProductList;
-    }
-
-    @GetMapping("/orders")
-    public List<BartenderOrderProductJTO> getAllOrderedProducts() {
-        log.trace("ENTRY - getAllOrderedProducts");
-        final List<BartenderOrderProductJTO> orderedProductList = productService.getAllOrderedProducts();
-        log.trace("EXIT - getAllOrderedProducts - {}", orderedProductList);
         return orderedProductList;
     }
 

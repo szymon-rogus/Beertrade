@@ -1,5 +1,6 @@
 package pl.beertrade.services;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class UserService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public User getUserByUsername(String username) throws UserNotFoundException {
+    public User getUserByUsername(@NonNull String username) throws UserNotFoundException {
         log.trace("ENTRY - getUserByUsername - {}", username);
         final Optional<User> userOptional = userRepository.findByLogin(username);
         final User user = userOptional.orElseThrow(() ->
@@ -30,7 +31,7 @@ public class UserService {
         return user;
     }
 
-    public Client getClientByUsername(String username) throws UserNotFoundException {
+    public Client getClientByUsername(@NonNull String username) throws UserNotFoundException {
         log.trace("ENTRY - getClientByUsername - {}", username);
         final Optional<Client> clientOptional = clientRepository.findByLogin(username);
         final Client client = clientOptional.orElseThrow(() ->

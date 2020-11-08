@@ -7,7 +7,7 @@ import lombok.NonNull;
 import java.util.UUID;
 
 @Builder
-public class BartenderOrderProductJTO {
+public class ManageProductsListItemJTO {
 
     @JsonProperty
     private final UUID id;
@@ -18,9 +18,17 @@ public class BartenderOrderProductJTO {
 
     @JsonProperty
     @NonNull
-    private final String userLogin;
+    private final String type;
 
     @JsonProperty
-    private final Integer tableNumber;
+    @NonNull
+    private final double alcoholPercentage;
+
+    @JsonProperty
+    @NonNull
+    private final Integer ibu;
+
+    @NonNull
+    private final String encodedPhoto;
 
 }

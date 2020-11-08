@@ -1,24 +1,29 @@
-package pl.beertrade.model.beer;
+package pl.beertrade.model.order;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import pl.beertrade.model.beer.jto.BartenderOrderProductJTO;
+import pl.beertrade.model.beer.Beer;
+import pl.beertrade.model.order.enums.OrderState;
+import pl.beertrade.model.order.jto.BartenderOrderProductJTO;
 import pl.beertrade.model.beer.jto.OrderedProductListItemJTO;
 import pl.beertrade.model.user.Client;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Builder
-@Table(name = "BOUGHT_BEER")
+@Table(name = "APP_ORDER")
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @ToString
-public class BoughtBeer {
+public class Order {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -27,25 +32,36 @@ public class BoughtBeer {
     private UUID id;
 
     @NotNull
+    private String orderViewId;
+
+    @NotNull
+    private Date boughtDate;
+
+    @NotNull
     @OneToOne
-    @JoinColumn(name = "BEER_ID", referencedColumnName = "ID")
-    private Beer beer;
+    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")
+    private Beer product;
+
+    @NotNull
+    private float price;
+
+    @NotNull
+    private Integer amount;
 
     @NotNull
     @OneToOne
     private Client client;
 
     @NotNull
-    private float price;
-
-    @NotNull
-    private Date boughtTime;
+    @Enumerated(EnumType.STRING)
+    @Setter
+    @Getter
+    private OrderState orderState;
 
     public OrderedProductListItemJTO toOrderedProductListItemJTO() {
         return OrderedProductListItemJTO.builder()
-                .name(beer.getName())
-                .type(beer.getType())
-                .brand(beer.getBrand())
+                .name(product.getName())
+                .type(product.getType())
                 .price(price)
                 .id(id)
                 .build();
@@ -54,9 +70,14 @@ public class BoughtBeer {
     public BartenderOrderProductJTO toBartenderOrderProductJTO() {
         return BartenderOrderProductJTO.builder()
                 .id(id)
-                .name(beer.getName())
-                .userLogin(client.getLogin())
+                .orderViewId(orderViewId)
+                .timeOrdered(LocalDateTime.ofInstant(boughtDate.toInstant(), ZoneId.systemDefault())
+                        .toLocalTime()
+                        .format(DateTimeFormatter.ofPattern("HH:mm")))
+                .beerName(product.getName())
+                .amount(amount)
                 .tableNumber(client.getTableNumber())
+                .userLogin(client.getLogin())
                 .build();
     }
 

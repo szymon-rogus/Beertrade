@@ -1,7 +1,9 @@
 package pl.beertrade.model.beer;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import pl.beertrade.model.beer.jto.ManageProductsListItemJTO;
 import pl.beertrade.model.beer.jto.ProductDetailsJTO;
 import pl.beertrade.model.beer.jto.ProductListItemJTO;
 
@@ -30,24 +32,55 @@ public class Beer {
     private String name;
 
     @NotNull
-    private String type; //TODO possible some enum
+    private String type;
 
     @NotNull
-    private String brand; //TODO possible some enum
+    private Double alcoholPercentage;
+
+    @NotNull
+    private Integer ibu;
+
+    @NotNull
+    private Double blg;
+
+    @NotNull
+    private Integer ebc;
+
+    @NotNull
+    private String origin;
+
+    @NotNull
+    private String brewery;
+
+    @NotNull
+    private String year;
 
     private String description;
 
     @NotNull
+    @Setter
     private boolean onStore;
 
     @NotNull
-    private boolean onSystem;
+    @Lob
+    private byte[] photo;
+
+    @NotNull
+    private Double basePrice;
+
+    @NotNull
+    private Double minPrice;
+
+    @NotNull
+    private Double maxPrice;
+
+    @NotNull
+    private Double amortizationFactor;
 
     public ProductListItemJTO toProductListItemJTO() {
         return ProductListItemJTO.builder()
                 .name(name)
                 .type(type)
-                .brand(brand)
                 .id(id)
                 .price(mockPrice())
                 .build();
@@ -63,9 +96,19 @@ public class Beer {
         return ProductDetailsJTO.builder()
                 .name(name)
                 .type(type)
-                .brand(brand)
                 .description(description)
                 .onStore(onStore)
+                .build();
+    }
+
+    public ManageProductsListItemJTO toManageProductsListItemJTO() {
+        return ManageProductsListItemJTO.builder()
+                .id(id)
+                .name(name)
+                .type(type)
+                .alcoholPercentage(alcoholPercentage)
+                .ibu(ibu)
+                .encodedPhoto(Base64.encode(photo))
                 .build();
     }
 

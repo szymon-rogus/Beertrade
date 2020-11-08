@@ -1,5 +1,6 @@
 package pl.beertrade.services;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class TableService {
         return tableClientViewJTOList;
     }
 
-    public void chooseTable(Client client, int tableNumber) throws TableException {
+    public void chooseTable(@NonNull Client client, @NonNull Integer tableNumber) throws TableException {
         log.trace("ENTRY - chooseTable - {} {}", client, tableNumber);
         final Optional<Table> tableOptional = tableRepository.findByTableNumber(tableNumber);
         final Table table = tableOptional.orElseThrow(() ->
@@ -47,7 +48,7 @@ public class TableService {
         log.trace("EXIT - chooseTable");
     }
 
-    public void unreserveTable(Client client, int tableNumber) throws TableException {
+    public void unreserveTable(@NonNull Client client, @NonNull Integer tableNumber) throws TableException {
         log.trace("ENTRY - unreserveTable - {} {}", client, tableNumber);
         final Optional<Table> tableOptional = tableRepository.findByTableNumber(tableNumber);
         final Table table = tableOptional.orElseThrow(() ->

@@ -2,7 +2,7 @@ package pl.beertrade.model.user;
 
 import lombok.*;
 import org.springframework.lang.Nullable;
-import pl.beertrade.model.beer.BoughtBeer;
+import pl.beertrade.model.order.Order;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,12 +22,12 @@ public class Client extends User {
     private Integer tableNumber;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BoughtBeer> boughtBeerList;
+    private List<Order> orderList;
 
     @Builder
     public Client(@NotNull String login, @NotNull String password,
                   @NotNull String firstName, @NotNull String lastName, @NotNull String email,
-                  @NotNull String phoneNumber, @Nullable Integer tableNumber, List<BoughtBeer> boughtBeerList) {
+                  @NotNull String phoneNumber, @Nullable Integer tableNumber, List<Order> orderList) {
         this.setLogin(login);
         this.setPassword(password);
         this.setFirstName(firstName);
@@ -35,6 +35,6 @@ public class Client extends User {
         this.setEmail(email);
         this.setPhoneNumber(phoneNumber);
         this.tableNumber = tableNumber;
-        this.boughtBeerList = boughtBeerList;
+        this.orderList = orderList;
     }
 }
