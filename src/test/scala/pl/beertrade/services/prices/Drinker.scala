@@ -16,12 +16,9 @@ class Drinker(pricesModifier: PricesModifier, input_prices: Map[Int, Double]) {
 object PricesAnalyzer {
   def analyze(input_prices: Map[Int, Double], output_prices: Map[Int, Double]): String = {
     def sign(input: Double, output: Double): String = {
-      if (input < output)
-        return "<"
-      if (input > output)
-        return ">"
-      if (input == output)
-        return "="
+      if (input < output) return "<"
+      if (input > output) return ">"
+      if (input == output) return "="
       "="
     }
 
