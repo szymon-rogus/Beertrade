@@ -36,7 +36,6 @@ class DrinkerTest extends AnyFlatSpec {
 
   "PricesModifier" should "return expected values for a medium list of 8 elements" in {
     val inputList = List(5.09, 8.6, 0.42, 6.61, 8.53, 12.45, 6.67, 15.21)
-    val borderPrices: Map[Int, BorderPrices] = (0 to inputList.size).toList.map(i => (i, BorderPrices(4.0, 20.0))).toMap
     val drinker: Drinker = new Drinker(new PricesModifierImpl, convertList(inputList))
 
     rAssertEquals(drinker.check(List(1, 9, 7, 2, 8, 3, 6, 12)), "><>><>><")
@@ -49,6 +48,29 @@ class DrinkerTest extends AnyFlatSpec {
     val drinker: Drinker = new Drinker(new PricesAmorthizedModifierImpl(borderPrices), convertList(inputList))
     rAssertEquals(drinker.check(List(1, 9, 7, 2, 8, 3, 6, 12)), "><>><>><")
     rAssertEquals(drinker.check(List(1, 2, 3, 4, 20, 21, 22, 23)), ">>>>><<<")
+  }
+
+  "simple test with only few products and huge number of buys" should "not  increase the prices over the border" in {
+    val drinker: Drinker = new Drinker(new PricesAmorthizedModifierImpl(Map(
+      0 -> BorderPrices(1.0,20.0),
+      1 -> BorderPrices(1.0,20.0),
+      2 -> BorderPrices(1.0,20.0),
+    )), convertList(List(7.0, 8.0, 9.0)))
+    rAssertEquals(drinker.check(List(1,1,2)), ">><")
+
+  }
+
+  "AmortizedPricesModifier2" should "return expected values for a medium list of 8 elements" in {
+    val inputList = List(7.0, 8.0, 9.0)
+    val borderPrices: Map[Int, BorderPrices] = (0 to inputList.size).toList.map(i => (i, BorderPrices(1.0, 20.0))).toMap
+
+    PricesAmorthizedModifierImpl(borderPrices) match {
+      case Some(modifier) => {
+        val drinker: Drinker = new Drinker(modifier, convertList(inputList))
+//        rAssertEquals(drinker.check(List(1, 1, 2)), ">><")
+        rAssertEquals(drinker.check(List(1, 1, 1000)), ">><")
+      }
+    }
   }
 
 

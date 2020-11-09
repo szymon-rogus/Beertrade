@@ -1,26 +1,24 @@
 package pl.beertrade.services.prices
 
-
 case class BorderPrices(lower: Double, upper: Double)
 
 class PricesAmorthizedModifierImpl(borderPrices: Map[Int, BorderPrices]) extends AbstractBucketsPricesModifier {
-
   override def countNewPrices(toIncrease: List[Repr], toDecrease: List[Repr], initPrices: Map[Int, Double]): Map[Int, Double] = {
-    val toDistribute: Double = initPrices.size * 1.0
+    val toDistribute = initPrices.size * 1.0
 
-    val toDecreaseBiggest: Int = toDecrease.map(repr => repr.buys).max
-    val toIncreaseSmallest: Int = toIncrease.map(repr => repr.buys).min
-    val compareValue: Double = toDecreaseBiggest + (toIncreaseSmallest - toDecreaseBiggest) / 2.0
+    val toDecreaseBiggest = toDecrease.map(repr => repr.buys).max
+    val toIncreaseSmallest = toIncrease.map(repr => repr.buys).min
+    val compareValue = toDecreaseBiggest + (toIncreaseSmallest - toDecreaseBiggest) / 2.0
 
-    val amortizedToDecreaseDistances: Map[Int, Double] = toDecrease.map(
+    val amortizedToDecreaseDistances = toDecrease.map(
       repr => (repr.productId, toDecreaseAmortizedDistance(initPrices, compareValue, repr))).toMap
-    val toDecreaseDistance: Double = amortizedToDecreaseDistances.values.sum
-    val toDecreaseUnit: Double = (toDistribute / 2.0) / toDecreaseDistance
+    val toDecreaseDistance = amortizedToDecreaseDistances.values.sum
+    val toDecreaseUnit = (toDistribute / 2.0) / toDecreaseDistance
 
-    val amortizedToIncreaseDistances: Map[Int, Double] = toIncrease.map(
+    val amortizedToIncreaseDistances = toIncrease.map(
       repr => (repr.productId, toIncreaseAmortizedDistance(initPrices, compareValue, repr))).toMap
-    val toIncreaseDistance: Double = amortizedToDecreaseDistances.values.sum
-    val toIncreaseUnit: Double = (toDistribute / 2) / toIncreaseDistance
+    val toIncreaseDistance = amortizedToIncreaseDistances.values.sum
+    val toIncreaseUnit = (toDistribute / 2) / toIncreaseDistance
 
     var newPrices = Map[Int, Double]()
 
@@ -33,12 +31,20 @@ class PricesAmorthizedModifierImpl(borderPrices: Map[Int, BorderPrices]) extends
     newPrices
   }
 
-  private def toIncreaseAmortizedDistance(initPrices: Map[Int, Double], compareValue: Double, repr: Repr) = {
-    (repr.buys - compareValue) * (borderPrices(repr.productId).upper - initPrices(repr.productId)) / borderPrices(repr.productId).upper
+  private def toIncreaseAmortizedDistance(initPrices: Map[Int, Double], compareValue: Double, repr: Repr) = (repr.buys - compareValue) * (borderPrices(repr.productId).upper - initPrices(repr.productId)) / borderPrices(repr.productId).upper
+
+  private def toDecreaseAmortizedDistance(initPrices: Map[Int, Double], compareValue: Double, repr: Repr) = (compareValue - repr.buys) * (initPrices(repr.productId) - borderPrices(repr.productId).lower) / borderPrices(repr.productId).lower
+
+
+}
+
+object PricesAmorthizedModifierImpl {
+  def apply(borderPrices: Map[Int, BorderPrices]): Option[PricesAmorthizedModifierImpl] = {
+    if (validateBorderPrices(borderPrices))
+      Option(new PricesAmorthizedModifierImpl(borderPrices))
+    else
+      None
   }
 
-  private def toDecreaseAmortizedDistance(initPrices: Map[Int, Double], compareValue: Double, repr: Repr) = {
-    (compareValue - repr.buys) * (initPrices(repr.productId) - borderPrices(repr.productId).lower) / borderPrices(repr.productId).lower
-  }
-
+  def validateBorderPrices(borderPrices: Map[Int, BorderPrices]): Boolean = !borderPrices.values.exists(borderPrice => borderPrice.upper == 0.0 || borderPrice.lower == 0.0)
 }
