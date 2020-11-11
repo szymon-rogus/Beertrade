@@ -16,7 +16,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "BEER")
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @EqualsAndHashCode
 @ToString
 @Getter
@@ -55,14 +55,13 @@ public class Beer {
     @NotNull
     private String year;
 
+    @Column(length = 2048)
     private String description;
 
     @NotNull
     @Setter
     private boolean onStore;
 
-    @NotNull
-    @Lob
     private byte[] photo;
 
     @NotNull
