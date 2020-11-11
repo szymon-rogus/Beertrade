@@ -11,7 +11,6 @@ public class TableAssembler {
         final int occupiedSeats = table.getActualClients()
                 .size();
         return TableClientViewJTO.builder()
-                .name(table.getName())
                 .tableNumber(table.getTableNumber())
                 .seats(table.getSeats())
                 .occupiedSeats(occupiedSeats)

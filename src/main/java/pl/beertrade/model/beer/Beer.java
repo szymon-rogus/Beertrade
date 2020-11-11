@@ -1,7 +1,10 @@
 package pl.beertrade.model.beer;
 
 import lombok.*;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.annotations.GenericGenerator;
+import pl.beertrade.model.beer.enums.ProductState;
+import pl.beertrade.model.beer.jto.ManageProductsListItemJTO;
 import pl.beertrade.model.beer.jto.ProductDetailsJTO;
 import pl.beertrade.model.beer.jto.ProductListItemJTO;
 
@@ -14,7 +17,7 @@ import java.util.UUID;
 @Builder
 @Table(name = "BEER")
 @NoArgsConstructor
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @EqualsAndHashCode
 @ToString
 @Getter
@@ -30,24 +33,48 @@ public class Beer {
     private String name;
 
     @NotNull
-    private String type; //TODO possible some enum
+    private String type;
 
     @NotNull
-    private String brand; //TODO possible some enum
+    private Double alcoholPercentage;
 
+    @NotNull
+    private Integer ibu;
+
+    private Double blg;
+
+    private Integer ebc;
+
+    private String origin;
+
+    private String brewery;
+
+    private String year;
+
+    @Column(length = 2048)
     private String description;
 
     @NotNull
-    private boolean onStore;
+    @Setter
+    private ProductState productState;
+
+    private byte[] photo;
 
     @NotNull
-    private boolean onSystem;
+    private Double basePrice;
+
+    @NotNull
+    private Double minPrice;
+
+    @NotNull
+    private Double maxPrice;
+
+    private Double amortizationFactor;
 
     public ProductListItemJTO toProductListItemJTO() {
         return ProductListItemJTO.builder()
                 .name(name)
                 .type(type)
-                .brand(brand)
                 .id(id)
                 .price(mockPrice())
                 .build();
@@ -63,9 +90,18 @@ public class Beer {
         return ProductDetailsJTO.builder()
                 .name(name)
                 .type(type)
-                .brand(brand)
                 .description(description)
-                .onStore(onStore)
+                .build();
+    }
+
+    public ManageProductsListItemJTO toManageProductsListItemJTO() {
+        return ManageProductsListItemJTO.builder()
+                .id(id)
+                .name(name)
+                .type(type)
+                .alcoholPercentage(alcoholPercentage)
+                .encodedPhoto(Base64.encodeBase64String(photo))
+                .productState(productState)
                 .build();
     }
 

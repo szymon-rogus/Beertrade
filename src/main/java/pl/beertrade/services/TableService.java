@@ -1,5 +1,6 @@
 package pl.beertrade.services;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,25 +36,26 @@ public class TableService {
         return tableClientViewJTOList;
     }
 
-    public void chooseTable(Client client, int tableNumber) throws TableException {
+    public void chooseTable(@NonNull Client client, @NonNull Integer tableNumber) throws TableException {
         log.trace("ENTRY - chooseTable - {} {}", client, tableNumber);
         final Optional<Table> tableOptional = tableRepository.findByTableNumber(tableNumber);
         final Table table = tableOptional.orElseThrow(() ->
                 new TableException(String.format("Table with number %d not found", tableNumber)));
         table.addClientToTable(client);
-        client.setTableNumber(tableNumber);
+        client.setTable(table);
         tableRepository.save(table);
         clientRepository.save(client);
         log.trace("EXIT - chooseTable");
     }
 
-    public void unreserveTable(Client client, int tableNumber) throws TableException {
-        log.trace("ENTRY - unreserveTable - {} {}", client, tableNumber);
-        final Optional<Table> tableOptional = tableRepository.findByTableNumber(tableNumber);
-        final Table table = tableOptional.orElseThrow(() ->
-                new TableException(String.format("Table with number %d not found", tableNumber)));
-        table.removeClientFromTable(client);
-        client.setTableNumber(null);
+    public void unreserveTable(@NonNull Client client) throws TableException {
+        log.trace("ENTRY - unreserveTable - {}", client);
+        Table table = client.getTable();
+        if(table != null) {
+            client.setTable(null);
+        } else{
+            throw new TableException(String.format("Client %s is not registered at any table", client.getLogin()));
+        }
         tableRepository.save(table);
         clientRepository.save(client);
         log.trace("EXIT - unreserveTable");

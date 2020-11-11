@@ -21,7 +21,7 @@ public class Decoder {
                 .lastName(decode(user.getLastName()))
                 .email(decode(user.getEmail()))
                 .phoneNumber(decode(user.getPhoneNumber()))
-                .boughtBeerList(new ArrayList<>())
+                .orderList(new ArrayList<>())
                 .build();
     }
 

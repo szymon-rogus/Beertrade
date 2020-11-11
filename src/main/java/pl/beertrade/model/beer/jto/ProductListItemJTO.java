@@ -22,10 +22,6 @@ public class ProductListItemJTO {
     private final String type;
 
     @JsonProperty
-    @NonNull
-    private final String brand;
-
-    @JsonProperty
     private final double price;
 
 }

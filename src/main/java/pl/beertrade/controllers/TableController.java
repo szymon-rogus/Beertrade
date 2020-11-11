@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.beertrade.exception.NotFoundException;
 import pl.beertrade.exception.TableException;
-import pl.beertrade.exception.UserNotFoundException;
 import pl.beertrade.model.table.jto.TableClientViewJTO;
 import pl.beertrade.model.user.Client;
 import pl.beertrade.services.TableService;
@@ -35,18 +35,18 @@ public class TableController {
     }
 
     @PostMapping("/reserve/{tableNumber}")
-    public void chooseTable(@PathVariable int tableNumber) throws TableException, UserNotFoundException {
+    public void chooseTable(@PathVariable int tableNumber) throws TableException, NotFoundException {
         log.trace("ENTRY - chooseTable");
         final Client client = userContextProvider.getUserAsClient();
         tableService.chooseTable(client, tableNumber);
         log.trace("EXIT - chooseTable");
     }
 
-    @PostMapping("/unreserve/{tableNumber}")
-    public void unreserveTable(@PathVariable int tableNumber) throws TableException, UserNotFoundException {
+    @PostMapping("/unreserve")
+    public void unreserveTable() throws TableException, NotFoundException {
         log.trace("ENTRY - unreserveTable");
         final Client client = userContextProvider.getUserAsClient();
-        tableService.unreserveTable(client, tableNumber);
+        tableService.unreserveTable(client);
         log.trace("EXIT - unreserveTable");
     }
 

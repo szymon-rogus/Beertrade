@@ -1,17 +1,17 @@
 package pl.beertrade.services;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.beertrade.exception.ProductNotFoundException;
-import pl.beertrade.model.beer.BoughtBeer;
-import pl.beertrade.model.beer.jto.BartenderOrderProductJTO;
-import pl.beertrade.model.beer.jto.OrderedProductListItemJTO;
-import pl.beertrade.model.beer.jto.ProductDetailsJTO;
-import pl.beertrade.model.beer.jto.ProductListItemJTO;
+import pl.beertrade.exception.NotFoundException;
+import pl.beertrade.model.beer.enums.ProductState;
+import pl.beertrade.model.beer.jto.*;
+import pl.beertrade.model.order.Order;
 import pl.beertrade.model.beer.*;
+import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.user.Client;
-import pl.beertrade.repositories.BoughtProductRepository;
+import pl.beertrade.repositories.OrderRepository;
 import pl.beertrade.repositories.ProductRepository;
 
 import java.time.Instant;
@@ -24,73 +24,88 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class ProductService {
+    private static final int orderViewId = 321;
 
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
-    private BoughtProductRepository boughtProductRepository;
+    private OrderRepository orderRepository;
 
-
-    public List<ProductListItemJTO> getAllProductList() {
+    public List<ProductListItemJTO> getAllProductOnStoreList() {
         log.trace("ENTRY - getAllProductList");
         final List<Beer> productList = productRepository.findAll();
         final List<ProductListItemJTO> productJTOList = productList.stream()
+                .filter(beer -> beer.getProductState().equals(ProductState.ON_STORE))
                 .map(Beer::toProductListItemJTO)
                 .collect(Collectors.toList());
         log.trace("EXIT - getAllProductList - {}", productJTOList);
         return productJTOList;
     }
 
-    public void addProduct(Beer product) {
+    public void addProduct(@NonNull Beer product) {
         log.trace("ENTRY - addProduct - {}", product);
         productRepository.save(product);
         log.trace("EXIT - addProduct");
     }
 
-    public void orderProduct(UUID id, Client client) throws ProductNotFoundException {
+    public void orderProduct(@NonNull UUID id, @NonNull Client client) throws NotFoundException {
         log.trace("ENTRY - orderProduct - {} {}", id, client);
-        final Optional<BoughtBeer> boughtBeerOptional = productRepository.findById(id)
-                .map((beer) -> BoughtBeer.builder()
+        final Optional<Order> boughtBeerOptional = productRepository.findById(id)
+                .map((beer) -> Order.builder()
                         .client(client)
-                        .beer(beer)
+                        .product(beer)
                         .price(10)  // TODO: Take price from algorithm
-                        .boughtTime(Date.from(Instant.now()))
+                        .boughtDate(Date.from(Instant.now()))
+                        .orderViewId(orderViewId)
+                        .orderState(OrderState.WAITING)
+                        .amount(1)
                         .build());
-        final BoughtBeer boughtBeer = boughtBeerOptional.orElseThrow(() ->
-                new ProductNotFoundException(String.format("Product with id: %s does not exist", id.toString())));
-        boughtProductRepository.save(boughtBeer);
-        log.trace("EXIT - orderProduct - {}", boughtBeer);
+        final Order order = boughtBeerOptional.orElseThrow(() ->
+                new NotFoundException(Beer.class.getName(), id.toString()));
+        orderRepository.save(order);
+        log.trace("EXIT - orderProduct - {}", order);
     }
 
-    public List<OrderedProductListItemJTO> getClientOrderedProducts(Client client) {
+    public List<OrderedProductListItemJTO> getClientOrderedProducts(@NonNull Client client) {
         log.trace("ENTRY - getUserOrderedProducts - {}", client);
-        final List<OrderedProductListItemJTO> orderedProducts = boughtProductRepository.findByClientOrderByBoughtTimeAsc(client)
+        final List<OrderedProductListItemJTO> orderedProducts = orderRepository.findByClientOrderByBoughtDateAsc(client)
                 .stream()
-                .map(BoughtBeer::toOrderedProductListItemJTO)
+                .map(Order::toOrderedProductListItemJTO)
                 .collect(Collectors.toList());
         log.trace("EXIT - getUserOrderedProducts - {}", orderedProducts);
         return orderedProducts;
     }
 
-    public List<BartenderOrderProductJTO> getAllOrderedProducts() {
-        log.trace("ENTRY - getAllOrderedProducts");
-        final List<BartenderOrderProductJTO> orderedProducts = boughtProductRepository.findAll()
+    public List<ManageProductsListItemJTO> getManageProductsList() {
+        log.trace("ENTRY - getManageRemoveProductsList");
+        final List<ManageProductsListItemJTO> manageProductList = productRepository.findAll()
                 .stream()
-                .map(BoughtBeer::toBartenderOrderProductJTO)
+                .map(Beer::toManageProductsListItemJTO)
                 .collect(Collectors.toList());
-        log.trace("EXIT - getAllOrderedProducts - {}", orderedProducts);
-        return orderedProducts;
+        log.trace("EXIT - getManageRemoveProductsList - {}", manageProductList);
+        return manageProductList;
     }
 
-    public ProductDetailsJTO getProductDetails(UUID id) throws ProductNotFoundException {
+    public ProductDetailsJTO getProductDetails(@NonNull UUID id) throws NotFoundException {
         log.trace("ENTRY - getProductDetails - {}", id);
         final Optional<Beer> productOptional = productRepository.findById(id);
         final Beer product = productOptional.orElseThrow(() ->
-                new ProductNotFoundException(String.format("Product with id: %s does not exist", id.toString())));
+                new NotFoundException(Beer.class.getName(), id.toString()));
         final ProductDetailsJTO productDetailsJTO = product.toProductDetailsJTO();
         log.trace("EXIT - getProductDetails - {}", productDetailsJTO);
         return productDetailsJTO;
+    }
+
+    public Beer setProductOnStore(UUID id, String state) throws NotFoundException {
+        log.trace("ENTRY - setProductOnStore - {} {}", id, state);
+        final Optional<Beer> productOptional = productRepository.findById(id);
+        final Beer product = productOptional.orElseThrow(() ->
+                new NotFoundException(Beer.class.getName(), id.toString()));
+        product.setProductState(ProductState.valueOf(state));
+        productRepository.save(product);
+        log.trace("EXIT - setProductOnStore");
+        return product;
     }
 
 }

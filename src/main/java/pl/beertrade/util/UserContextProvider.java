@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import pl.beertrade.exception.UserNotFoundException;
+import pl.beertrade.exception.NotFoundException;
 import pl.beertrade.model.user.Client;
 import pl.beertrade.model.user.User;
 import pl.beertrade.services.UserService;
@@ -20,13 +20,13 @@ public class UserContextProvider {
     @Autowired
     private UserService userService;
 
-    public User getUser() throws UserNotFoundException {
+    public User getUser() throws NotFoundException {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userService.getUserByUsername(userDetails.getUsername());
     }
 
-    public Client getUserAsClient() throws UserNotFoundException {
+    public Client getUserAsClient() throws NotFoundException {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userService.getClientByUsername(userDetails.getUsername());

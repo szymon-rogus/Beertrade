@@ -6,12 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.beertrade.exception.ProductNotFoundException;
-import pl.beertrade.exception.UserNotFoundException;
-import pl.beertrade.model.beer.jto.BartenderOrderProductJTO;
-import pl.beertrade.model.beer.jto.OrderedProductListItemJTO;
-import pl.beertrade.model.beer.jto.ProductDetailsJTO;
-import pl.beertrade.model.beer.jto.ProductListItemJTO;
+import pl.beertrade.exception.NotFoundException;
+import pl.beertrade.model.beer.jto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.beertrade.model.beer.*;
@@ -33,16 +29,33 @@ public class ProductController {
     @Autowired
     private UserContextProvider userContextProvider;
 
-    @RequestMapping("/list")
-    public List<ProductListItemJTO> getAllProducts() {
-        log.trace("ENTRY - getAllProducts");
-        final List<ProductListItemJTO> productList = productService.getAllProductList();
-        log.trace("EXIT - getAllProducts - {}", productList);
+    @GetMapping("/onStore")
+    public List<ProductListItemJTO> getAllProductsOnStore() {
+        log.trace("ENTRY - getAllProductsOnStore");
+        final List<ProductListItemJTO> productList = productService.getAllProductOnStoreList();
+        log.trace("EXIT - getAllProductsOnStore - {}", productList);
         return productList;
     }
 
+    @GetMapping("/manage/all")
+    public List<ManageProductsListItemJTO> getManageProductsList() {
+        log.trace("ENTRY - getManageEnabledProductsList");
+        final List<ManageProductsListItemJTO> productList = productService.getManageProductsList();
+        log.trace("EXIT - getManageEnabledProductsList - {}", productList);
+        return productList;
+    }
+
+    @PostMapping("/state/{id}/{state}")
+    public ManageProductsListItemJTO enableProduct(@PathVariable UUID id, @PathVariable String state) throws NotFoundException {
+        log.trace("ENTRY - enableProduct");
+        final ManageProductsListItemJTO manageProductsListItem = productService.setProductOnStore(id, state)
+                .toManageProductsListItemJTO();
+        log.trace("EXIT - enableProduct - {}", manageProductsListItem);
+        return manageProductsListItem;
+    }
+
     @GetMapping("/{id}")
-    public ProductDetailsJTO getProductDetails(@PathVariable UUID id) throws ProductNotFoundException {
+    public ProductDetailsJTO getProductDetails(@PathVariable UUID id) throws NotFoundException {
         log.trace("ENTRY - getProductDetails - {}", id);
         final ProductDetailsJTO productDetails = productService.getProductDetails(id);
         log.trace("EXIT - getProductDetails - {}", productDetails);
@@ -57,7 +70,7 @@ public class ProductController {
     }
 
     @PostMapping("/order/{id}")
-    public ResponseEntity<?> orderProduct(@PathVariable UUID id) throws UserNotFoundException, ProductNotFoundException {
+    public ResponseEntity<?> orderProduct(@PathVariable UUID id) throws NotFoundException {
         log.trace("ENTRY - orderProduct - {}", id);
         productService.orderProduct(id, userContextProvider.getUserAsClient());
         log.trace("EXIT - orderProduct");
@@ -66,18 +79,10 @@ public class ProductController {
     }
 
     @GetMapping("/order")
-    public List<OrderedProductListItemJTO> getClientOrderedProducts() throws UserNotFoundException {
+    public List<OrderedProductListItemJTO> getClientOrderedProducts() throws NotFoundException {
         log.trace("ENTRY - getUserOrderedProducts");
         final List<OrderedProductListItemJTO> orderedProductList = productService.getClientOrderedProducts(userContextProvider.getUserAsClient());
         log.trace("EXIT - getUserOrderedProducts - {}", orderedProductList);
-        return orderedProductList;
-    }
-
-    @GetMapping("/orders")
-    public List<BartenderOrderProductJTO> getAllOrderedProducts() {
-        log.trace("ENTRY - getAllOrderedProducts");
-        final List<BartenderOrderProductJTO> orderedProductList = productService.getAllOrderedProducts();
-        log.trace("EXIT - getAllOrderedProducts - {}", orderedProductList);
         return orderedProductList;
     }
 

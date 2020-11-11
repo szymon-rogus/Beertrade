@@ -42,7 +42,7 @@ export default class ProductsPage extends Component {
   };
 
   setProducts(context) {
-    http.get('/product/list').then(response => response.data).then(data => context.setState({products: data}))
+    http.get('/product/onStore').then(response => response.data).then(data => context.setState({products: data}))
       .catch(err => console.log(err));
   }
 

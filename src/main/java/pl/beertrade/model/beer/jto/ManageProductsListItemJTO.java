@@ -3,11 +3,12 @@ package pl.beertrade.model.beer.jto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.NonNull;
+import pl.beertrade.model.beer.enums.ProductState;
 
 import java.util.UUID;
 
 @Builder
-public class BartenderOrderProductJTO {
+public class ManageProductsListItemJTO {
 
     @JsonProperty
     private final UUID id;
@@ -18,9 +19,18 @@ public class BartenderOrderProductJTO {
 
     @JsonProperty
     @NonNull
-    private final String userLogin;
+    private final String type;
 
     @JsonProperty
-    private final Integer tableNumber;
+    @NonNull
+    private final double alcoholPercentage;
+
+    @JsonProperty
+    @NonNull
+    private final String encodedPhoto;
+
+    @JsonProperty
+    @NonNull
+    private final ProductState productState;
 
 }
