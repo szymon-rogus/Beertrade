@@ -2,6 +2,8 @@ package pl.beertrade.services;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pl.beertrade.services.prices.PricesModifier;
+import pl.beertrade.services.prices.PricesModifierImpl;
 
 import java.util.Properties;
 
@@ -17,6 +19,11 @@ public class ServicesConfiguration {
         prop.put("mail.smtp.port", "2525");
         prop.put("mail.smtp.ssl.trust", "smtp.elasticemail.com");
         return prop;
+    }
+
+    @Bean
+    public PricesModifier pricesModifier() {
+        return new PricesModifierImpl();
     }
 
 }

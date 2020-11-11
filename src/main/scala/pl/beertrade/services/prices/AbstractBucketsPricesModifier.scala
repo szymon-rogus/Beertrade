@@ -1,15 +1,17 @@
 package pl.beertrade.services.prices
 
+import java.util.UUID
+
 import scala.math.abs
 
 abstract class AbstractBucketsPricesModifier extends PricesModifier{
 
-  case class Repr(productId: Int, buys: Int, sumPref: Int = 0)
+  case class Repr(productId: UUID, buys: Int, sumPref: Int = 0)
 
-  def countNewPrices(toIncrease: List[Repr], toDecrease: List[Repr], initPrices: Map[Int, Double]): Map[Int, Double]
+  def finalize(toIncrease: List[Repr], toDecrease: List[Repr], initPrices: Map[UUID, Double]): Map[UUID, Double]
 
-  private def decideWhichBest(pricesIfLeft: Map[Int, Double], pricesIfRight: Map[Int, Double], borderSet: List[Repr], indexedInitPrices: Map[Int, Double]): Map[Int,Double] = {
-    def calcSum(prices: Map[Int,Double]) = borderSet.map(x => prices(x.productId)).sum
+  private def decideWhichBest(pricesIfLeft: Map[UUID, Double], pricesIfRight: Map[UUID, Double], borderSet: List[Repr], indexedInitPrices: Map[UUID, Double]): Map[UUID,Double] = {
+    def calcSum(prices: Map[UUID,Double]) = borderSet.map(x => prices(x.productId)).sum
 
     val sumPlain = calcSum(indexedInitPrices)
 
@@ -28,9 +30,9 @@ abstract class AbstractBucketsPricesModifier extends PricesModifier{
   }
 
 
-  override def countNewPrices(inputPrices: Map[Int, Double], buys: Map[Int, Int]): Map[Int, Double] = {
+  override def countNewPrices(inputPrices: Map[UUID, Double], buys: Map[UUID, Int]): Map[UUID, Double] = {
     val indexedBuys: List[Repr] = inputPrices.keys.map {
-      productId: Int => Repr(productId = productId, buys = buys(productId))
+      productId: UUID => Repr(productId = productId, buys = buys(productId))
     }.toList
     val sortedIndexedBuys: List[Repr] = indexedBuys.sortWith(_.buys < _.buys)
     val justSums = sortedIndexedBuys.map(a => a.buys)
@@ -57,7 +59,7 @@ abstract class AbstractBucketsPricesModifier extends PricesModifier{
     val toIncreaseSmallest = toIncrease.map(repr => repr.buys).min
 
     if (toIncreaseSmallest != toDecreaseBiggest) {
-      countNewPrices(toIncrease, toDecrease, inputPrices)
+      finalize(toIncrease, toDecrease, inputPrices)
     } else {
       val theEqual: Int = toDecreaseBiggest
       val borderSet: List[Repr] = sortedIndexedBuysWithSums.filter(x => x.buys == theEqual)
@@ -67,13 +69,13 @@ abstract class AbstractBucketsPricesModifier extends PricesModifier{
       if(borderSet.size == sortedIndexedBuysWithSums.size){
         inputPrices
       }else if(toDecrease2.isEmpty){
-        countNewPrices(toIncrease2, borderSet, inputPrices)
+        finalize(toIncrease2, borderSet, inputPrices)
       }else if(toIncrease2.isEmpty){
-        countNewPrices(borderSet, toDecrease2, inputPrices)
+        finalize(borderSet, toDecrease2, inputPrices)
       }else{
         decideWhichBest(
-          countNewPrices(toIncrease2, toDecrease2.union(borderSet), inputPrices),
-          countNewPrices(toIncrease2.union(borderSet), toDecrease2, inputPrices),
+          finalize(toIncrease2, toDecrease2.union(borderSet), inputPrices),
+          finalize(toIncrease2.union(borderSet), toDecrease2, inputPrices),
           borderSet,
           inputPrices)
       }
