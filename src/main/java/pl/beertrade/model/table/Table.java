@@ -24,7 +24,7 @@ public class Table {
     @NotNull
     private int seats;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "table")
     private List<Client> actualClients;
 
     public void addClientToTable(Client client) throws TableException {
@@ -36,12 +36,4 @@ public class Table {
         }
         actualClients.add(client);
     }
-
-    public void removeClientFromTable(Client client) throws TableException {
-        if (actualClients.size() == 0 || !actualClients.contains(client)) {
-            throw new TableException(String.format("Client %s is not registered in the table %d", client.getLogin(), tableNumber));
-        }
-        actualClients.remove(client);
-    }
-
 }

@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.beertrade.exception.NotFoundException;
+import pl.beertrade.model.beer.enums.ProductState;
 import pl.beertrade.model.beer.jto.*;
 import pl.beertrade.model.order.Order;
 import pl.beertrade.model.beer.*;
+import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.user.Client;
 import pl.beertrade.repositories.OrderRepository;
 import pl.beertrade.repositories.ProductRepository;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class ProductService {
+    private static final int orderViewId = 321;
 
     @Autowired
     private ProductRepository productRepository;
@@ -33,7 +36,7 @@ public class ProductService {
         log.trace("ENTRY - getAllProductList");
         final List<Beer> productList = productRepository.findAll();
         final List<ProductListItemJTO> productJTOList = productList.stream()
-                .filter(Beer::isOnStore)
+                .filter(beer -> beer.getProductState().equals(ProductState.ON_STORE))
                 .map(Beer::toProductListItemJTO)
                 .collect(Collectors.toList());
         log.trace("EXIT - getAllProductList - {}", productJTOList);
@@ -54,6 +57,9 @@ public class ProductService {
                         .product(beer)
                         .price(10)  // TODO: Take price from algorithm
                         .boughtDate(Date.from(Instant.now()))
+                        .orderViewId(orderViewId)
+                        .orderState(OrderState.WAITING)
+                        .amount(1)
                         .build());
         final Order order = boughtBeerOptional.orElseThrow(() ->
                 new NotFoundException(Beer.class.getName(), id.toString()));
@@ -91,12 +97,12 @@ public class ProductService {
         return productDetailsJTO;
     }
 
-    public Beer setProductOnStore(UUID id, boolean onStore) throws NotFoundException {
-        log.trace("ENTRY - setProductOnStore - {} {}", id, onStore);
+    public Beer setProductOnStore(UUID id, String state) throws NotFoundException {
+        log.trace("ENTRY - setProductOnStore - {} {}", id, state);
         final Optional<Beer> productOptional = productRepository.findById(id);
         final Beer product = productOptional.orElseThrow(() ->
                 new NotFoundException(Beer.class.getName(), id.toString()));
-        product.setOnStore(onStore);
+        product.setProductState(ProductState.valueOf(state));
         productRepository.save(product);
         log.trace("EXIT - setProductOnStore");
         return product;

@@ -42,11 +42,11 @@ public class TableController {
         log.trace("EXIT - chooseTable");
     }
 
-    @PostMapping("/unreserve/{tableNumber}")
-    public void unreserveTable(@PathVariable int tableNumber) throws TableException, NotFoundException {
+    @PostMapping("/unreserve")
+    public void unreserveTable() throws TableException, NotFoundException {
         log.trace("ENTRY - unreserveTable");
         final Client client = userContextProvider.getUserAsClient();
-        tableService.unreserveTable(client, tableNumber);
+        tableService.unreserveTable(client);
         log.trace("EXIT - unreserveTable");
     }
 

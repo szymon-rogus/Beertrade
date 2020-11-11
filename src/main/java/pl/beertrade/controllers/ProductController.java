@@ -45,21 +45,12 @@ public class ProductController {
         return productList;
     }
 
-    @PostMapping("/enable/{id}")
-    public ManageProductsListItemJTO enableProduct(@PathVariable UUID id) throws NotFoundException {
+    @PostMapping("/state/{id}/{state}")
+    public ManageProductsListItemJTO enableProduct(@PathVariable UUID id, @PathVariable String state) throws NotFoundException {
         log.trace("ENTRY - enableProduct");
-        final ManageProductsListItemJTO manageProductsListItem = productService.setProductOnStore(id, true)
+        final ManageProductsListItemJTO manageProductsListItem = productService.setProductOnStore(id, state)
                 .toManageProductsListItemJTO();
         log.trace("EXIT - enableProduct - {}", manageProductsListItem);
-        return manageProductsListItem;
-    }
-
-    @PostMapping("/disable/{id}")
-    public ManageProductsListItemJTO disableProduct(@PathVariable UUID id) throws NotFoundException {
-        log.trace("ENTRY - disableProduct");
-        final ManageProductsListItemJTO manageProductsListItem = productService.setProductOnStore(id, false)
-                .toManageProductsListItemJTO();
-        log.trace("EXIT - disableProduct - {}", manageProductsListItem);
         return manageProductsListItem;
     }
 

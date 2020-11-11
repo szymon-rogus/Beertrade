@@ -42,19 +42,20 @@ public class TableService {
         final Table table = tableOptional.orElseThrow(() ->
                 new TableException(String.format("Table with number %d not found", tableNumber)));
         table.addClientToTable(client);
-        client.setTableNumber(tableNumber);
+        client.setTable(table);
         tableRepository.save(table);
         clientRepository.save(client);
         log.trace("EXIT - chooseTable");
     }
 
-    public void unreserveTable(@NonNull Client client, @NonNull Integer tableNumber) throws TableException {
-        log.trace("ENTRY - unreserveTable - {} {}", client, tableNumber);
-        final Optional<Table> tableOptional = tableRepository.findByTableNumber(tableNumber);
-        final Table table = tableOptional.orElseThrow(() ->
-                new TableException(String.format("Table with number %d not found", tableNumber)));
-        table.removeClientFromTable(client);
-        client.setTableNumber(null);
+    public void unreserveTable(@NonNull Client client) throws TableException {
+        log.trace("ENTRY - unreserveTable - {}", client);
+        Table table = client.getTable();
+        if(table != null) {
+            client.setTable(null);
+        } else{
+            throw new TableException(String.format("Client %s is not registered at any table", client.getLogin()));
+        }
         tableRepository.save(table);
         clientRepository.save(client);
         log.trace("EXIT - unreserveTable");

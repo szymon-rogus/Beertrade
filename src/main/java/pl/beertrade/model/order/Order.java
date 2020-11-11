@@ -32,7 +32,7 @@ public class Order {
     private UUID id;
 
     @NotNull
-    private String orderViewId;
+    private Integer orderViewId;
 
     @NotNull
     private Date boughtDate;
@@ -49,7 +49,7 @@ public class Order {
     private Integer amount;
 
     @NotNull
-    @OneToOne
+    @ManyToOne
     private Client client;
 
     @NotNull
@@ -76,7 +76,7 @@ public class Order {
                         .format(DateTimeFormatter.ofPattern("HH:mm")))
                 .beerName(product.getName())
                 .amount(amount)
-                .tableNumber(client.getTableNumber())
+                .tableNumber(client.getTable().getTableNumber())
                 .userLogin(client.getLogin())
                 .build();
     }

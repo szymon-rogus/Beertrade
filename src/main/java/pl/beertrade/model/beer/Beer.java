@@ -3,6 +3,7 @@ package pl.beertrade.model.beer;
 import lombok.*;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.annotations.GenericGenerator;
+import pl.beertrade.model.beer.enums.ProductState;
 import pl.beertrade.model.beer.jto.ManageProductsListItemJTO;
 import pl.beertrade.model.beer.jto.ProductDetailsJTO;
 import pl.beertrade.model.beer.jto.ProductListItemJTO;
@@ -55,7 +56,7 @@ public class Beer {
 
     @NotNull
     @Setter
-    private boolean onStore;
+    private ProductState productState;
 
     private byte[] photo;
 
@@ -90,7 +91,6 @@ public class Beer {
                 .name(name)
                 .type(type)
                 .description(description)
-                .onStore(onStore)
                 .build();
     }
 
@@ -101,7 +101,7 @@ public class Beer {
                 .type(type)
                 .alcoholPercentage(alcoholPercentage)
                 .encodedPhoto(Base64.encodeBase64String(photo))
-                .onStore(onStore)
+                .productState(productState)
                 .build();
     }
 

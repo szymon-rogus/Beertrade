@@ -17,7 +17,7 @@ public class BartenderOrderProductJTO {
 
     @JsonProperty
     @NonNull
-    private String orderViewId;
+    private Integer orderViewId;
 
     @JsonProperty
     @NonNull

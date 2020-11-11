@@ -3,6 +3,7 @@ package pl.beertrade.model.beer.jto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.NonNull;
+import pl.beertrade.model.beer.enums.ProductState;
 
 import java.util.UUID;
 
@@ -30,6 +31,6 @@ public class ManageProductsListItemJTO {
 
     @JsonProperty
     @NonNull
-    private final boolean onStore;
+    private final ProductState productState;
 
 }
