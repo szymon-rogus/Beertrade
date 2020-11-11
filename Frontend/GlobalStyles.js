@@ -4,7 +4,7 @@ import { bgColor, fontColor } from "./src/Login/LoginPageStyles";
 export const globalStyles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: bgColor,
+    backgroundColor: 'white',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
@@ -24,7 +24,7 @@ export const globalStyles = StyleSheet.create({
     margin: 15,
     height: 40,
     width: 300,
-    borderColor: 'white',
+    borderColor: 'darkblue',
     borderWidth: 1
   },
 })

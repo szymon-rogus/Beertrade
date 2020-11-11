@@ -2,7 +2,7 @@ package pl.beertrade.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.beertrade.exception.UserNotFoundException;
+import pl.beertrade.exception.NotFoundException;
 import pl.beertrade.model.user.Client;
 import pl.beertrade.repositories.ClientRepository;
 import pl.beertrade.util.Decoder;
@@ -36,7 +36,7 @@ public class ForgottenPasswordService {
 
     public void sendEmailWithPassword(@NotNull String email) throws Exception {
         final Optional<Client> clientOptional = clientRepository.findByEmail(email);
-        final Client client = clientOptional.orElseThrow(() -> new UserNotFoundException(String.format("User with email: %s not found", email)));
+        final Client client = clientOptional.orElseThrow(() -> new NotFoundException(Client.class.getName(), email));
         final String randomPassword = generateRandomPassword();
         client.setPassword(Decoder.encodeBcrypt(randomPassword));
         clientRepository.save(client);

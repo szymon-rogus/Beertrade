@@ -26,9 +26,10 @@ public class ManageProductsListItemJTO {
 
     @JsonProperty
     @NonNull
-    private final Integer ibu;
-
-    @NonNull
     private final String encodedPhoto;
+
+    @JsonProperty
+    @NonNull
+    private final boolean onStore;
 
 }
