@@ -37,7 +37,6 @@ export const styles = StyleSheet.create({
   listImage: {
     width: 50,
     height: 100,
-    resizeMode: Image.resizeMode.contain
   },
   listAttributes: {
     fontSize: 14,

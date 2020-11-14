@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, TextInput} from 'react-native';
-import {http, setAuthorizationToken} from '../../Global.js'
-import {styles, fontColor, bgColor} from './LoginPageStyles.js'
-import {globalStyles} from "../../GlobalStyles";
+import React, { Component } from 'react';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { http, setAuthorizationToken } from '../../Global.js'
+import { bgColor, fontColor, styles } from './LoginPageStyles.js'
+import { globalStyles } from "../../GlobalStyles";
 
 
 export default class LoginPage extends Component {
@@ -25,14 +25,14 @@ export default class LoginPage extends Component {
           }).then((response) => {
               setAuthorizationToken(response.data.token);
               this.setState({ loggedIn: true });
-              var role = response.data.role;
-              if (role == 'pl.beertrade.model.user.Bartender') {
+              let role = response.data.role;
+              if (role === 'pl.beertrade.model.user.Bartender') {
                   this.props.navigation.navigate('bartenderOrder');
               } else {
                   this.props.navigation.navigate('prices');
               }
           })
-          .catch(err => alert("Invalid login or password!"));
+          .catch(_ => alert("Invalid login or password!"));
       }
   }
 

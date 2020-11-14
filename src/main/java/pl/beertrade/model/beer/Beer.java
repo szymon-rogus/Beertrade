@@ -56,6 +56,7 @@ public class Beer {
 
     @NotNull
     @Setter
+    @Enumerated(EnumType.STRING)
     private ProductState productState;
 
     private byte[] photo;

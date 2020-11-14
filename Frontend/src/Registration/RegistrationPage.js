@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, TextInput} from 'react-native';
-import {http} from '../../Global.js'
-import {styles, fontColor, bgColor} from './RegistrationPageStyles.js'
-import {globalStyles} from "../../GlobalStyles";
+import React, { Component } from 'react';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { http } from '../../Global.js'
+import { bgColor, fontColor, styles } from './RegistrationPageStyles.js'
+import { globalStyles } from "../../GlobalStyles";
 import base64 from 'react-native-base64'
 
 export default class RegistrationPage extends Component {
@@ -17,8 +17,8 @@ export default class RegistrationPage extends Component {
   }
 
   handleRegister = () => {
-    if (this.state.login != '' && this.state.password != '' && this.state.firstName != '' &&
-      this.state.lastName != '' && this.state.email != '' && this.state.phoneNumber != '') {
+    if (this.state.login !== '' && this.state.password !== '' && this.state.firstName !== '' &&
+      this.state.lastName !== '' && this.state.email !== '' && this.state.phoneNumber !== '') {
       http.post('/register', {
         login: base64.encode(this.state.login),
         password: base64.encode(this.state.password),
@@ -27,7 +27,7 @@ export default class RegistrationPage extends Component {
         email: base64.encode(this.state.email),
         phoneNumber: base64.encode(this.state.phoneNumber)
       })
-        .catch(err => alert("Server is not responding!"));
+        .catch(_ => alert("Server is not responding!"));
       this.props.navigation.navigate('login');
     }
   }

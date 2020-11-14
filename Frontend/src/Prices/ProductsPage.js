@@ -1,9 +1,8 @@
-import React, {Component, useState} from 'react';
-import {FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {globalStyles} from "../../GlobalStyles";
-import {http} from '../../Global'
-import {styles} from './ProductsPageStyles'
-import {listStyles} from "../../ListStyles";
+import React, { Component } from 'react';
+import { FlatList, SafeAreaView, Text, TouchableOpacity } from "react-native";
+import { globalStyles } from "../../GlobalStyles";
+import { http } from '../../Global'
+import { listStyles } from "../../ListStyles";
 
 
 const Item = ({item, onPress, style}) => (
@@ -36,7 +35,7 @@ export default class ProductsPage extends Component {
           this.orderProduct(item.id)
           alert("Product ordered.")
         }}
-        style={ listStyles.item }
+        style={listStyles.item}
       />
     );
   };
