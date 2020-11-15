@@ -1,14 +1,14 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from "react-native";
 
-export const fontColor = 'white'
-export const bgColor = 'darkorchid'
+export const fontColor = "white";
+export const bgColor = "darkorchid";
 
 export const styles = StyleSheet.create({
   registerPageButton: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     elevation: 8,
     paddingVertical: 10,
     paddingHorizontal: 12,
-    margin: 15
-  }
-})
+    margin: 15,
+  },
+});

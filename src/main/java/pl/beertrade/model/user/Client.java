@@ -33,7 +33,7 @@ public class Client extends User {
     @Builder
     public Client(@NotNull String login, @NotNull String password,
                   @NotNull String firstName, @NotNull String lastName, @NotNull String email,
-                  @NotNull String phoneNumber, List<Order> actualOrdersList) {
+                  @NotNull String phoneNumber, List<Order> actualOrdersList, List<HistoricalOrder> historicalOrders) {
         this.setLogin(login);
         this.setPassword(password);
         this.setFirstName(firstName);
@@ -41,5 +41,6 @@ public class Client extends User {
         this.setEmail(email);
         this.setPhoneNumber(phoneNumber);
         this.actualOrdersList = actualOrdersList;
+        this.historicalOrdersList = historicalOrders;
     }
 }

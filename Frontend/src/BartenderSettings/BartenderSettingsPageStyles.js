@@ -1,46 +1,50 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  title: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 28
+  clearSessionButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 22,
+    backgroundColor: "darkblue",
+    width: 130,
+    height: 50,
   },
-  topBar: {
-    flex: 0.15,
-    backgroundColor: 'darkblue',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+  clearSessionButtonDisabled: {
+    paddingVertical: 14,
+    paddingHorizontal: 22,
+    backgroundColor: "grey",
+    width: 130,
+    height: 50,
   },
-  titleBox: {
-    flex: 0.5,
-    margin: 15,
-    backgroundColor: 'darkblue',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center'
+  loadingPageStyle: {
+    flex: 0.9,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  navIconsBox: {
-    flex: 0.5,
-    margin: 15,
-    backgroundColor: 'darkblue',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center'
+  settingsPageContainer: {
+    flex: 0.9,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  listTitle: {
-    fontSize: 18,
-    color: 'black',
-    marginBottom: 12
+  sessionText: {
+    fontSize: 28,
+    marginBottom: 15,
+    color: "black",
   },
-  listImage: {
-    width: 50,
-    height: 100,
-    resizeMode: Image.resizeMode.contain
+  sessionSwitchSelector: {
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 15,
   },
-  listAttributes: {
-    fontSize: 14,
-    color: 'black'
-  }
+  clearSessionButtonText: {
+    color: "white",
+  },
 });
+
+export const topBarIconStyle = (margin) =>
+  StyleSheet.create({
+    style: {
+      margin: margin,
+    },
+  });

@@ -1,11 +1,19 @@
-import React, { Component } from 'react';
-import { FlatList, SafeAreaView, Text, TouchableOpacity } from "react-native";
+import React, { Component, useState } from "react";
+import {
+  FlatList,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { globalStyles } from "../../GlobalStyles";
-import { http } from '../../Global'
+import { http } from "../../Global";
+import { styles } from "./ProductsPageStyles";
 import { listStyles } from "../../ListStyles";
 
-
-const Item = ({item, onPress, style}) => (
+const Item = ({ item, onPress, style }) => (
   <TouchableOpacity onPress={onPress} style={[style]}>
     <Text style={listStyles.itemText}>{item.name}</Text>
     <Text style={listStyles.itemText}> Buy for {item.price} PLN </Text>
@@ -17,23 +25,22 @@ export default class ProductsPage extends Component {
     super(props);
     this.state = {
       selectedId: null,
-      products: []
+      products: [],
     };
-
   }
 
   orderProduct(id) {
-    http.post('/product/order/' + id).catch(err => console.log(err));
+    http.post("/product/order/" + id).catch((err) => console.log(err));
   }
 
-  renderItem = ({item}) => {
+  renderItem = ({ item }) => {
     return (
       <Item
         item={item}
         onPress={() => {
-          this.setState({selectedId: item.id})
-          this.orderProduct(item.id)
-          alert("Product ordered.")
+          this.setState({ selectedId: item.id });
+          this.orderProduct(item.id);
+          alert("Product ordered.");
         }}
         style={listStyles.item}
       />
@@ -41,21 +48,26 @@ export default class ProductsPage extends Component {
   };
 
   setProducts(context) {
-    http.get('/product/onStore').then(response => response.data).then(data => context.setState({products: data}))
-      .catch(err => console.log(err));
+    http
+      .get("/product/onStore")
+      .then((response) => response.data)
+      .then((data) => context.setState({ products: data }))
+      .catch((err) => console.log(err));
   }
 
   componentDidMount() {
-    this.setProducts(this)
-    this.interval = setInterval((
+    this.setProducts(this);
+    this.interval = setInterval(
       function (self) {
-        self.setProducts(self)
-      }
-    ), 5000, this);
+        self.setProducts(self);
+      },
+      5000,
+      this
+    );
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval)
+    clearInterval(this.interval);
   }
 
   render() {
