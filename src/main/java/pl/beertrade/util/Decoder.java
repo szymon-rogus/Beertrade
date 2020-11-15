@@ -22,10 +22,7 @@ public class Decoder {
                 .email(decode(user.getEmail()))
                 .phoneNumber(decode(user.getPhoneNumber()))
                 .actualOrdersList(new ArrayList<>())
-<<<<<<< Updated upstream
-=======
                 .historicalOrders(new ArrayList<>())
->>>>>>> Stashed changes
                 .build();
     }
 

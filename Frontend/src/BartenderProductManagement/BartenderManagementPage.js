@@ -10,7 +10,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 import { ProductListItem } from "./ProductListItem.js";
 
-export default class BartenderSettingsPage extends Component {
+export default class BartenderManagementPage extends Component {
   state = {
     enabledItems: [],
     disabledItems: [],

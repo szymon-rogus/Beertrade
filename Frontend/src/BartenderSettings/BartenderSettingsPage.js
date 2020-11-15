@@ -6,9 +6,8 @@ import { globalStyles } from "../../GlobalStyles.js";
 import { styles, topBarIconStyle } from "./BartenderSettingsPageStyles.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
-import MaterialCommunityIcons from "react-native-vector-icons";
 
-export default class BartenderManagementPage extends Component {
+export default class BartenderSettingsPage extends Component {
   state = {
     isSessionDisabled: null,
     isLoading: true,
