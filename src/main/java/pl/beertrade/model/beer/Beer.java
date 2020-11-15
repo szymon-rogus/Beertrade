@@ -78,6 +78,8 @@ public class Beer {
                 .type(type)
                 .id(id)
                 .price(mockPrice())
+                .ibu(ibu)
+                .alcoholPercentage(alcoholPercentage)
                 .build();
     }
 
