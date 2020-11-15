@@ -23,7 +23,7 @@ export default class BartenderSettingsPage extends Component {
       .get("/session")
       .then((response) => {
         var sessionState = response.data;
-        var isSessionDisabled = sessionState == "START" ? false : true;
+        var isSessionDisabled = sessionState === "START" ? false : true;
         this.setState({
           isSessionDisabled: isSessionDisabled,
           isLoading: false,
@@ -34,7 +34,7 @@ export default class BartenderSettingsPage extends Component {
 
   changeSessionState = (state) => {
     this.postSessionChange(state);
-    if (state == "enable") {
+    if (state === "enable") {
       this.setState({
         isSessionDisabled: false,
       });

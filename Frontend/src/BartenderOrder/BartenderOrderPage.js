@@ -125,7 +125,7 @@ export default class BartenderOrderPage extends Component {
         lastOrderPresent: true,
       });
     }
-    var newLastOrder = actualItems.filter((item) => item.id == id)[0];
+    var newLastOrder = actualItems.filter((item) => item.id === id)[0];
     actualItems = actualItems.filter((item) => item.id !== newLastOrder.id);
     actualItems.unshift(newLastOrder);
     return [actualItems, newLastOrder, deletedOrders];
@@ -176,7 +176,7 @@ export default class BartenderOrderPage extends Component {
 
   renderItem = ({ item }) => {
     var shadowLayerValue =
-      this.state.lastOrderPresent && item == this.state.lastOrder ? (
+      this.state.lastOrderPresent && item === this.state.lastOrder ? (
         <View style={styles.lastOrderLayer}>
           <Ionicons
             name="md-refresh"
