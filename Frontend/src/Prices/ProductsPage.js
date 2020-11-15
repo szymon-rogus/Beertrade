@@ -97,7 +97,7 @@ export default class ProductsPage extends Component {
     this.setState({searchText: searchText});
 
     let filteredData = this.state.products.filter(function (item) {
-      return item.name.substring(0, searchText.length).toLowerCase() === searchText
+      return item.name.substring(0, searchText.length).toLowerCase() === searchText.toLowerCase()
     });
 
     this.setState({filteredProducts: filteredData});
