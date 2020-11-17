@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { http, TopBar } from "../../Global.js";
 import { View, Text, TouchableOpacity } from "react-native";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { globalStyles } from "../../GlobalStyles.js";
-import { styles, topBarIconStyle } from "./BartenderSettingsPageStyles.js";
+import { globalStyles, topBarIconStyle } from "../../GlobalStyles.js";
+import { styles } from "./BartenderSettingsPageStyles.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 
@@ -22,8 +22,8 @@ export default class BartenderSettingsPage extends Component {
     http
       .get("/session")
       .then((response) => {
-        var sessionState = response.data;
-        var isSessionDisabled = sessionState === "START" ? false : true;
+        const sessionState = response.data;
+        const isSessionDisabled = sessionState === "START" ? false : true;
         this.setState({
           isSessionDisabled: isSessionDisabled,
           isLoading: false,
@@ -91,8 +91,8 @@ export default class BartenderSettingsPage extends Component {
         </View>
       );
     } else {
-      var initialSelectorValue = this.state.isSessionDisabled ? 1 : 0;
-      var clearSessionButtonStyle = this.state.isSessionDisabled
+      const initialSelectorValue = this.state.isSessionDisabled ? 1 : 0;
+      const clearSessionButtonStyle = this.state.isSessionDisabled
         ? styles.clearSessionButton
         : styles.clearSessionButtonDisabled;
       return (
@@ -110,8 +110,8 @@ export default class BartenderSettingsPage extends Component {
               borderColor="black"
               hasPadding
               options={[
-                { label: "Enabled", value: "enable" },
-                { label: "Disabled", value: "disable" },
+                {label: "Enabled", value: "enable"},
+                {label: "Disabled", value: "disable"},
               ]}
             />
             <TouchableOpacity

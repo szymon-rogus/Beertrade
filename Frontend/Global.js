@@ -4,7 +4,7 @@ import { globalStyles } from "./GlobalStyles.js";
 import React from "react";
 import { View, Text } from "react-native";
 
-export var http = axios.create({
+export const http = axios.create({
   baseURL: "http://10.0.2.2:8080/",
   timeout: 1000,
   headers: {
@@ -21,11 +21,11 @@ export var http = axios.create({
 
 export default stack = createStackNavigator();
 
-export var setAuthorizationToken = (token) => {
+export const setAuthorizationToken = (token) => {
   http.defaults.headers.common["Authorization"] = "Bearer " + token;
 };
 
-export const TopBar = ({ title, icons }) => (
+export const TopBar = ({title, icons}) => (
   <View style={globalStyles.topBar}>
     <View style={globalStyles.titleBox}>
       <Text style={globalStyles.topBarTitle}>{title}</Text>

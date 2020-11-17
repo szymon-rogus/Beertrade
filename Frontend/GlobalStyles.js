@@ -1,8 +1,6 @@
 import { StyleSheet } from "react-native";
-import { bgColor, fontColor } from "./src/Login/LoginPageStyles";
+import { fontColor } from "./src/Login/LoginPageStyles";
 
-const tobBarColor = "darkblue";
-const topBarTitleColor = "white";
 
 export const globalStyles = StyleSheet.create({
   mainContainer: {
@@ -32,12 +30,12 @@ export const globalStyles = StyleSheet.create({
   },
   topBarTitle: {
     textAlign: "center",
-    color: topBarTitleColor,
+    color: "white",
     fontSize: 26,
   },
   topBar: {
     flex: 0.1,
-    backgroundColor: tobBarColor,
+    backgroundColor: "darkblue",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -45,7 +43,7 @@ export const globalStyles = StyleSheet.create({
   titleBox: {
     flex: 0.6,
     margin: 15,
-    backgroundColor: tobBarColor,
+    backgroundColor: "darkblue",
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -53,9 +51,25 @@ export const globalStyles = StyleSheet.create({
   navIconsBox: {
     flex: 0.4,
     margin: 15,
-    backgroundColor: tobBarColor,
+    backgroundColor: "darkblue",
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
   },
 });
+
+export const topBarIconStyle = (margin) =>
+  StyleSheet.create({
+    style: {
+      margin: margin,
+    },
+  });
+
+export const listItemAttributeTextStyle = (marginLeft) =>
+  StyleSheet.create({
+    style: {
+      fontSize: 14,
+      color: "black",
+      marginLeft: marginLeft,
+    },
+  });

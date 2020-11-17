@@ -4,12 +4,8 @@ import { View, Text, FlatList } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { globalStyles } from "../../GlobalStyles.js";
-import {
-  styles,
-  statisticsValueStyle,
-  topBarIconStyle,
-} from "./BartenderOrderPageStyles.js";
+import { globalStyles, topBarIconStyle } from "../../GlobalStyles.js";
+import { styles, statisticsValueStyle } from "./BartenderOrderPageStyles.js";
 import * as Progress from "react-native-progress";
 import OrderItem from "./OrderItem.js";
 
@@ -24,6 +20,7 @@ export default class BartenderOrderPage extends Component {
     lastOrder: null,
     deletedOrders: [],
     lastOrderExecuted: false,
+    orderBarColor: "blue",
   };
 
   constructor(props) {
@@ -36,7 +33,7 @@ export default class BartenderOrderPage extends Component {
     http
       .get("/order/waiting")
       .then((response) => {
-        var fetchedList = [];
+        let fetchedList = [];
         fetchedList.push(...response.data);
         this.state.deletedOrders.forEach((deletedId) => {
           fetchedList = fetchedList.filter((item) => item.id !== deletedId);
@@ -55,7 +52,7 @@ export default class BartenderOrderPage extends Component {
         });
         if (fetchedList.length > this.state.maxOrders) {
           this.setState({
-            maxOrders: fetchedList.length,
+            orderBarColor: "red",
           });
         }
       })
@@ -73,13 +70,13 @@ export default class BartenderOrderPage extends Component {
 
   sendRequestExecuteItem = (id) => {
     if (!this.state.lastOrderPresent || this.state.lastOrder.id !== id) {
-      var itemsToUpdate = this.sendRequestAndPrepareListForUpdate(
+      const itemsToUpdate = this.sendRequestAndPrepareListForUpdate(
         "/order/execute/",
         id
       );
-      var actualItems = itemsToUpdate[0];
-      var newLastOrder = itemsToUpdate[1];
-      var deletedOrders = itemsToUpdate[2];
+      const actualItems = itemsToUpdate[0];
+      const newLastOrder = itemsToUpdate[1];
+      const deletedOrders = itemsToUpdate[2];
       this.setState({
         items: actualItems,
         done: this.state.done + 1,
@@ -93,13 +90,13 @@ export default class BartenderOrderPage extends Component {
 
   sendRequestCancelItem = (id) => {
     if (!this.state.lastOrderPresent || this.state.lastOrder.id !== id) {
-      var itemsToUpdate = this.sendRequestAndPrepareListForUpdate(
+      const itemsToUpdate = this.sendRequestAndPrepareListForUpdate(
         "/order/cancel/",
         id
       );
-      var actualItems = itemsToUpdate[0];
-      var newLastOrder = itemsToUpdate[1];
-      var deletedOrders = itemsToUpdate[2];
+      const actualItems = itemsToUpdate[0];
+      const newLastOrder = itemsToUpdate[1];
+      const deletedOrders = itemsToUpdate[2];
       this.setState({
         items: actualItems,
         cancelled: this.state.cancelled + 1,
@@ -113,8 +110,8 @@ export default class BartenderOrderPage extends Component {
 
   sendRequestAndPrepareListForUpdate = (path, id) => {
     this.doPost(path, id);
-    var actualItems = this.state.items;
-    var deletedOrders = this.state.deletedOrders;
+    let actualItems = this.state.items;
+    let deletedOrders = this.state.deletedOrders;
     if (this.state.lastOrderPresent) {
       actualItems = actualItems.filter(
         (item) => item.id !== this.state.lastOrder.id
@@ -125,8 +122,13 @@ export default class BartenderOrderPage extends Component {
         lastOrderPresent: true,
       });
     }
-    var newLastOrder = actualItems.filter((item) => item.id === id)[0];
+    let newLastOrder = actualItems.filter((item) => item.id === id)[0];
     actualItems = actualItems.filter((item) => item.id !== newLastOrder.id);
+    if (actualItems.length <= this.state.maxOrders) {
+      this.setState({
+        orderBarColor: "blue",
+      });
+    }
     actualItems.unshift(newLastOrder);
     return [actualItems, newLastOrder, deletedOrders];
   };
@@ -144,7 +146,7 @@ export default class BartenderOrderPage extends Component {
     }
     if (this.state.waiting + 1 > this.state.maxOrders) {
       this.setState({
-        maxOrders: this.state.maxOrders + 1,
+        orderBarColor: "red",
       });
     }
     this.setState({
@@ -174,8 +176,8 @@ export default class BartenderOrderPage extends Component {
     clearInterval(this.updateInterval);
   }
 
-  renderItem = ({ item }) => {
-    var shadowLayerValue =
+  renderItem = ({item}) => {
+    const shadowLayerValue =
       this.state.lastOrderPresent && item === this.state.lastOrder ? (
         <View style={styles.lastOrderLayer}>
           <Ionicons
@@ -196,7 +198,7 @@ export default class BartenderOrderPage extends Component {
     );
   };
 
-  StatisticsView = ({ label, value, paddingLeft }) => (
+  StatisticsView = ({label, value, paddingLeft}) => (
     <View style={styles.orderStatsInsideBox}>
       <Text style={styles.statisticsLabel}>{label}</Text>
       <Text style={statisticsValueStyle(paddingLeft).style}>{value}</Text>
@@ -247,6 +249,7 @@ export default class BartenderOrderPage extends Component {
             width={320}
             height={10}
             animated={true}
+            color={this.state.orderBarColor}
           />
           <this.StatisticsView
             label={"In queue"}

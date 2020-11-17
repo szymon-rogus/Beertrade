@@ -41,10 +41,3 @@ export const styles = StyleSheet.create({
     color: "white",
   },
 });
-
-export const topBarIconStyle = (margin) =>
-  StyleSheet.create({
-    style: {
-      margin: margin,
-    },
-  });

@@ -45,10 +45,3 @@ export const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
 });
-
-export const topBarIconStyle = (margin) =>
-  StyleSheet.create({
-    style: {
-      margin: margin,
-    },
-  });

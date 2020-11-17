@@ -2,15 +2,13 @@ import React from "react";
 import { View, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { listStyles } from "../../ListStyles.js";
-import {
-  styles,
-  listItemAttributeTextStyle,
-} from "./BartenderOrderPageStyles.js";
+import { styles } from "./BartenderOrderPageStyles.js";
+import { listItemAttributeTextStyle } from "../../GlobalStyles.js"
 
 const orderItemIconSize = 40;
 const orderItemIconColor = "black";
 
-export default OrderItem = ({ item, executeFunc, cancelFunc, shadowLayer }) => (
+export default OrderItem = ({item, executeFunc, cancelFunc, shadowLayer}) => (
   <View style={listStyles.item}>
     {shadowLayer}
     <View style={styles.listItemAttributeColumn}>
@@ -25,7 +23,7 @@ export default OrderItem = ({ item, executeFunc, cancelFunc, shadowLayer }) => (
     </View>
     <View style={styles.listItemIconsColumn}>
       <View style={styles.listItemOrderNumberRow}>
-        <Text style={styles.listItemCornerAttribute}>{item.orderViewId}</Text>
+        <Text style={styles.listItemStamp}>#{item.orderViewId}</Text>
       </View>
       <View style={styles.listItemIconRow}>
         <AntDesign
@@ -44,13 +42,13 @@ export default OrderItem = ({ item, executeFunc, cancelFunc, shadowLayer }) => (
         />
       </View>
       <View style={styles.listItemTimestampRow}>
-        <Text style={styles.listItemCornerAttribute}>{item.timeOrdered}</Text>
+        <Text style={styles.listItemStamp}>{item.timeOrdered}</Text>
       </View>
     </View>
   </View>
 );
 
-const ItemAttribute = ({ label, value, marginLeft }) => (
+const ItemAttribute = ({label, value, marginLeft}) => (
   <View style={listStyles.attributeView}>
     <Text style={listStyles.itemLabelText}>{label}</Text>
     <Text style={listItemAttributeTextStyle(marginLeft).style}>{value}</Text>

@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
   },
-  listItemCornerAttribute: {
+  listItemStamp: {
     fontSize: 16,
     color: "black",
   },
@@ -88,21 +88,5 @@ export const statisticsValueStyle = (paddingLeft) =>
       fontSize: 16,
       color: "black",
       paddingLeft: paddingLeft,
-    },
-  });
-
-export const topBarIconStyle = (margin) =>
-  StyleSheet.create({
-    style: {
-      margin: margin,
-    },
-  });
-
-export const listItemAttributeTextStyle = (marginLeft) =>
-  StyleSheet.create({
-    style: {
-      fontSize: 14,
-      color: "black",
-      marginLeft: marginLeft,
     },
   });
