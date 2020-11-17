@@ -69,7 +69,7 @@ public class OrderController {
         return bartenderStatistics;
     }
 
-    @GetMapping("/myOrders/")
+    @GetMapping("/myOrders")
     public List<ClientOrderProductJTO> getClientOrders() throws NotFoundException {
         return orderService.clientOrders(userContextProvider.getUserAsClient());
     }
