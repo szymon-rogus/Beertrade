@@ -6,9 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.beertrade.exception.NotFoundException;
 import pl.beertrade.model.order.enums.OrderState;
-import pl.beertrade.model.order.jto.BartenderOrderProductJTO;
-import pl.beertrade.model.order.jto.BartenderStatisticsJTO;
+import pl.beertrade.model.order.jto.Bartender.BartenderOrderProductJTO;
+import pl.beertrade.model.order.jto.Bartender.BartenderStatisticsJTO;
+import pl.beertrade.model.order.jto.Client.ClientOrderProductJTO;
 import pl.beertrade.services.OrderService;
+import pl.beertrade.util.UserContextProvider;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +22,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private UserContextProvider userContextProvider;
 
     @PostMapping("/cancel/{id}")
     public ResponseEntity<?> cancelOrder(@PathVariable UUID id) throws NotFoundException {
@@ -62,6 +67,11 @@ public class OrderController {
         final BartenderStatisticsJTO bartenderStatistics = orderService.getBartenderStatistics();
         log.trace("EXIT - getBartenderStatistics - {}", bartenderStatistics);
         return bartenderStatistics;
+    }
+
+    @GetMapping("/myOrders/")
+    public List<ClientOrderProductJTO> getClientOrders() throws NotFoundException {
+        return orderService.clientOrders(userContextProvider.getUserAsClient());
     }
 
 }

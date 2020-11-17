@@ -4,8 +4,9 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import pl.beertrade.model.beer.Beer;
 import pl.beertrade.model.order.enums.OrderState;
-import pl.beertrade.model.order.jto.BartenderOrderProductJTO;
+import pl.beertrade.model.order.jto.Bartender.BartenderOrderProductJTO;
 import pl.beertrade.model.beer.jto.OrderedProductListItemJTO;
+import pl.beertrade.model.order.jto.Client.ClientOrderProductJTO;
 import pl.beertrade.model.user.Client;
 
 import javax.persistence.*;
@@ -84,4 +85,15 @@ public class Order {
                 .build();
     }
 
+    public ClientOrderProductJTO toClientOrderProductJTO() {
+        return ClientOrderProductJTO.builder()
+                .id(id)
+                .orderViewId(orderViewId)
+                .timeOrdered(LocalDateTime.ofInstant(boughtDate.toInstant(), ZoneId.systemDefault())
+                        .toLocalTime()
+                        .format(DateTimeFormatter.ofPattern("HH:mm")))
+                .beerName(product.getName())
+                .amount(amount)
+                .build();
+    }
 }

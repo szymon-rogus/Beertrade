@@ -9,8 +9,10 @@ import pl.beertrade.model.beer.Beer;
 import pl.beertrade.model.beer.enums.ProductState;
 import pl.beertrade.model.order.Order;
 import pl.beertrade.model.order.enums.OrderState;
-import pl.beertrade.model.order.jto.BartenderOrderProductJTO;
-import pl.beertrade.model.order.jto.BartenderStatisticsJTO;
+import pl.beertrade.model.order.jto.Bartender.BartenderOrderProductJTO;
+import pl.beertrade.model.order.jto.Bartender.BartenderStatisticsJTO;
+import pl.beertrade.model.order.jto.Client.ClientOrderProductJTO;
+import pl.beertrade.model.user.Client;
 import pl.beertrade.repositories.OrderRepository;
 import pl.beertrade.repositories.ProductRepository;
 
@@ -94,4 +96,14 @@ public class OrderService {
         });
     }
 
+    public List<ClientOrderProductJTO> clientOrders(Client client) {
+        log.trace("ENTRY - getClientOrders");
+        final List<ClientOrderProductJTO> orderedProducts = orderRepository.findByClientOrderByBoughtDateAsc(client)
+                .stream()
+                .map(Order::toClientOrderProductJTO)
+                .collect(Collectors.toList());
+        log.trace("EXIT - getClientOrders - {}", orderedProducts);
+        return orderedProducts;
+
+    }
 }
