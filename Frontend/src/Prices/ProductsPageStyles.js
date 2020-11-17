@@ -1,4 +1,4 @@
-import {StatusBar, StyleSheet} from 'react-native';
+import { StatusBar, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -10,13 +10,12 @@ export const styles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: "row",
   },
   title: {
     fontSize: 32,
   },
   price: {
     fontSize: 32,
-
   },
 });

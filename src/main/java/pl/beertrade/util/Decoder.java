@@ -22,6 +22,7 @@ public class Decoder {
                 .email(decode(user.getEmail()))
                 .phoneNumber(decode(user.getPhoneNumber()))
                 .actualOrdersList(new ArrayList<>())
+                .historicalOrders(new ArrayList<>())
                 .build();
     }
 
