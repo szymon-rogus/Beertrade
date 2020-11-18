@@ -2,8 +2,8 @@ package pl.beertrade.services;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.beertrade.services.prices.PricesModifier;
-import pl.beertrade.services.prices.PricesModifierImpl;
+//import pl.beertrade.services.prices.PricesModifier;
+//import pl.beertrade.services.prices.PricesModifierImpl;
 
 import java.util.Properties;
 
@@ -21,9 +21,9 @@ public class ServicesConfiguration {
         return prop;
     }
 
-    @Bean
+    /*@Bean
     public PricesModifier pricesModifier() {
         return new PricesModifierImpl();
-    }
+    }*/
 
 }

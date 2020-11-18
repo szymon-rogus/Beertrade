@@ -5,8 +5,8 @@ import { http } from '../../Global'
 import { styles } from "./ProductsPageStyles";
 import { AntDesign, FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
+const Item = ({item, onPress, navigation}) => (
 
-const Item = ({item, onPress}) => (
     <View style={styles.item}>
         <View style={{
             flex: 0.3,
@@ -32,7 +32,10 @@ const Item = ({item, onPress}) => (
             alignItems: 'flex-end'
         }}>
             <TouchableOpacity>
-              <Ionicons name="ios-information-circle" size={24} color="darkblue" style={{marginBottom: 20, marginTop: 6}}/>
+              <Ionicons name="ios-information-circle" size={24} color="darkblue" style={{marginBottom: 20, marginTop: 6}}
+              onPress={() => navigation.navigate('productDetails', {
+                itemId: item.id
+              })}/>
             </TouchableOpacity>
             <Text style={styles.attributes}>{item.price} PLN</Text>
             <TouchableOpacity style={styles.orderButton} onPress={onPress}>
@@ -66,6 +69,7 @@ export default class ProductsPage extends Component {
           this.orderProduct(item.id);
           alert("Product ordered.");
         }}
+        navigation={this.props.navigation}
       />
     );
   };
