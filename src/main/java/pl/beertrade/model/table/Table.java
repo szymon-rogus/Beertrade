@@ -2,6 +2,7 @@ package pl.beertrade.model.table;
 
 import lombok.*;
 import pl.beertrade.exception.TableException;
+import pl.beertrade.model.table.jto.TableClientViewJTO;
 import pl.beertrade.model.user.Client;
 
 import javax.persistence.*;
@@ -35,5 +36,14 @@ public class Table {
             throw new TableException(String.format("Client %s is already registered in the table %d", client.getLogin(), tableNumber));
         }
         actualClients.add(client);
+    }
+
+    public TableClientViewJTO toTableClientViewJTO() {
+        final int occupiedSeats = actualClients.size();
+        return TableClientViewJTO.builder()
+                .tableNumber(getTableNumber())
+                .seats(getSeats())
+                .occupiedSeats(occupiedSeats)
+                .build();
     }
 }

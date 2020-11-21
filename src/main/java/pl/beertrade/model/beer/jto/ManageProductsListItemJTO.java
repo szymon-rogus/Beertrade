@@ -26,7 +26,6 @@ public class ManageProductsListItemJTO {
     private final double alcoholPercentage;
 
     @JsonProperty
-    @NonNull
     private final String encodedPhoto;
 
     @JsonProperty

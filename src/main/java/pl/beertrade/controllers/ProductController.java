@@ -46,9 +46,9 @@ public class ProductController {
     }
 
     @PostMapping("/state/{id}/{state}")
-    public ManageProductsListItemJTO enableProduct(@PathVariable UUID id, @PathVariable String state) throws NotFoundException {
+    public ManageProductsListItemJTO setProductState(@PathVariable UUID id, @PathVariable String state) throws NotFoundException {
         log.trace("ENTRY - enableProduct");
-        final ManageProductsListItemJTO manageProductsListItem = productService.setProductOnStore(id, state)
+        final ManageProductsListItemJTO manageProductsListItem = productService.setProductState(id, state)
                 .toManageProductsListItemJTO();
         log.trace("EXIT - enableProduct - {}", manageProductsListItem);
         return manageProductsListItem;

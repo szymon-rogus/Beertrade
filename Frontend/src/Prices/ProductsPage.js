@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
-import { FlatList, SafeAreaView, Text, TouchableOpacity } from "react-native";
+import React, { Component } from "react";
+import { FlatList, SafeAreaView, Text, TouchableOpacity, View, } from "react-native";
 import { globalStyles } from "../../GlobalStyles";
-import { http } from '../../Global'
+import { http } from "../../Global";
 import { listStyles } from "../../ListStyles";
+import { tableStyles } from "./TableStyles"
+import { ChooseTableBar } from "./ChooseTableBar"
+
 
 
 const Item = ({item, onPress, style}) => (
@@ -17,13 +20,13 @@ export default class ProductsPage extends Component {
     super(props);
     this.state = {
       selectedId: null,
-      products: []
+      products: [],
+      isModalVisible: false,
     };
-
   }
 
   orderProduct(id) {
-    http.post('/product/order/' + id).catch(err => console.log(err));
+    http.post("/product/order/" + id).catch((err) => console.log(err));
   }
 
   renderItem = ({item}) => {
@@ -31,9 +34,9 @@ export default class ProductsPage extends Component {
       <Item
         item={item}
         onPress={() => {
-          this.setState({selectedId: item.id})
-          this.orderProduct(item.id)
-          alert("Product ordered.")
+          this.setState({selectedId: item.id});
+          this.orderProduct(item.id);
+          alert("Product ordered.");
         }}
         style={listStyles.item}
       />
@@ -41,26 +44,39 @@ export default class ProductsPage extends Component {
   };
 
   setProducts(context) {
-    http.get('/product/onStore').then(response => response.data).then(data => context.setState({products: data}))
-      .catch(err => console.log(err));
+    http
+      .get("/product/onStore")
+      .then((response) => response.data)
+      .then((data) => context.setState({products: data}))
+      .catch((err) => console.log(err));
   }
 
   componentDidMount() {
-    this.setProducts(this)
-    this.interval = setInterval((
+    this.setProducts(this);
+    this.interval = setInterval(
       function (self) {
-        self.setProducts(self)
-      }
-    ), 5000, this);
+        self.setProducts(self);
+      },
+      5000,
+      this
+    );
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval)
+    clearInterval(this.interval);
   }
 
   render() {
+    let navBar = tableStyles("darkblue", 28)
+
     return (
       <SafeAreaView style={globalStyles.mainContainer}>
+        <View style={navBar.topBar}>
+          <View style={navBar.titleBox}>
+            <Text style={navBar.title}>Products</Text>
+          </View>
+        </View>
+        <ChooseTableBar/>
         <FlatList
           data={this.state.products}
           renderItem={this.renderItem}

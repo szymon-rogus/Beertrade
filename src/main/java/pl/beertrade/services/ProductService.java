@@ -81,6 +81,7 @@ public class ProductService {
         log.trace("ENTRY - getManageRemoveProductsList");
         final List<ManageProductsListItemJTO> manageProductList = productRepository.findAll()
                 .stream()
+                .filter(beer -> !beer.getProductState().equals(ProductState.ARCHIVED))
                 .map(Beer::toManageProductsListItemJTO)
                 .collect(Collectors.toList());
         log.trace("EXIT - getManageRemoveProductsList - {}", manageProductList);
@@ -97,7 +98,7 @@ public class ProductService {
         return productDetailsJTO;
     }
 
-    public Beer setProductOnStore(UUID id, String state) throws NotFoundException {
+    public Beer setProductState(UUID id, String state) throws NotFoundException {
         log.trace("ENTRY - setProductOnStore - {} {}", id, state);
         final Optional<Beer> productOptional = productRepository.findById(id);
         final Beer product = productOptional.orElseThrow(() ->

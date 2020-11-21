@@ -26,10 +26,11 @@ public class TableService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public List<TableClientViewJTO> getTableList() {
+    public List<TableClientViewJTO> getReservableTableList(Client userAsClient) {
         log.trace("ENTRY - getTableList");
         final List<Table> tables = tableRepository.findAll();
         final List<TableClientViewJTO> tableClientViewJTOList = tables.stream()
+                .filter(table -> table != userAsClient.getTable())
                 .map(TableAssembler::toTableClientViewJTO)
                 .collect(Collectors.toList());
         log.trace("EXIT - getTableList - {}", tableClientViewJTOList);
