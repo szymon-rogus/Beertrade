@@ -31,7 +31,7 @@ export const globalStyles = StyleSheet.create({
   topBarTitle: {
     textAlign: "center",
     color: "white",
-    fontSize: 20,
+    fontSize: 26,
   },
   topBar: {
     flex: 0.1,
