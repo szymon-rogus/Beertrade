@@ -1,33 +1,41 @@
-import {StatusBar, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const detailStyles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    backgroundColor: "white",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   titleContainer: {
+    flex: 0.1,
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    margin: 10,
   },
   title: {
-    fontSize: 36,
+    fontSize: 38,
     fontWeight: 'bold',
-    padding: 10,
   },
   infoBlock: {
+    flex: 0.45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
-    padding: 10,
   },
   photo: {
     flex: 0.55,
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start'
+  },
+  beerImage: {
+    width: 120,
+    height: 240,
+    marginLeft: 20,
   },
   rightBlock: {
     flex: 0.45,
@@ -36,20 +44,18 @@ export const detailStyles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   leftBlock: {
-    flex: 1,
+    flex: 0.35,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    paddingTop: 20,
     marginLeft: 30,
     marginRight: 30,
   },
   orderButton: {
     backgroundColor: 'darkblue',
-    elevation: 8,
     paddingVertical: 5,
     paddingHorizontal: 15,
-    marginTop: 20,
+    marginTop: 50,
     borderRadius: 10,
     width: 100,
   },
