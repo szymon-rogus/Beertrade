@@ -59,4 +59,10 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 20,
   },
+
+  navBar: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  }
 });

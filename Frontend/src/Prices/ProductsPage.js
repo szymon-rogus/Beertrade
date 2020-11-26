@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { FlatList, SafeAreaView, Text, TouchableOpacity } from "react-native";
+import { FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../../GlobalStyles";
 import { http } from '../../Global'
 import { styles } from "./ProductsPageStyles";
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { ChooseTableBar } from "./ChooseTableBar";
 
 
 const Item = ({item, onPress}) => (
@@ -120,7 +121,8 @@ export default class ProductsPage extends Component {
             <FontAwesome name="unsorted" size={32} color="black"/>
           </View>
         </View>
-        <Text style={styles.tableChoose}>Click here to choose the table</Text>
+
+        <ChooseTableBar/>
         <FlatList
           data={this.state.searchText.length > 0 ? this.state.filteredProducts : this.state.products}
           renderItem={this.renderItem}
