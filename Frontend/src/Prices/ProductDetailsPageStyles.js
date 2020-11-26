@@ -55,9 +55,14 @@ export const detailStyles = StyleSheet.create({
     backgroundColor: 'darkblue',
     paddingVertical: 5,
     paddingHorizontal: 15,
-    marginTop: 50,
+    marginTop: 30,
     borderRadius: 10,
     width: 100,
   },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: "bold"
+  }
 });
 

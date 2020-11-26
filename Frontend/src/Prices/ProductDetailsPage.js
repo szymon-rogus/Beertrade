@@ -6,6 +6,13 @@ import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 
 const B = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
 
+const Attribute = ({boldText, text, icon, padding, margin}) => (
+    <View style={{flexDirection: 'row'}}>
+      <Ionicons name={icon} size={16} color="darkblue" style={{paddingRight: 5, paddingTop: padding}}/>
+      <Text style={{marginTop: margin}}><B>{boldText}</B>{text}</Text>
+    </View>
+);
+
 const ItemDetails = ({product, onPress, backIcon, topBarIcons}) => (
     <View style={detailStyles.container}>
       <TopBar backIcon={backIcon} icons={topBarIcons}/>
@@ -17,27 +24,15 @@ const ItemDetails = ({product, onPress, backIcon, topBarIcons}) => (
           <Image style={detailStyles.beerImage} source={{uri: beerPhoto}} />
         </View>
         <View style={detailStyles.rightBlock}>
-          <View style={{flexDirection: 'row'}}>
-            <Ionicons name="ios-information-circle" size={16} color="darkblue" style={{paddingRight: 5, paddingTop: 3}}/>
-            <Text><B>Type: </B> {product.type}</Text>
-          </View>
+          <Attribute boldText='Type: ' text={product.type} icon="ios-information-circle" padding={3} margin={1}/>
           <View style={{flexDirection: 'row'}}>
             <Text style={{marginTop: 5, marginLeft: 18}}><B>Alcohol: </B> {product.alcoholPercentage}%</Text>
           </View>
-          <View style={{flexDirection: 'row'}}>
-            <Ionicons name="ios-information-circle" size={16} color="darkblue" style={{paddingRight: 5, paddingTop: 6}}/>
-            <Text style={{marginTop: 5}}><B>IBU: </B> {product.ibu}</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Ionicons name="ios-information-circle" size={16} color="darkblue" style={{paddingRight: 5, paddingTop: 6}}/>
-            <Text style={{marginTop: 5}}><B>BLG: </B> {product.blg}</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Ionicons name="ios-information-circle" size={16} color="darkblue" style={{paddingRight: 5, paddingTop: 6}}/>
-            <Text style={{marginTop: 5}}><B>EBC: </B> {product.ebc}</Text>
-          </View>
+          <Attribute boldText='IBU: ' text={product.ibu} icon="ios-information-circle" padding={6} margin={5}/>
+          <Attribute boldText='BLG: ' text={product.blg} icon="ios-information-circle" padding={6} margin={5}/>
+          <Attribute boldText='EBC: ' text={product.ebc} icon="ios-information-circle" padding={6} margin={5}/>
           <TouchableOpacity style={detailStyles.orderButton} onPress={onPress}>
-            <Text style={{color: 'white', fontSize: 16, fontWeight: "bold"}}>Order for{"\n"}{product.price} PLN</Text>
+            <Text style={detailStyles.buttonText}>Order for{"\n"}{product.price} PLN</Text>
           </TouchableOpacity>
         </View>
       </View>
