@@ -82,7 +82,7 @@ export class ChooseTableBar extends Component {
               style={listStyles.item}
             />
           )}
-          keyExtractor={(item) => item.tableNumber}
+          keyExtractor={(item) => "Table" + item.tableNumber}
           extraData={this.selectedId}
         />
         <View style={{flex: 1, justifyContent: 'center', position: 'absolute', bottom: 0}}>
