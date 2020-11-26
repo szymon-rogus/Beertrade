@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { fontColor } from "./src/Login/LoginPageStyles";
-
+import React from "react";
 
 export const globalStyles = StyleSheet.create({
   mainContainer: {
@@ -31,7 +31,7 @@ export const globalStyles = StyleSheet.create({
   topBarTitle: {
     textAlign: "center",
     color: "white",
-    fontSize: 26,
+    fontSize: 24,
   },
   topBar: {
     flex: 0.1,
@@ -42,7 +42,6 @@ export const globalStyles = StyleSheet.create({
   },
   titleBox: {
     flex: 0.6,
-    margin: 15,
     backgroundColor: "darkblue",
     flexDirection: "row",
     justifyContent: "flex-start",
@@ -50,7 +49,6 @@ export const globalStyles = StyleSheet.create({
   },
   navIconsBox: {
     flex: 0.4,
-    margin: 15,
     backgroundColor: "darkblue",
     flexDirection: "row",
     justifyContent: "flex-end",

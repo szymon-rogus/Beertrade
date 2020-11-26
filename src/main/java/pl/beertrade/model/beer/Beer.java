@@ -92,7 +92,15 @@ public class Beer {
     public ProductDetailsJTO toProductDetailsJTO() {
         return ProductDetailsJTO.builder()
                 .name(name)
+                .price(mockPrice())
                 .type(type)
+                .alcoholPercentage(alcoholPercentage)
+                .ibu(ibu)
+                .blg(blg)
+                .ebc(ebc)
+                .brewery(brewery)
+                .year(year)
+                .origin(origin)
                 .description(description)
                 .build();
     }

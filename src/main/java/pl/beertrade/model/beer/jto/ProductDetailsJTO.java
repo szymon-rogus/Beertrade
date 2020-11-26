@@ -23,4 +23,25 @@ public class ProductDetailsJTO {
     @JsonProperty
     private final double price;
 
+    @JsonProperty
+    private final Integer ibu;
+
+    @JsonProperty
+    private final double blg;
+
+    @JsonProperty
+    private final Integer ebc;
+
+    @JsonProperty
+    private final String brewery;
+
+    @JsonProperty
+    private final String origin;
+
+    @JsonProperty
+    private final String year;
+
+    @JsonProperty
+    private final Double alcoholPercentage;
+
 }

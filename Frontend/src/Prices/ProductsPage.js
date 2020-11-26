@@ -6,15 +6,43 @@ import { styles } from "./ProductsPageStyles";
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { ChooseTableBar } from "./ChooseTableBar";
 
+const Item = ({item, onPress, navigation}) => (
 
-const Item = ({item, onPress}) => (
-  <View style={styles.item}>
-    <View style={{
-      flex: 0.3,
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}>
+    <View style={styles.item}>
+        <View style={{
+            flex: 0.3,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+        </View>
+        <View style={{
+            flex: 0.4,
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'stretch'
+        }}>
+            <Text style={styles.title}>{item.name}</Text>
+            <Text style={styles.attributes}>{item.type} {item.alcoholPercentage}%</Text>
+            <Text style={styles.attributes}>IBU {item.ibu}</Text>
+        </View>
+        <View style={{
+            flex: 0.3,
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-end'
+        }}>
+            <TouchableOpacity>
+              <Ionicons name="ios-information-circle" size={24} color="darkblue" style={{marginBottom: 20, marginTop: 6}}
+              onPress={() => navigation.navigate('productDetails', {
+                itemId: item.id
+              })}/>
+            </TouchableOpacity>
+            <Text style={styles.attributes}>{item.price} PLN</Text>
+            <TouchableOpacity style={styles.orderButton} onPress={onPress}>
+              <Text style={{color: 'white'}}>Order</Text>
+            </TouchableOpacity>
+        </View>
     </View>
     <View style={{
       flex: 0.4,
@@ -68,6 +96,7 @@ export default class ProductsPage extends Component {
           this.orderProduct(item.id);
           alert("Product ordered.");
         }}
+        navigation={this.props.navigation}
       />
     );
   };
