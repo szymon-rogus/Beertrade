@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {FlatList, SafeAreaView, Text, TouchableOpacity, View, TextInput} from "react-native";
+import { FlatList, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../../GlobalStyles";
 import { http } from '../../Global'
 import { styles } from "./ProductsPageStyles";
-import { AntDesign, FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { ChooseTableBar } from "./ChooseTableBar";
 
 const Item = ({item, onPress, navigation}) => (
 
@@ -43,6 +44,31 @@ const Item = ({item, onPress, navigation}) => (
             </TouchableOpacity>
         </View>
     </View>
+    <View style={{
+      flex: 0.4,
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'stretch'
+    }}>
+      <Text style={styles.title}>{item.name}</Text>
+      <Text style={styles.attributes}>{item.type} {item.alcoholPercentage}%</Text>
+      <Text style={styles.attributes}>IBU {item.ibu}</Text>
+    </View>
+    <View style={{
+      flex: 0.3,
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-end'
+    }}>
+      <TouchableOpacity>
+        <Ionicons name="ios-information-circle" size={24} color="darkblue" style={{marginBottom: 20, marginTop: 6}}/>
+      </TouchableOpacity>
+      <Text style={styles.attributes}>{item.price} PLN</Text>
+      <TouchableOpacity style={styles.orderButton} onPress={onPress}>
+        <Text style={{color: 'white'}}>Order</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
 );
 
 export default class ProductsPage extends Component {
@@ -50,9 +76,10 @@ export default class ProductsPage extends Component {
     super(props);
     this.state = {
       selectedId: null,
-      products: [],
       searchText: '',
-      filteredProducts: []
+      filteredProducts: [],
+      products: [],
+      isModalVisible: false,
     };
   }
 
@@ -60,12 +87,12 @@ export default class ProductsPage extends Component {
     http.post("/product/order/" + id).catch((err) => console.log(err));
   }
 
-  renderItem = ({ item }) => {
+  renderItem = ({item}) => {
     return (
       <Item
         item={item}
         onPress={() => {
-          this.setState({ selectedId: item.id });
+          this.setState({selectedId: item.id});
           this.orderProduct(item.id);
           alert("Product ordered.");
         }}
@@ -78,7 +105,7 @@ export default class ProductsPage extends Component {
     http
       .get("/product/onStore")
       .then((response) => response.data)
-      .then((data) => context.setState({ products: data }))
+      .then((data) => context.setState({products: data}))
       .catch((err) => console.log(err));
   }
 
@@ -110,20 +137,21 @@ export default class ProductsPage extends Component {
   render() {
     return (
       <SafeAreaView style={globalStyles.mainContainer}>
-          <View style={styles.navBar}>
-              <View style={styles.searchBar}>
-                  <Ionicons name="ios-search" size={26}/>
-                  <TextInput placeholder="Search..." onChangeText={this.search} autoCorrect={false}
-                             value={this.state.searchText} />
-              </View>
-              <View style={{marginRight: 10}}>
-                  <Ionicons name="ios-funnel" size={32} color="black" />
-              </View>
-              <View style={{marginRight: 10}}>
-                <FontAwesome name="unsorted" size={32} color="black" />
-              </View>
+        <View style={styles.navBar}>
+          <View style={styles.searchBar}>
+            <Ionicons name="ios-search" size={26}/>
+            <TextInput placeholder="Search..." onChangeText={this.search} autoCorrect={false}
+                       value={this.state.searchText}/>
           </View>
-          <Text style={styles.tableChoose}>Click here to choose the table</Text>
+          <View style={{marginRight: 10}}>
+            <Ionicons name="ios-funnel" size={32} color="black"/>
+          </View>
+          <View style={{marginRight: 10}}>
+            <FontAwesome name="unsorted" size={32} color="black"/>
+          </View>
+        </View>
+
+        <ChooseTableBar/>
         <FlatList
           data={this.state.searchText.length > 0 ? this.state.filteredProducts : this.state.products}
           renderItem={this.renderItem}

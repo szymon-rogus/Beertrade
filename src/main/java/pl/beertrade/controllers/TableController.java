@@ -10,6 +10,7 @@ import pl.beertrade.exception.TableException;
 import pl.beertrade.model.table.jto.TableClientViewJTO;
 import pl.beertrade.model.user.Client;
 import pl.beertrade.services.TableService;
+import pl.beertrade.util.TableAssembler;
 import pl.beertrade.util.UserContextProvider;
 
 import java.util.Arrays;
@@ -26,10 +27,10 @@ public class TableController {
     @Autowired
     private UserContextProvider userContextProvider;
 
-    @GetMapping("/list")
-    public List<TableClientViewJTO> getTableList() {
+    @GetMapping("/reservable")
+    public List<TableClientViewJTO> getTableList() throws NotFoundException {
         log.trace("ENTRY - getTableList");
-        final List<TableClientViewJTO> tableList = tableService.getTableList();
+        final List<TableClientViewJTO> tableList = tableService.getReservableTableList( userContextProvider.getUserAsClient());
         log.trace("EXIT - getTableList - {}", tableList);
         return tableList;
     }
@@ -40,6 +41,11 @@ public class TableController {
         final Client client = userContextProvider.getUserAsClient();
         tableService.chooseTable(client, tableNumber);
         log.trace("EXIT - chooseTable");
+    }
+
+    @GetMapping
+    public TableClientViewJTO getTable() throws NotFoundException {
+        return TableAssembler.toTableClientViewJTO(userContextProvider.getUserAsClient().getTable());
     }
 
     @PostMapping("/unreserve")
