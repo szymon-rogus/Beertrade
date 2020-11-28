@@ -10,6 +10,13 @@ import stack from "./Global.js";
 import BartenderOrderPage from "./src/BartenderOrder/BartenderOrderPage.js";
 import BartenderManagementPage from "./src/BartenderProductManagement/BartenderManagementPage.js";
 import BartenderSettingsPage from "./src/BartenderProductManagement/BartenderManagementPage.js";
+import ProductsPage from "./src/Products/ProductsPage";
+import ProductDetailsPage from "./src/Products/ProductDetailsPage";
+import {NavigationContainer} from '@react-navigation/native';
+import stack from './Global.js'
+import BartenderOrderPage from './src/BartenderOrder/BartenderOrderPage.js';
+import BartenderManagementPage from './src/BartenderProductManagement/BartenderManagementPage.js'
+import BartenderSettingsPage from './src/BartenderProductManagement/BartenderManagementPage.js';
 
 export default class App extends React.Component {
   render() {
