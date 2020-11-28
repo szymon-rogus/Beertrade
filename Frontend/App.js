@@ -17,6 +17,7 @@ import stack from './Global.js'
 import BartenderOrderPage from './src/BartenderOrder/BartenderOrderPage.js';
 import BartenderManagementPage from './src/BartenderProductManagement/BartenderManagementPage.js'
 import BartenderSettingsPage from './src/BartenderProductManagement/BartenderManagementPage.js';
+import ClientOrderPage from "./src/ClientOrderPage/ClientOrderPage";
 
 export default class App extends React.Component {
   render() {
@@ -40,7 +41,7 @@ export default class App extends React.Component {
           />
           <stack.Screen
             name="productList"
-            component={ProductsPage}
+            component={ClientOrderPage}
             options={{ headerShown: false }}
           />
           <stack.Screen
