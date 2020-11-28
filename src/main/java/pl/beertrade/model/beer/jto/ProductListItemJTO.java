@@ -22,9 +22,6 @@ public class ProductListItemJTO {
     private final String type;
 
     @JsonProperty
-    private final double price;
-
-    @JsonProperty
     private final double ibu;
 
     @JsonProperty

@@ -6,6 +6,7 @@ import pl.beertrade.model.order.Order;
 import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.user.Client;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,5 +20,7 @@ public interface OrderRepository extends CrudRepository<Order, UUID> {
     void deleteById(UUID id);
 
     List<Order> findByOrderState(OrderState orderState);
+
+    List<Order> findByBoughtDateAfter(Date dateAfter);
 
 }

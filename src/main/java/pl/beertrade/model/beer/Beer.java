@@ -77,16 +77,9 @@ public class Beer {
                 .name(name)
                 .type(type)
                 .id(id)
-                .price(mockPrice())
                 .ibu(ibu)
                 .alcoholPercentage(alcoholPercentage)
                 .build();
-    }
-
-    private double mockPrice() {
-        Random r = new Random();
-        double randomValue = 10.0 * r.nextDouble();
-        return Math.round(randomValue*100.0)/100.0;
     }
 
     public ProductDetailsJTO toProductDetailsJTO() {

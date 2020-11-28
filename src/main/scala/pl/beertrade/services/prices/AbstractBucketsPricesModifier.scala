@@ -1,6 +1,8 @@
 package pl.beertrade.services.prices
 
 import java.util.UUID
+import collection.JavaConverters._
+import scala.collection.breakOut
 
 import scala.math.abs
 
@@ -30,9 +32,11 @@ abstract class AbstractBucketsPricesModifier extends PricesModifier{
   }
 
 
-  override def countNewPrices(inputPrices: Map[UUID, Double], buys: Map[UUID, Int]): Map[UUID, Double] = {
-    val indexedBuys: List[Repr] = inputPrices.keys.map {
-      productId: UUID => Repr(productId = productId, buys = buys(productId))
+  override def countNewPrices(inputPrices: java.util.Map[UUID, java.lang.Double], buys: java.util.Map[UUID, java.lang.Integer]): java.util.Map[UUID, java.lang.Double] = {
+    val scalaInputPrices: Map[UUID, Double] = inputPrices.asScala.map{case (k, v) => (k, v.doubleValue)}(breakOut)
+    val scalaBuys: Map[UUID, Int] = buys.asScala.map{case (k, v) => (k, v.intValue())}(breakOut)
+    val indexedBuys: List[Repr] = scalaInputPrices.keys.map {
+      productId: UUID => Repr(productId = productId, buys = scalaBuys(productId))
     }.toList
     val sortedIndexedBuys: List[Repr] = indexedBuys.sortWith(_.buys < _.buys)
     val justSums = sortedIndexedBuys.map(a => a.buys)
@@ -45,7 +49,7 @@ abstract class AbstractBucketsPricesModifier extends PricesModifier{
     val sortedZippedBuysWithSums: List[(Repr, Int)] = sortedIndexedBuys.zip(prefixSums.reverse)
     val sortedIndexedBuysWithSums = sortedZippedBuysWithSums.map{case (repr, zippedSum) => Repr(repr.productId, repr.buys, zippedSum)}
 
-    val allBuys: Int = buys.values.sum
+    val allBuys: Int = scalaBuys.values.sum
     val halfBuys: Double = allBuys / 2.0
 
 
@@ -59,7 +63,7 @@ abstract class AbstractBucketsPricesModifier extends PricesModifier{
     val toIncreaseSmallest = toIncrease.map(repr => repr.buys).min
 
     if (toIncreaseSmallest != toDecreaseBiggest) {
-      finalize(toIncrease, toDecrease, inputPrices)
+      finalize(toIncrease, toDecrease, scalaInputPrices).map { case (k, v) => (k -> new java.lang.Double(v)) }.asJava
     } else {
       val theEqual: Int = toDecreaseBiggest
       val borderSet: List[Repr] = sortedIndexedBuysWithSums.filter(x => x.buys == theEqual)
@@ -69,17 +73,21 @@ abstract class AbstractBucketsPricesModifier extends PricesModifier{
       if(borderSet.size == sortedIndexedBuysWithSums.size){
         inputPrices
       }else if(toDecrease2.isEmpty){
-        finalize(toIncrease2, borderSet, inputPrices)
+        mapToJava(finalize(toIncrease2, borderSet, scalaInputPrices))
       }else if(toIncrease2.isEmpty){
-        finalize(borderSet, toDecrease2, inputPrices)
+        mapToJava(finalize(borderSet, toDecrease2, scalaInputPrices))
       }else{
-        decideWhichBest(
-          finalize(toIncrease2, toDecrease2.union(borderSet), inputPrices),
-          finalize(toIncrease2.union(borderSet), toDecrease2, inputPrices),
+        mapToJava(decideWhichBest(
+          finalize(toIncrease2, toDecrease2.union(borderSet), scalaInputPrices),
+          finalize(toIncrease2.union(borderSet), toDecrease2, scalaInputPrices),
           borderSet,
-          inputPrices)
+          scalaInputPrices))
       }
     }
 
+  }
+
+  private def mapToJava(scalaMap: Map[UUID, Double]): java.util.Map[UUID, java.lang.Double] = {
+    scalaMap.map { case (k, v) => k -> new java.lang.Double(v) }.asJava
   }
 }

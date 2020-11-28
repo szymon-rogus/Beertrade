@@ -5,14 +5,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.beertrade.exception.NotFoundException;
+import pl.beertrade.model.beer.Beer;
 import pl.beertrade.model.order.Order;
 import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.order.jto.BartenderOrderProductJTO;
 import pl.beertrade.model.order.jto.BartenderStatisticsJTO;
 import pl.beertrade.repositories.OrderRepository;
+import pl.beertrade.repositories.ProductRepository;
 
-import java.util.List;
-import java.util.UUID;
+import java.time.Instant;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +23,9 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     public void processOrder(@NonNull UUID id, @NonNull OrderState state) throws NotFoundException {
         log.trace("ENTRY - processOrder - {}", id);
@@ -56,6 +61,32 @@ public class OrderService {
                 .done(ordersDone)
                 .cancelled(ordersCancelled)
                 .build();
+    }
+
+    public Map<UUID, Integer> getProductBuysForIteration(Instant lastOrderTimestamp) {
+        final List<Order> newOrders = orderRepository.findByBoughtDateAfter(Date.from(lastOrderTimestamp));
+        final Map<UUID, Integer> buys = new HashMap<>();
+        newOrders.forEach(order -> incrementOrCreateBuys(order.getProduct().getId(), order.getAmount(), buys));
+        fillMissingProducts(buys);
+        return buys;
+    }
+
+    private void incrementOrCreateBuys(UUID productId, Integer amount, Map<UUID, Integer> buys) {
+        Integer recentAmount = 0;
+        if(buys.containsKey(productId)) {
+            recentAmount = buys.get(productId);
+        }
+        recentAmount += amount;
+        buys.put(productId, recentAmount);
+    }
+
+    private void fillMissingProducts(Map<UUID, Integer> newBuys) {
+        final List<Beer> products = productRepository.findAll();
+        products.forEach(product -> {
+            if (!newBuys.containsKey(product.getId())) {
+                newBuys.put(product.getId(), 0);
+            }
+        });
     }
 
 }

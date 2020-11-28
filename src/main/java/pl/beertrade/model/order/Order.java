@@ -29,6 +29,7 @@ public class Order {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(updatable = false)
+    @Getter
     private UUID id;
 
     @NotNull
@@ -40,12 +41,14 @@ public class Order {
     @NotNull
     @OneToOne
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")
+    @Getter
     private Beer product;
 
     @NotNull
     private float price;
 
     @NotNull
+    @Getter
     private Integer amount;
 
     @NotNull
@@ -79,10 +82,6 @@ public class Order {
                 .tableNumber(client.getTable().getTableNumber())
                 .userLogin(client.getLogin())
                 .build();
-    }
-
-    public UUID getId() {
-        return id;
     }
 
 }
