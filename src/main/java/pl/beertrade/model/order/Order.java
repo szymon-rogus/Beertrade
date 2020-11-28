@@ -94,6 +94,8 @@ public class Order {
                         .format(DateTimeFormatter.ofPattern("HH:mm")))
                 .beerName(product.getName())
                 .amount(amount)
+                .orderState(orderState)
+                .totalPrice(amount * price)
                 .build();
     }
 }

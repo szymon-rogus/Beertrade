@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
+import pl.beertrade.model.order.enums.OrderState;
 
 import java.util.UUID;
 
@@ -30,4 +31,13 @@ public class ClientOrderProductJTO {
     @JsonProperty
     @NonNull
     private Integer amount;
+
+    @JsonProperty
+    @NonNull
+    private OrderState orderState;
+
+    @JsonProperty
+    @NonNull
+    private float totalPrice;
+
 }
