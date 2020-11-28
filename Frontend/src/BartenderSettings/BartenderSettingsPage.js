@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { http, TopBar } from "../../Global.js";
+import { http } from "../../Global.js";
 import { View, Text, TouchableOpacity } from "react-native";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-import { globalStyles, topBarIconStyle } from "../../GlobalStyles.js";
+import { globalStyles } from "../../GlobalStyles.js";
 import { styles } from "./BartenderSettingsPageStyles.js";
-import { FontAwesome5 } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 
 export default class BartenderSettingsPage extends Component {
@@ -54,52 +52,28 @@ export default class BartenderSettingsPage extends Component {
   };
 
   render() {
-    const iconSize = 36;
-    const iconColor = "white";
-    const topBarIcons = [
-      <FontAwesome5
-        key={1}
-        name="th-list"
-        size={iconSize}
-        color={iconColor}
-        style={topBarIconStyle(4).style}
-        onPress={() => this.props.navigation.navigate("bartenderOrder")}
-      />,
-      <MaterialCommunityIcons
-        key={2}
-        name="cup"
-        size={iconSize}
-        color={iconColor}
-        style={topBarIconStyle(4).style}
-        onPress={() => this.props.navigation.navigate("bartenderManage")}
-      />,
-      <MaterialIcons
-        key={3}
-        name="account-circle"
-        size={iconSize}
-        color={iconColor}
-        style={topBarIconStyle(4).style}
-      />,
-    ];
     if (this.state.isLoading) {
       return (
         <View style={globalStyles.mainContainer}>
-          <TopBar title={"Settings"} icons={topBarIcons} />
           <View style={styles.loadingPageStyle}>
             <Text>Loading...</Text>
+            {this.props.slideDownIcon}
           </View>
         </View>
       );
     } else {
+      let noClearWarn = null;
+      if (this.props.ordersWaiting) {
+        noClearWarn = <Text style={{color: "red"}}>Cannot finish the day - orders still waiting</Text>
+      }
       const initialSelectorValue = this.state.isSessionDisabled ? 1 : 0;
-      const clearSessionButtonStyle = this.state.isSessionDisabled
+      const clearSessionButtonStyle = this.state.isSessionDisabled && !this.props.ordersWaiting
         ? styles.clearSessionButton
         : styles.clearSessionButtonDisabled;
       return (
         <View style={globalStyles.mainContainer}>
-          <TopBar title={"Settings"} icons={topBarIcons} />
           <View style={styles.settingsPageContainer}>
-            <Text style={styles.sessionText}>Session</Text>
+            <Text style={styles.sessionText}>Ordering products</Text>
             <SwitchSelector
               style={styles.sessionSwitchSelector}
               initial={initialSelectorValue}
@@ -117,10 +91,12 @@ export default class BartenderSettingsPage extends Component {
             <TouchableOpacity
               onPress={this.clearSession}
               style={clearSessionButtonStyle}
-              disabled={!this.state.isSessionDisabled}
+              disabled={!this.state.isSessionDisabled || this.props.ordersWaiting}
             >
-              <Text style={styles.clearSessionButtonText}>Clear session</Text>
+              <Text style={styles.clearSessionButtonText}>Finish the day</Text>
             </TouchableOpacity>
+            {noClearWarn}
+            {this.props.slideDownIcon}
           </View>
         </View>
       );

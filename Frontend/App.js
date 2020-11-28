@@ -47,11 +47,6 @@ export default class App extends React.Component {
             options={{ headerShown: false }}
           />
           <stack.Screen
-            name="bartenderSettings"
-            component={BartenderSettingsPage}
-            options={{ headerShown: false }}
-          />
-          <stack.Screen
             name="bartenderManage"
             component={BartenderManagementPage}
             options={{ headerShown: false }}

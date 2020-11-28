@@ -128,14 +128,6 @@ export default class BartenderManagementPage extends Component {
     const iconSize = 36;
     const iconColor = "white";
     const topBarIcons = [
-      <Ionicons
-        key={1}
-        name="md-settings"
-        size={iconSize}
-        color={iconColor}
-        style={topBarIconStyle(6).style}
-        onPress={() => this.props.navigation.navigate("bartenderSettings")}
-      />,
       <FontAwesome5
         key={2}
         name="th-list"
