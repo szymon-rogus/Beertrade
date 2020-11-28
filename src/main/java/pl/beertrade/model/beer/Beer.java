@@ -85,7 +85,6 @@ public class Beer {
     public ProductDetailsJTO toProductDetailsJTO() {
         return ProductDetailsJTO.builder()
                 .name(name)
-                .price(mockPrice())
                 .type(type)
                 .alcoholPercentage(alcoholPercentage)
                 .ibu(ibu)
