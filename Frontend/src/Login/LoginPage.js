@@ -16,23 +16,25 @@ export default class LoginPage extends Component {
   };
 
   handleAuth = () => {
-      if (this.state.login !== '' && this.state.password !== '') {
-          http.post('/login', {
-              login: this.state.login,
-              password: this.state.password
-          }).then((response) => {
-              setAuthorizationToken(response.data.token);
-              this.setState({ loggedIn: true });
-              let role = response.data.role;
-              if (role === 'pl.beertrade.model.user.Bartender') {
-                  this.props.navigation.navigate('bartenderOrder');
-              } else {
-                  this.props.navigation.navigate('productList');
-              }
-          })
-          .catch(_ => alert("Invalid login or password!"));
-      }
-  }
+    if (this.state.login !== "" && this.state.password !== "") {
+      http
+        .post("/login", {
+          login: this.state.login,
+          password: this.state.password,
+        })
+        .then((response) => {
+          setAuthorizationToken(response.data.token);
+          this.setState({ loggedIn: true });
+          let role = response.data.role;
+          if (role === "pl.beertrade.model.user.Bartender") {
+            this.props.navigation.navigate("bartenderOrder");
+          } else {
+            this.props.navigation.navigate("productList");
+          }
+        })
+        .catch((_) => alert("Invalid login or password!"));
+    }
+  };
 
   handlePassword = (text) => {
     this.setState({ password: text });

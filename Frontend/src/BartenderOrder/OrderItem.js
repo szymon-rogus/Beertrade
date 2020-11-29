@@ -3,12 +3,12 @@ import { View, Text } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { listStyles } from "../../ListStyles.js";
 import { styles } from "./BartenderOrderPageStyles.js";
-import { listItemAttributeTextStyle } from "../../GlobalStyles.js"
+import { listItemAttributeTextStyle } from "../../GlobalStyles.js";
 
 const orderItemIconSize = 40;
 const orderItemIconColor = "black";
 
-export default OrderItem = ({item, executeFunc, cancelFunc, shadowLayer}) => (
+export default OrderItem = ({ item, executeFunc, cancelFunc, shadowLayer }) => (
   <View style={listStyles.item}>
     {shadowLayer}
     <View style={styles.listItemAttributeColumn}>
@@ -48,7 +48,7 @@ export default OrderItem = ({item, executeFunc, cancelFunc, shadowLayer}) => (
   </View>
 );
 
-const ItemAttribute = ({label, value, marginLeft}) => (
+const ItemAttribute = ({ label, value, marginLeft }) => (
   <View style={listStyles.attributeView}>
     <Text style={listStyles.itemLabelText}>{label}</Text>
     <Text style={listItemAttributeTextStyle(marginLeft).style}>{value}</Text>

@@ -64,12 +64,17 @@ export default class BartenderSettingsPage extends Component {
     } else {
       let noClearWarn = null;
       if (this.props.ordersWaiting) {
-        noClearWarn = <Text style={{color: "red"}}>Cannot finish the day - orders still waiting</Text>
+        noClearWarn = (
+          <Text style={{ color: "red" }}>
+            Cannot finish the day - orders still waiting
+          </Text>
+        );
       }
       const initialSelectorValue = this.state.isSessionDisabled ? 1 : 0;
-      const clearSessionButtonStyle = this.state.isSessionDisabled && !this.props.ordersWaiting
-        ? styles.clearSessionButton
-        : styles.clearSessionButtonDisabled;
+      const clearSessionButtonStyle =
+        this.state.isSessionDisabled && !this.props.ordersWaiting
+          ? styles.clearSessionButton
+          : styles.clearSessionButtonDisabled;
       return (
         <View style={globalStyles.mainContainer}>
           <View style={styles.settingsPageContainer}>
@@ -84,14 +89,16 @@ export default class BartenderSettingsPage extends Component {
               borderColor="black"
               hasPadding
               options={[
-                {label: "Enabled", value: "enable"},
-                {label: "Disabled", value: "disable"},
+                { label: "Enabled", value: "enable" },
+                { label: "Disabled", value: "disable" },
               ]}
             />
             <TouchableOpacity
               onPress={this.clearSession}
               style={clearSessionButtonStyle}
-              disabled={!this.state.isSessionDisabled || this.props.ordersWaiting}
+              disabled={
+                !this.state.isSessionDisabled || this.props.ordersWaiting
+              }
             >
               <Text style={styles.clearSessionButtonText}>Finish the day</Text>
             </TouchableOpacity>

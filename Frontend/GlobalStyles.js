@@ -9,6 +9,7 @@ export const globalStyles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -32,6 +33,7 @@ export const globalStyles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 24,
+    marginLeft: 10,
   },
   topBar: {
     flex: 0.1,
