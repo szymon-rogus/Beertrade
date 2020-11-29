@@ -8,7 +8,7 @@ import { listItemAttributeTextStyle } from "../../GlobalStyles.js";
 const orderItemIconSize = 40;
 const orderItemIconColor = "black";
 
-export default OrderItem = ({ item, executeFunc, cancelFunc, shadowLayer }) => (
+export const OrderItem = ({item, executeFunc, cancelFunc, shadowLayer}) => (
   <View style={listStyles.item}>
     {shadowLayer}
     <View style={styles.listItemAttributeColumn}>
