@@ -8,14 +8,15 @@ import React from "react";
 const glass = (<FontAwesome5 name="glass-whiskey" size={20} color="black" />)
 
 function ItemAmount(props) {
-  let beers = [];
-  for (let i = 0; i < props.amount; i++){
-    beers.push(<View key={i}>{glass}</View>)
+  if(props.amount < 6) {
+    let beers = [];
+    for (let i = 0; i < props.amount; i++) {
+      beers.push(<View key={i}>{glass}</View>)
+    }
+    return (<View style={{flexDirection: "row"}}>{beers}</View>)
+  } else {
+    return (<View style={{flexDirection: "row"}}>{glass}<Text style={styles.smallText}>x{props.amount}</Text></View>)
   }
-  if(props.amount < 6)
-    return (<View style = {{flexDirection: "row"}}>{beers}</View>)
-  else
-    return (<View style = {{flexDirection: "row"}}>{glass}<Text style={styles.smallText}>x{props.amount}</Text></View>)
 }
 
 function OrderState(props) {
