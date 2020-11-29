@@ -5,15 +5,17 @@ import { listStyles } from "../../ListStyles";
 import { CURRENCY } from "../../Global";
 import React from "react";
 
+const glass = (<FontAwesome5 name="glass-whiskey" size={20} color="black" />)
+
 function ItemAmount(props) {
   let beers = [];
   for (let i = 0; i < props.amount; i++){
-    beers.push(<View><FontAwesome5 name="glass-whiskey" size={20} color="black" /></View>)
+    beers.push(<View key={i}>{glass}</View>)
   }
   if(props.amount < 6)
     return (<View style = {{flexDirection: "row"}}>{beers}</View>)
   else
-    return (<View style = {{flexDirection: "row"}}><FontAwesome5 name="glass-whiskey" size={20} color="black" /><Text style={{fontSize: 16, color: 'black'}}>x{props.amount}</Text></View>)
+    return (<View style = {{flexDirection: "row"}}>{glass}<Text style={styles.smallText}>x{props.amount}</Text></View>)
 }
 
 function OrderState(props) {
@@ -31,33 +33,24 @@ function OrderState(props) {
 
 export const ClientOrderItem = ({ item }) => (
   <View style={ styles.item }>
-    <View style={{
-      flex: 0.6,
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-
-    }}>
+    <View style={styles.leftSection}>
       <View style={listStyles.attributeView}>
         <Text style={{fontSize: 20, color: 'black'}}>{ item.beerName } </Text>
       </View>
       <ItemAmount amount = {item.amount} />
-      <View><Text style={{fontSize: 18, color: 'black'}}>Total: {item.totalPrice.toFixed(2)}{CURRENCY}</Text></View>
+      <View>
+        <Text style={styles.mediumText}>Total: {item.totalPrice.toFixed(2)}{CURRENCY}</Text>
+      </View>
     </View>
-    <View style={{
-      flex: 0.4,
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'flex-end'
-    }}>
+    <View style={styles.rightSection}>
       <View style={{ flex: 0.2, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center' }}>
-        <Text style={{fontSize: 16, color: 'black'}}> #{ item.orderViewId }</Text>
+        <Text style={styles.smallText}> #{ item.orderViewId }</Text>
       </View>
       <View style={styles.listItemIconRow}>
         <OrderState orderState={item.orderState}/>
       </View>
       <View style={{ flex: 0.2, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center' }}>
-        <Text style={{fontSize: 16, color: 'black'}}>{ item.timeOrdered }</Text>
+        <Text style={styles.smallText}>{ item.timeOrdered }</Text>
       </View>
     </View>
   </View>
