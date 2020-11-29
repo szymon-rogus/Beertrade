@@ -6,7 +6,6 @@ import lombok.NonNull;
 
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Builder
 public class PricesJTO {

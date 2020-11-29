@@ -27,4 +27,7 @@ public class ProductListItemJTO {
     @JsonProperty
     private final double alcoholPercentage;
 
+    @JsonProperty
+    private final double basePrice;
+
 }

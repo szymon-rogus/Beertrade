@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.beertrade.model.beer.Beer;
 import pl.beertrade.model.beer.jto.PriceJTO;
 import pl.beertrade.model.beer.jto.PricesJTO;
 import pl.beertrade.services.prices.PricesModifier;
@@ -59,8 +60,11 @@ public class PricesServiceImpl implements PricesService {
 
     @Override
     public void countNewPrices() {
-        final Map<UUID, Integer> buys = orderService.getProductBuysForIteration(lastOrderTimestamp);
+        final Map<Beer, Integer> buys = orderService.getProductBuysForIteration(lastOrderTimestamp);
         lastOrderTimestamp = Instant.now();
+        final HashMap<UUID, Double> filteredPrices = new HashMap<>();
+        final HashMap<UUID, Integer> mappedBuys = new HashMap<>();
+        buys.keySet().forEach(key -> mappedBuys.put(key.getId(), buys.get(key)));
         try {
             writeMutex.acquire();
             writersCount++;
@@ -69,7 +73,14 @@ public class PricesServiceImpl implements PricesService {
             }
             writeMutex.release();
             writeBlock.acquire();
-            prices = pricesModifier.countNewPrices(prices, buys);
+            buys.keySet().forEach(key -> {
+                if (prices.containsKey(key.getId())) {
+                    filteredPrices.put(key.getId(), prices.get(key.getId()));
+                } else {
+                    filteredPrices.put(key.getId(), key.getBasePrice());
+                }
+            });
+            prices = pricesModifier.countNewPrices(filteredPrices, mappedBuys);
             pricesCheckStamp = UUID.randomUUID();
             writeBlock.release();
             writeMutex.acquire();

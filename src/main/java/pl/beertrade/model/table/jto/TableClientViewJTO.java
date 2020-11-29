@@ -9,12 +9,19 @@ import javax.validation.constraints.NotNull;
 public class TableClientViewJTO {
 
     @JsonProperty
-    private final int tableNumber;
+    private final Integer tableNumber;
 
     @JsonProperty
-    private final int seats;
+    private final Integer seats;
 
     @JsonProperty
-    private final int occupiedSeats;
+    private final Integer occupiedSeats;
+
+    public static TableClientViewJTO emptyTableClientViewJTO() {
+        return TableClientViewJTO.builder().occupiedSeats(null)
+                .tableNumber(null)
+                .seats(null)
+                .build();
+    }
 
 }

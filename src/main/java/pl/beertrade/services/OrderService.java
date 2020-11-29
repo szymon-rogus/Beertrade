@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.beertrade.exception.NotFoundException;
 import pl.beertrade.model.beer.Beer;
+import pl.beertrade.model.beer.enums.ProductState;
 import pl.beertrade.model.order.Order;
 import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.order.jto.BartenderOrderProductJTO;
@@ -63,28 +64,32 @@ public class OrderService {
                 .build();
     }
 
-    public Map<UUID, Integer> getProductBuysForIteration(Instant lastOrderTimestamp) {
+    public Map<Beer, Integer> getProductBuysForIteration(Instant lastOrderTimestamp) {
         final List<Order> newOrders = orderRepository.findByBoughtDateAfter(Date.from(lastOrderTimestamp));
-        final Map<UUID, Integer> buys = new HashMap<>();
-        newOrders.forEach(order -> incrementOrCreateBuys(order.getProduct().getId(), order.getAmount(), buys));
+        final List<Order> disabledProductsFilteredOrders = newOrders.stream()
+                .filter(order -> order.getProduct()
+                .getProductState().equals(ProductState.ON_STORE))
+                .collect(Collectors.toList());
+        final Map<Beer, Integer> buys = new HashMap<>();
+        disabledProductsFilteredOrders.forEach(order -> incrementOrCreateBuys(order.getProduct(), order.getAmount(), buys));
         fillMissingProducts(buys);
         return buys;
     }
 
-    private void incrementOrCreateBuys(UUID productId, Integer amount, Map<UUID, Integer> buys) {
+    private void incrementOrCreateBuys(Beer product, Integer amount, Map<Beer, Integer> buys) {
         Integer recentAmount = 0;
-        if(buys.containsKey(productId)) {
-            recentAmount = buys.get(productId);
+        if(buys.containsKey(product)) {
+            recentAmount = buys.get(product);
         }
         recentAmount += amount;
-        buys.put(productId, recentAmount);
+        buys.put(product, recentAmount);
     }
 
-    private void fillMissingProducts(Map<UUID, Integer> newBuys) {
+    private void fillMissingProducts(Map<Beer, Integer> newBuys) {
         final List<Beer> products = productRepository.findAll();
         products.forEach(product -> {
-            if (!newBuys.containsKey(product.getId())) {
-                newBuys.put(product.getId(), 0);
+            if (product.getProductState().equals(ProductState.ON_STORE) && !newBuys.containsKey(product)) {
+                newBuys.put(product, 0);
             }
         });
     }

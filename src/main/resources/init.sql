@@ -9,6 +9,7 @@ INSERT INTO public.beer (id, alcohol_percentage, amortization_factor, base_price
 INSERT INTO public.beer (id, alcohol_percentage, amortization_factor, base_price, blg, brewery, description, ebc, ibu, max_price, min_price, name, product_state, origin, photo, type, year) VALUES ('411075a0-5b19-40ea-aa37-5f51fcb506f2', 5.5, 5, 12, 8, 'Pilsner', 'The aroma of craft beer comes mainly from the hops, malt, and yeast strain.', 8, 12, 21, 7, 'Pilsner', 'ON_STORE', 'USA', null, 'Dark', '2010');
 
 insert into app_table(table_number, seats) values (1, 1);
+insert into app_table(table_number, seats) values (2, 1);
 
 insert into public.app_user(user_type, id, email, first_name, last_name, login, password, phone_number, table_table_number) values ('BARTENDER','7175c66d-29fe-4e0e-82fe-83736513c2f5','email','bartek','lagosz','admin','$2a$10$0JZhi20JVHUvBONl7XLBhOAwSgmH7dtg/dTgj9qCptKXo1JLLH/2e',123123123, null);
 insert into public.app_user (user_type, id, email, first_name, last_name, login, password, phone_number, table_table_number) values ('CLIENT', '6e0b7333-8214-45b8-9344-3757d42c7ce9', 'a@b.com', 'a', 'b', 'a', '$2a$10$OOunjBzlAIlNp/qLwvcOXecv0aS772nWpWmfIicaAJPxUQkt6l8SC', 567890123, 1);

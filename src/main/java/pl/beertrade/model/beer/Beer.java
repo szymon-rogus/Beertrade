@@ -79,6 +79,7 @@ public class Beer {
                 .id(id)
                 .ibu(ibu)
                 .alcoholPercentage(alcoholPercentage)
+                .basePrice(basePrice)
                 .build();
     }
 
