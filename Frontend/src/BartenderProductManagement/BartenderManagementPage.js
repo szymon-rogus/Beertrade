@@ -1,21 +1,19 @@
 import React, { Component } from "react";
-import { http, TopBar } from "../../Global.js";
+import { http, TopBar, logout } from "../../Global.js";
 import { View, FlatList } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { globalStyles, topBarIconStyle } from "../../GlobalStyles.js";
 import { styles } from "./BartenderManagementPageStyles.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 import { ProductListItem } from "./ProductListItem.js";
-import {beerPhoto} from "../../Global";
+import { beerPhoto } from "../../Global";
 
-const ENABLED = "enabled"
-const DISABLED = "disabled"
+const ENABLED = "enabled";
+const DISABLED = "disabled";
 
 export default class BartenderManagementPage extends Component {
-
   state = {
     enabledItems: [],
     disabledItems: [],
@@ -84,28 +82,27 @@ export default class BartenderManagementPage extends Component {
       .catch((err) => console.log(err));
   };
 
-  renderItem = ({item}) => {
+  renderItem = ({ item }) => {
     const actionIcon =
       item.productState === "ON_STORE" ? (
         <AntDesign
-          name="close"
-          style={{marginTop: 60}}
+          name="minuscircleo"
+          style={{ marginTop: 60 }}
           size={36}
           color="black"
           onPress={() => this.sendRequestDisableItem(item.id)}
         />
       ) : (
-        <Ionicons
-          name="md-add"
-          size={40}
+        <AntDesign
+          name="pluscircleo"
+          size={36}
           color="black"
-          style={{marginTop: 60}}
+          style={{ marginTop: 60 }}
           onPress={() => this.sendRequestEnableItem(item.id)}
         />
       );
     const encodedPhoto =
-      item.encodedPhoto !== null
-        ? item.encodedPhoto : beerPhoto
+      item.encodedPhoto !== null ? item.encodedPhoto : beerPhoto;
     return (
       <ProductListItem
         item={item}
@@ -128,14 +125,6 @@ export default class BartenderManagementPage extends Component {
     const iconSize = 36;
     const iconColor = "white";
     const topBarIcons = [
-      <Ionicons
-        key={1}
-        name="md-settings"
-        size={iconSize}
-        color={iconColor}
-        style={topBarIconStyle(6).style}
-        onPress={() => this.props.navigation.navigate("bartenderSettings")}
-      />,
       <FontAwesome5
         key={2}
         name="th-list"
@@ -144,12 +133,13 @@ export default class BartenderManagementPage extends Component {
         style={topBarIconStyle(6).style}
         onPress={() => this.props.navigation.navigate("bartenderOrder")}
       />,
-      <MaterialIcons
+      <MaterialCommunityIcons
         key={3}
-        name="account-circle"
+        name="logout"
         size={iconSize}
         color={iconColor}
         style={topBarIconStyle(6).style}
+        onPress={() => logout(this)}
       />,
     ];
     return (
@@ -158,7 +148,7 @@ export default class BartenderManagementPage extends Component {
         <View style={styles.listBox}>
           <SwitchSelector
             initial={0}
-            onPress={(value) => this.setState({chosenItems: value})}
+            onPress={(value) => this.setState({ chosenItems: value })}
             textColor="black"
             selectedColor="white"
             buttonColor="black"
@@ -166,9 +156,9 @@ export default class BartenderManagementPage extends Component {
             hasPadding
             style={styles.switchSelector}
             options={[
-              {label: "Enabled", value: ENABLED},
-              {label: "All", value: "all"},
-              {label: "Disabled", value: DISABLED},
+              { label: "Enabled", value: ENABLED },
+              { label: "All", value: "all" },
+              { label: "Disabled", value: DISABLED },
             ]}
           />
           <FlatList

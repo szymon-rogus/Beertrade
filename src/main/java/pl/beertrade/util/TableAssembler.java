@@ -8,6 +8,9 @@ import pl.beertrade.model.table.jto.TableClientViewJTO;
 public class TableAssembler {
 
     public TableClientViewJTO toTableClientViewJTO(Table table) {
+        if (table == null) {
+            return TableClientViewJTO.emptyTableClientViewJTO();
+        }
         final int occupiedSeats = table.getActualClients()
                 .size();
         return TableClientViewJTO.builder()

@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import { http, TopBar } from "../../Global.js";
+import { http, TopBar, logout } from "../../Global.js";
 import { View, Text, FlatList } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { globalStyles, topBarIconStyle } from "../../GlobalStyles.js";
 import { styles, statisticsValueStyle } from "./BartenderOrderPageStyles.js";
 import * as Progress from "react-native-progress";
 import OrderItem from "./OrderItem.js";
+import SlidingUpPanel from "rn-sliding-up-panel";
+import BartenderSettingsPage from "../BartenderSettings/BartenderSettingsPage.js";
 
 export default class BartenderOrderPage extends Component {
   state = {
@@ -176,7 +178,7 @@ export default class BartenderOrderPage extends Component {
     clearInterval(this.updateInterval);
   }
 
-  renderItem = ({item}) => {
+  renderItem = ({ item }) => {
     const shadowLayerValue =
       this.state.lastOrderPresent && item === this.state.lastOrder ? (
         <View style={styles.lastOrderLayer}>
@@ -198,7 +200,7 @@ export default class BartenderOrderPage extends Component {
     );
   };
 
-  StatisticsView = ({label, value, paddingLeft}) => (
+  StatisticsView = ({ label, value, paddingLeft }) => (
     <View style={styles.orderStatsInsideBox}>
       <Text style={styles.statisticsLabel}>{label}</Text>
       <Text style={statisticsValueStyle(paddingLeft).style}>{value}</Text>
@@ -209,30 +211,32 @@ export default class BartenderOrderPage extends Component {
     const iconSize = 36;
     const iconColor = "white";
     const topBarIcons = [
-      <MaterialIcons
-        key={1}
-        name="settings"
-        size={iconSize}
-        color={iconColor}
-        style={topBarIconStyle(6).style}
-        onPress={() => this.props.navigation.navigate("bartenderSettings")}
-      />,
       <MaterialCommunityIcons
-        key={2}
+        key={1}
         name="cup"
         size={iconSize}
         color={iconColor}
         style={topBarIconStyle(6).style}
         onPress={() => this.props.navigation.navigate("bartenderManage")}
       />,
-      <MaterialIcons
-        key={3}
-        name="account-circle"
+      <MaterialCommunityIcons
+        key={2}
+        name="logout"
         size={iconSize}
         color={iconColor}
         style={topBarIconStyle(6).style}
+        onPress={() => logout(this)}
       />,
     ];
+    const slideDownIcon = (
+      <AntDesign
+        style={{ marginTop: 15 }}
+        name="down"
+        size={24}
+        color="blue"
+        onPress={() => this._panel.hide()}
+      />
+    );
     return (
       <View style={globalStyles.mainContainer}>
         <TopBar title={"Orders"} icons={topBarIcons} />
@@ -267,6 +271,28 @@ export default class BartenderOrderPage extends Component {
             paddingLeft={40}
           />
         </View>
+        <View style={{ flex: 0.05 }}>
+          <AntDesign
+            name="up"
+            size={24}
+            color="blue"
+            onPress={() => this._panel.show()}
+          />
+        </View>
+        <SlidingUpPanel
+          ref={(c) => (this._panel = c)}
+          showBackdrop={true}
+          visible={false}
+          allowDragging={false}
+          draggableRange={{ top: 240, bottom: 0 }}
+        >
+          <View style={styles.slideView}>
+            <BartenderSettingsPage
+              slideDownIcon={slideDownIcon}
+              ordersWaiting={this.state.waiting != 0}
+            />
+          </View>
+        </SlidingUpPanel>
       </View>
     );
   }

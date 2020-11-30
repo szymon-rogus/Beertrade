@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     flex: 0.9,
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
+    width: "90%",
   },
   listTitle: {
     fontSize: 18,

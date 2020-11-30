@@ -29,21 +29,9 @@ public class Table {
     private List<Client> actualClients;
 
     public void addClientToTable(Client client) throws TableException {
-        if (actualClients.size() == seats) {
-            throw new TableException(String.format("Table %d is full.", tableNumber));
-        }
         if (actualClients.contains(client)) {
             throw new TableException(String.format("Client %s is already registered in the table %d", client.getLogin(), tableNumber));
         }
         actualClients.add(client);
-    }
-
-    public TableClientViewJTO toTableClientViewJTO() {
-        final int occupiedSeats = actualClients.size();
-        return TableClientViewJTO.builder()
-                .tableNumber(getTableNumber())
-                .seats(getSeats())
-                .occupiedSeats(occupiedSeats)
-                .build();
     }
 }

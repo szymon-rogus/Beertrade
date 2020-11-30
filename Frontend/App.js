@@ -5,11 +5,11 @@ import RegistrationPage from "./src/Registration/RegistrationPage.js";
 import ForgottenPasswordPage from "./src/ForgottenPassword/ForgottenPasswordPage.js";
 import ProductsPage from "./src/Prices/ProductsPage";
 import ProductDetailsPage from "./src/Prices/ProductDetailsPage";
-import {NavigationContainer} from '@react-navigation/native';
-import stack from './Global.js'
-import BartenderOrderPage from './src/BartenderOrder/BartenderOrderPage.js';
-import BartenderManagementPage from './src/BartenderProductManagement/BartenderManagementPage.js'
-import BartenderSettingsPage from './src/BartenderProductManagement/BartenderManagementPage.js';
+import { NavigationContainer } from "@react-navigation/native";
+import stack from "./Global.js";
+import BartenderOrderPage from "./src/BartenderOrder/BartenderOrderPage.js";
+import BartenderManagementPage from "./src/BartenderProductManagement/BartenderManagementPage.js";
+import BartenderSettingsPage from "./src/BartenderProductManagement/BartenderManagementPage.js";
 
 export default class App extends React.Component {
   render() {
@@ -37,18 +37,13 @@ export default class App extends React.Component {
             options={{ headerShown: false }}
           />
           <stack.Screen
-              name="productDetails"
-              component={ProductDetailsPage}
-              options={{ headerShown: false }}
+            name="productDetails"
+            component={ProductDetailsPage}
+            options={{ headerShown: false }}
           />
           <stack.Screen
             name="bartenderOrder"
             component={BartenderOrderPage}
-            options={{ headerShown: false }}
-          />
-          <stack.Screen
-            name="bartenderSettings"
-            component={BartenderSettingsPage}
             options={{ headerShown: false }}
           />
           <stack.Screen

@@ -2,11 +2,11 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   orderListContainer: {
-    flex: 0.75,
+    flex: 0.7,
     backgroundColor: "white",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
+    width: "90%",
   },
   bartenderStatisticsBox: {
     flex: 0.15,
@@ -79,6 +79,12 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
+  },
+  slideView: {
+    flex: 0.4,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

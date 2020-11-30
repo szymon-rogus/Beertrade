@@ -16,13 +16,13 @@ export const styles = StyleSheet.create({
     height: 50,
   },
   loadingPageStyle: {
-    flex: 0.9,
+    flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },
   settingsPageContainer: {
-    flex: 0.9,
+    flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",

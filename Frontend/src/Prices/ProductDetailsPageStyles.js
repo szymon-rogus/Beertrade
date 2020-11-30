@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const detailStyles = StyleSheet.create({
   container: {
@@ -10,27 +10,27 @@ export const detailStyles = StyleSheet.create({
   },
   titleContainer: {
     flex: 0.1,
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
     margin: 10,
   },
   title: {
     fontSize: 38,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   infoBlock: {
     flex: 0.45,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 10,
   },
   photo: {
     flex: 0.55,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start'
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
   beerImage: {
     width: 120,
@@ -39,30 +39,31 @@ export const detailStyles = StyleSheet.create({
   },
   rightBlock: {
     flex: 0.45,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start'
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
   leftBlock: {
     flex: 0.35,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     marginLeft: 30,
     marginRight: 30,
   },
   orderButton: {
-    backgroundColor: 'darkblue',
+    backgroundColor: "darkblue",
     paddingVertical: 5,
     paddingHorizontal: 15,
+    alignItems: "center",
     marginTop: 30,
     borderRadius: 10,
-    width: 100,
+    width: 125,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
+    textAlign: "center",
     fontSize: 16,
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 });
-

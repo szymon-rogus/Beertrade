@@ -15,10 +15,7 @@ import pl.beertrade.repositories.OrderRepository;
 import pl.beertrade.repositories.ProductRepository;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -107,6 +104,15 @@ public class ProductService {
         productRepository.save(product);
         log.trace("EXIT - setProductOnStore");
         return product;
+    }
+
+    public Map<UUID, Double> getBaseProductPrices() {
+        log.trace("ENTRY - getBaseProductPrices");
+        final List<Beer> products = productRepository.findAll();
+        final Map<UUID, Double> productPricesMap = products.stream()
+                .collect(Collectors.toMap(Beer::getId, Beer::getBasePrice));
+        log.trace("EXIT - getBaseProductPrices - {}", productPricesMap);
+        return productPricesMap;
     }
 
 }
