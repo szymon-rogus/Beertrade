@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
+import { Tooltip} from "react-native-elements";
 import { beerPhoto, http, TopBar, logout } from "../../Global";
 import { detailStyles } from "./ProductDetailsPageStyles";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -8,14 +9,28 @@ const B = (props) => (
   <Text style={{ fontWeight: "bold" }}>{props.children}</Text>
 );
 
+const ToolTipInfo = (text) => {
+  switch(text) {
+
+    case "Type: ":   return <Text>Differentiate beers by factors such as colour, flavour, strength etc.</Text>;
+    case "IBU: ":   return <Text>IBU Describes bitterness of a beer</Text>;
+    case "BLG: ": return <Text>BLG Describes the amount of sugar in a beer</Text>;
+    case "EBC: ":  return <Text>EBC Describes the colour of beer and malt</Text>;
+
+    default:      return <Text>{text}</Text>
+  }
+}
+
 const Attribute = ({ boldText, text, icon, padding, margin }) => (
   <View style={{ flexDirection: "row" }}>
-    <Ionicons
-      name={icon}
-      size={16}
-      color="darkblue"
-      style={{ paddingRight: 5, paddingTop: padding }}
-    />
+    <Tooltip popover={ToolTipInfo(boldText)} width={100} height={100}>
+      <Ionicons
+          name={icon}
+          size={16}
+          color="darkblue"
+          style={{ paddingRight: 5, paddingTop: padding }}
+      />
+    </Tooltip>
     <Text style={{ marginTop: margin }}>
       <B>{boldText}</B>
       {text}
@@ -115,8 +130,9 @@ export default class ProductDetailsPage extends Component {
   }
 
   setPrice = async () => {
-    http.get("/price/" + this.props.route.params.itemId).then((response) => {
-      if (response.data.checkStamp == this.state.checkStamp) {
+    http.get("/price/" + this.props.route.params.itemId)
+        .then((response) => {
+      if (response.data.checkStamp === this.state.checkStamp) {
         this.setPrice();
       } else {
         this.setState({
@@ -124,11 +140,12 @@ export default class ProductDetailsPage extends Component {
           checkStamp: response.data.checkStamp,
         });
       }
-    });
+    })
+        .catch((err) => console.log(err));;
   };
 
-  componentDidMount() {
-    this.setPrice();
+  async componentDidMount() {
+    await this.setPrice();
     this.setProductDetails();
     this.interval = setInterval(
       function (self) {

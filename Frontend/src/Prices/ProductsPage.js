@@ -8,10 +8,11 @@ import {
   View,
 } from "react-native";
 import { globalStyles } from "../../GlobalStyles";
-import { http, beerPhoto } from "../../Global";
+import {http, beerPhoto, TopBar, logout} from "../../Global";
 import { buttonStyleSheet, styles } from "./ProductsPageStyles";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import {FontAwesome, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import { ChooseTableBar } from "./ChooseTableBar";
+import {Sorter} from "./ClientModals/Sorter";
 
 const Item = ({ item, onPress, navigation, buttonEnabled, price }) => (
   <View style={styles.item}>
@@ -86,6 +87,8 @@ export default class ProductsPage extends Component {
       prices: {},
       pricesCheckStamp: null,
       dataLoaded: false,
+      sortBy: 'Name',
+      sortAsc: true,
     };
   }
 
@@ -117,6 +120,7 @@ export default class ProductsPage extends Component {
     http
       .get("/product/onStore")
       .then((response) => response.data)
+        .then((data) => {this.sortThisShit(data); return data;})
       .then((data) => this.setState({ products: data }))
       .catch((err) => console.log(err));
     http.get("/session").then((response) => {
@@ -191,9 +195,44 @@ export default class ProductsPage extends Component {
     this.setState({ filteredProducts: filteredData });
   };
 
+  sortThisShit = (list) => {
+    list.sort((a,b) => {
+      if(this.state.sortBy === 'Name') {
+        return this.state.sortAsc ? a.name.toLowerCase() > b.name.toLowerCase() : a.name.toLowerCase() < b.name.toLowerCase()
+      }
+      if(this.state.sortBy === 'IBU') {
+        return this.state.sortAsc ? a.ibu > b.ibu : a.ibu < b.ibu
+      }
+      if(this.state.sortBy === 'Alcohol') {
+        return this.state.sortAsc ? a.alcoholPercentage > b.alcoholPercentage : a.alcoholPercentage < b.alcoholPercentage
+      }
+    })
+  }
+
   render() {
+    const topBarIcons = [
+      <MaterialCommunityIcons
+          key={1}
+          name="logout"
+          size={36}
+          color={"white"}
+          style={{ marginRight: 20 }}
+          onPress={() => logout(this)}
+      />,
+    ];
+    const menuIcon = [
+      <MaterialCommunityIcons
+          key={1}
+          name="menu"
+          size={36}
+          color={"white"}
+          style={{ marginRight: 20 }}
+          onPress={() => logout(this)}
+      />,
+    ];
     return (
       <View style={globalStyles.mainContainer}>
+        <TopBar backIcon={menuIcon} icons={topBarIcons}/>
         <View style={styles.searchBar}>
           <Ionicons
             style={{ marginRight: 10, marginTop: 5 }}
@@ -207,7 +246,7 @@ export default class ProductsPage extends Component {
             value={this.state.searchText}
             style={{
               backgroundColor: "white",
-              width: "70%",
+              width: "60%",
               borderWidth: 1,
               marginTop: 5,
             }}
@@ -218,12 +257,7 @@ export default class ProductsPage extends Component {
             size={32}
             color="black"
           />
-          <FontAwesome
-            name="unsorted"
-            size={32}
-            color="black"
-            style={{ marginTop: 15 }}
-          />
+          <Sorter context={this} />
         </View>
         <View style={{ flex: 0.1, width: "100%" }}>
           <ChooseTableBar
