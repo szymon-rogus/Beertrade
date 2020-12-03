@@ -12,12 +12,12 @@ const B = (props) => (
 const ToolTipInfo = (text) => {
   switch(text) {
 
-    case "Type: ":   return <Text>Differentiate beers by factors such as colour, flavour, strength etc.</Text>;
-    case "IBU: ":   return <Text>IBU Describes bitterness of a beer</Text>;
-    case "BLG: ": return <Text>BLG Describes the amount of sugar in a beer</Text>;
-    case "EBC: ":  return <Text>EBC Describes the colour of beer and malt</Text>;
+    case "Type: ":   return <Text style={{color: 'white'}}>Differentiate beers by factors such as colour, flavour, strength etc.</Text>;
+    case "IBU: ":   return <Text style={{color: 'white'}}>IBU Describes bitterness of a beer</Text>;
+    case "BLG: ": return <Text style={{color: 'white'}}>BLG Describes the amount of sugar in a beer</Text>;
+    case "EBC: ":  return <Text style={{color: 'white'}}>EBC Describes the colour of beer and malt</Text>;
 
-    default:      return <Text>{text}</Text>
+    default:      return <Text style={{color: 'white'}}>{text}</Text>
   }
 }
 

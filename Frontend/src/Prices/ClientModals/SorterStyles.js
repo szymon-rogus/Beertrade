@@ -14,7 +14,9 @@ export const sorterStyles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   sorterPropertyTitle: {
-    fontSize: 24,
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: 'black',
   },
   sorterButton: {
     flexDirection: 'row',
@@ -24,7 +26,7 @@ export const sorterStyles = StyleSheet.create({
     paddingVertical: 3,
     paddingHorizontal: 12,
     margin: 5,
-    fontSize: 14,
+    fontSize: 15,
     borderRadius: 10,
     width: 80,
   },
@@ -33,10 +35,13 @@ export const sorterStyles = StyleSheet.create({
   },
   picker: {
     flex: 0.2,
-    backgroundColor: '#D3D3D3',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     marginBottom: 10,
+  },
+  dropdownList: {
+    backgroundColor: '#D3D3D3',
+    width: 200
   },
   selector: {
     flex: 0.2,
