@@ -20,7 +20,7 @@ export default class ClientOrderPage extends Component {
 
   constructor(props) {
     super(props);
-    this.updateItems();
+    this.updateItems()
   }
 
   updateItems = async () => {
@@ -41,15 +41,22 @@ export default class ClientOrderPage extends Component {
     );
   };
 
+
+
   updateInterval = setInterval(async () => {
     this.updateItems();
-  }, 5000)
+  }, 5000);
 
   componentDidMount() {
-
+    try {
+      this.updateInterval;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   componentWillUnmount() {
+    clearInterval(this.updateInterval);
   }
 
   render() {

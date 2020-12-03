@@ -34,7 +34,7 @@ export class Sorter extends Component {
     this.props.context.setState({products: products, filteredProducts: productsFiltered})
 
     console.log(products)
-
+    this.toggleModal()
   }
 
   render() {
@@ -51,7 +51,7 @@ export class Sorter extends Component {
           onBackdropPress={() => this.toggleModal()}
           onSwipeComplete={() => this.toggleModal()}
           swipeDirection="right" isVisible={this.state.isModalVisible}
-          style={{backgroundColor: 'white', marginTop: 160, marginBottom: 260}}>
+          style={{backgroundColor: 'white', marginTop: 160, marginBottom: 160}}>
         <View style={sorterStyles.container}>
           <View style={sorterStyles.sorterProperty}>
             <Text style={sorterStyles.sorterPropertyTitle}> Sort by </Text>

@@ -12,7 +12,7 @@ import {http, beerPhoto, TopBar, logout} from "../../Global";
 import { buttonStyleSheet, styles } from "./ProductsPageStyles";
 import {FontAwesome, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import { ChooseTableBar } from "./ChooseTableBar";
-import {Sorter} from "./ClientModals/Sorter";
+import {Sorter} from "../Prices/ClientModals/Sorter";
 
 const Item = ({ item, onPress, navigation, buttonEnabled, price }) => (
   <View style={styles.item}>
@@ -227,7 +227,7 @@ export default class ProductsPage extends Component {
           size={36}
           color={"white"}
           style={{ marginRight: 20 }}
-          onPress={() => logout(this)}
+          onPress={() => this.props.navigation.navigate("clientOrders")}
       />,
     ];
     return (
