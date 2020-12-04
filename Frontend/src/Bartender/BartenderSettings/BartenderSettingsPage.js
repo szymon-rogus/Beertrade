@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { http } from "../../Global.js";
+import { http } from "../../../Global.js";
 import { View, Text, TouchableOpacity } from "react-native";
-import { globalStyles } from "../../GlobalStyles.js";
+import { globalStyles } from "../../../GlobalStyles.js";
 import { styles } from "./BartenderSettingsPageStyles.js";
 import SwitchSelector from "react-native-switch-selector";
 

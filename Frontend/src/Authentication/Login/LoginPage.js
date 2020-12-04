@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, TextInput } from "react-native";
-import { http, setAuthorizationToken } from "../../Global.js";
+import { http, setAuthorizationToken } from "../../../Global.js";
 import { styles, fontColor, bgColor } from "./LoginPageStyles.js";
-import { globalStyles } from "../../GlobalStyles.js";
+import { globalStyles } from "../../../GlobalStyles.js";
 
 export default class LoginPage extends Component {
   state = {

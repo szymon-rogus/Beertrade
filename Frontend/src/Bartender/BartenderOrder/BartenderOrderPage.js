@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { http, TopBar, logout } from "../../Global.js";
+import { http, TopBar, logout } from "../../../Global.js";
 import { View, Text, FlatList } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { globalStyles, topBarIconStyle } from "../../GlobalStyles.js";
+import { globalStyles, topBarIconStyle } from "../../../GlobalStyles.js";
 import { styles, statisticsValueStyle } from "./BartenderOrderPageStyles.js";
 import * as Progress from "react-native-progress";
 import OrderItem from "./OrderItem.js";

@@ -1,8 +1,8 @@
 import { Text, View } from "react-native";
 import { AntDesign, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { styles } from "./ClientOrderPageStyles";
-import { listStyles } from "../../ListStyles";
-import { CURRENCY } from "../../Global";
+import { listStyles } from "../../../ListStyles";
+import { CURRENCY } from "../../../Global";
 import React from "react";
 
 const glass = (<FontAwesome5 name="glass-whiskey" size={20} color="black" />)
