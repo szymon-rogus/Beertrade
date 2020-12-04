@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import Modal from "react-native-modal";
 import {Text, TouchableOpacity, View} from "react-native";
-import {FontAwesome, Ionicons} from "@expo/vector-icons";
+import {FontAwesome} from "@expo/vector-icons";
 import {sorterStyles} from "./SorterStyles";
-import RNPickerSelect from 'react-native-picker-select';
+import DropDownPicker from 'react-native-dropdown-picker';
 import SwitchSelector from "react-native-switch-selector";
 
 export class Sorter extends Component {
@@ -23,7 +23,7 @@ export class Sorter extends Component {
   }
 
   sortList = (value) => {
-    this.props.context.setState({sortBy : value});
+    this.props.context.setState({sortBy: value});
 
     let products = this.props.context.state.products
     let productsFiltered = this.props.context.state.filteredProducts
@@ -44,7 +44,7 @@ export class Sorter extends Component {
             name="unsorted"
             size={32}
             color="black"
-            style={{ marginTop: 15 }}
+            style={{marginTop: 15}}
         />
       </TouchableOpacity>
       <Modal
@@ -57,14 +57,21 @@ export class Sorter extends Component {
             <Text style={sorterStyles.sorterPropertyTitle}> Sort by </Text>
           </View>
           <View style={sorterStyles.picker}>
-            <RNPickerSelect
-                onValueChange={(value) => this.setState({sortBy : value})}
-                value={this.props.context.state.sortBy}
+            <DropDownPicker
                 items={[
-                  { label: 'Name', value: 'Name' },
-                  { label: 'IBU', value: 'IBU' },
-                  { label: 'Alcohol', value: 'Alcohol' },
+                  {label: 'Name', value: 'Name'},
+                  {label: 'IBU', value: 'IBU'},
+                  {label: 'Alcohol', value: 'Alcohol'},
                 ]}
+                defaultValue={this.state.sortBy}
+                onChangeItem={item => this.setState({
+                  sortBy: item.value
+                })}
+                style={sorterStyles.dropdownList}
+                dropDownStyle={{backgroundColor: 'white', width: 200}}
+                activeItemStyle={{
+                  backgroundColor: '#D3D3D3',
+                }}
             />
           </View>
           <View style={sorterStyles.selector}>
@@ -78,8 +85,8 @@ export class Sorter extends Component {
                             borderColor="black"
                             hasPadding
                             options={[
-                              { label: "Ascending", value: "Ascending" },
-                              { label: "Descending", value: "Descending" },
+                              {label: "Ascending", value: "Ascending"},
+                              {label: "Descending", value: "Descending"},
                             ]}
             />
           </View>
@@ -95,5 +102,4 @@ export class Sorter extends Component {
       </Modal>
     </View>
   }
-
 }
