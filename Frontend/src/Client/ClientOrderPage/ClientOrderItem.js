@@ -40,7 +40,7 @@ export const ClientOrderItem = ({ item }) => (
       </View>
       <ItemAmount amount = {item.amount} />
       <View>
-        <Text style={styles.mediumText}>Total: {item.totalPrice.toFixed(2)}{CURRENCY}</Text>
+        <Text style={styles.mediumText}>Total: {item.totalPrice != null ? item.totalPrice.toFixed(2) : null}{CURRENCY}</Text>
       </View>
     </View>
     <View style={styles.rightSection}>

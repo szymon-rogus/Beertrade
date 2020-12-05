@@ -8,13 +8,13 @@ import {
   View,
 } from "react-native";
 import { globalStyles } from "../../../GlobalStyles";
-import {http, beerPhoto, TopBar, logout} from "../../../Global";
+import {http, beerPhoto, TopBar, logout, CURRENCY} from "../../../Global";
 import { buttonStyleSheet, styles } from "./ProductsPageStyles";
 import {FontAwesome5, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import { ChooseTableBar } from "./ClientModals/TablePicker/ChooseTableBar";
 import {Sorter} from "./ClientModals/Sorter/Sorter";
 
-const Item = ({ item, onPress, navigation, buttonEnabled, price }) => (
+const Item = ({ item, onPress, navigation, buttonEnabled, isTableSet, price }) => (
   <View style={styles.item}>
     <View
       style={{
@@ -57,11 +57,12 @@ const Item = ({ item, onPress, navigation, buttonEnabled, price }) => (
           onPress={() =>
             navigation.navigate("productDetails", {
               itemId: item.id,
+              isTableSet: isTableSet
             })
           }
         />
       </TouchableOpacity>
-      <Text style={styles.attributes}>{price} PLN</Text>
+      <Text style={styles.attributes}>{price != null ? price.toFixed(2) : price} {CURRENCY}</Text>
       <TouchableOpacity
         style={buttonStyleSheet(buttonEnabled).orderButton}
         disabled={!buttonEnabled}
@@ -110,6 +111,7 @@ export default class ProductsPage extends Component {
             : item.basePrice
         }
         buttonEnabled={this.state.isTableSet && this.state.sessionEnabled}
+        isTableSet = {this.state.isTableSet}
         onPress={() => {
           this.setState({ selectedId: item.id });
           this.orderProduct(item.id, this.getPrice(item));
@@ -128,7 +130,7 @@ export default class ProductsPage extends Component {
       .then((data) => this.setState({ products: data }))
       .catch((err) => console.log(err));
     http.get("/session").then((response) => {
-      if (response.data == "START") {
+      if (response.data === "START") {
         this.setState({
           sessionEnabled: true,
           dataLoaded: true,
@@ -150,7 +152,7 @@ export default class ProductsPage extends Component {
       .then((response) => {
         responseCheckStamp = response.data.checkStamp;
         prices = response.data.prices;
-        if (responseCheckStamp == this.state.pricesCheckStamp) {
+        if (responseCheckStamp === this.state.pricesCheckStamp) {
           this.setPrices();
         } else {
           this.setState({
