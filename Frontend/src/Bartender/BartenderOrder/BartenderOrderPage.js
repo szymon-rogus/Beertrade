@@ -7,7 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { globalStyles, topBarIconStyle } from "../../../GlobalStyles.js";
 import { styles, statisticsValueStyle } from "./BartenderOrderPageStyles.js";
 import * as Progress from "react-native-progress";
-import OrderItem from "./OrderItem.js";
+import { OrderItem } from "./OrderItem.js";
 import SlidingUpPanel from "rn-sliding-up-panel";
 import BartenderSettingsPage from "../BartenderSettings/BartenderSettingsPage.js";
 
