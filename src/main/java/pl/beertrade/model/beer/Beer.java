@@ -4,6 +4,7 @@ import lombok.*;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.annotations.GenericGenerator;
 import pl.beertrade.model.beer.enums.ProductState;
+import pl.beertrade.model.beer.jto.ConfigureProductsListItemJTO;
 import pl.beertrade.model.beer.jto.ManageProductsListItemJTO;
 import pl.beertrade.model.beer.jto.ProductDetailsJTO;
 import pl.beertrade.model.beer.jto.ProductListItemJTO;
@@ -109,4 +110,14 @@ public class Beer {
                 .build();
     }
 
+    public ConfigureProductsListItemJTO toConfigureProductsListItemJTO() {
+        return ConfigureProductsListItemJTO.builder()
+                .id(id)
+                .name(name)
+                .basePrice(basePrice)
+                .minPrice(minPrice)
+                .maxPrice(maxPrice)
+                .amortizationFactor(amortizationFactor)
+                .build();
+    }
 }

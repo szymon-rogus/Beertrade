@@ -46,6 +46,12 @@ public class ProductController {
         return productList;
     }
 
+    @GetMapping("/configure/all")
+    public List<ConfigureProductsListItemJTO> getConfigureProductsList() {
+        final List<ConfigureProductsListItemJTO> productList = productService.getConfigureProductsList();
+        return productList;
+    }
+
     @PostMapping("/state/{id}/{state}")
     public ManageProductsListItemJTO setProductState(@PathVariable UUID id, @PathVariable String state) throws NotFoundException {
         log.trace("ENTRY - enableProduct");
