@@ -28,8 +28,10 @@ export default class LoginPage extends Component {
           let role = response.data.role;
           if (role === "pl.beertrade.model.user.Bartender") {
             this.props.navigation.navigate("bartenderOrder");
-          } else {
+          } else if (role === "pl.beertrade.model.user.Client"){
             this.props.navigation.navigate("productList");
+          } else {
+            this.props.navigation.navigate("ownerProductList");
           }
         })
         .catch((_) => alert("Invalid login or password!"));
