@@ -46,13 +46,13 @@ public class ProductService {
         log.trace("EXIT - addProduct");
     }
 
-    public void orderProduct(@NonNull UUID id, @NonNull Client client) throws NotFoundException {
+    public void orderProduct(@NonNull UUID id, Float price, @NonNull Client client) throws NotFoundException {
         log.trace("ENTRY - orderProduct - {} {}", id, client);
         final Optional<Order> boughtBeerOptional = productRepository.findById(id)
                 .map((beer) -> Order.builder()
                         .client(client)
                         .product(beer)
-                        .price(10)  // TODO: Take price from algorithm
+                        .price(price)
                         .boughtDate(Date.from(Instant.now()))
                         .orderViewId(orderViewId)
                         .orderState(OrderState.WAITING)

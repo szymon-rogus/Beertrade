@@ -7,12 +7,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { globalStyles } from "../../GlobalStyles";
-import {http, beerPhoto, TopBar, logout} from "../../Global";
+import { globalStyles } from "../../../GlobalStyles";
+import {http, beerPhoto, TopBar, logout} from "../../../Global";
 import { buttonStyleSheet, styles } from "./ProductsPageStyles";
-import {FontAwesome, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
-import { ChooseTableBar } from "./ChooseTableBar";
-import {Sorter} from "../Prices/ClientModals/Sorter";
+import {FontAwesome5, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
+import { ChooseTableBar } from "./ClientModals/TablePicker/ChooseTableBar";
+import {Sorter} from "./ClientModals/Sorter/Sorter";
 
 const Item = ({ item, onPress, navigation, buttonEnabled, price }) => (
   <View style={styles.item}>
@@ -92,8 +92,12 @@ export default class ProductsPage extends Component {
     };
   }
 
-  orderProduct(id) {
-    http.post("/product/order/" + id).catch((err) => console.log(err));
+  orderProduct(id, price) {
+    http.post("/product/order/" + id, {price : price}).catch((err) => console.log(err));
+  }
+
+  getPrice(item) {
+    return this.state.prices[item.id] != null ? this.state.prices[item.id] : item.basePrice
   }
 
   renderItem = ({ item }) => {
@@ -108,7 +112,7 @@ export default class ProductsPage extends Component {
         buttonEnabled={this.state.isTableSet && this.state.sessionEnabled}
         onPress={() => {
           this.setState({ selectedId: item.id });
-          this.orderProduct(item.id);
+          this.orderProduct(item.id, this.getPrice(item));
           alert("Product ordered.");
         }}
         navigation={this.props.navigation}
@@ -221,12 +225,12 @@ export default class ProductsPage extends Component {
       />,
     ];
     const menuIcon = [
-      <MaterialCommunityIcons
+      <FontAwesome5
           key={1}
-          name="menu"
+          name="th-list"
           size={36}
           color={"white"}
-          style={{ marginRight: 20 }}
+          style={{ marginLeft: 20 }}
           onPress={() => this.props.navigation.navigate("clientOrders")}
       />,
     ];

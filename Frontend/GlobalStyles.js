@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { fontColor } from "./src/Login/LoginPageStyles";
+import { fontColor } from "./src/Authentication/Login/LoginPageStyles";
 import React from "react";
 
 export const globalStyles = StyleSheet.create({

@@ -2,8 +2,8 @@ import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import React, { Component } from "react";
 import { chooseTablePopupStyles, tableStyles } from "./TableStyles";
-import { http } from "../../Global";
-import { listStyles } from "../../ListStyles";
+import { http } from "../../../../../Global";
+import { listStyles } from "../../../../../ListStyles";
 
 const Item = ({ item, onPress, style }) => (
   <TouchableOpacity onPress={onPress} style={style}>

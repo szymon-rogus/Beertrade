@@ -15,6 +15,7 @@ import pl.beertrade.services.ProductService;
 import pl.beertrade.util.UserContextProvider;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,9 +71,9 @@ public class ProductController {
     }
 
     @PostMapping("/order/{id}")
-    public ResponseEntity<?> orderProduct(@PathVariable UUID id) throws NotFoundException {
+    public ResponseEntity<?> orderProduct(@PathVariable UUID id, @RequestBody LinkedHashMap<String, Float> price) throws NotFoundException {
         log.trace("ENTRY - orderProduct - {}", id);
-        productService.orderProduct(id, userContextProvider.getUserAsClient());
+        productService.orderProduct(id, price.get("price"), userContextProvider.getUserAsClient());
         log.trace("EXIT - orderProduct");
         return ResponseEntity.ok()
                 .build();

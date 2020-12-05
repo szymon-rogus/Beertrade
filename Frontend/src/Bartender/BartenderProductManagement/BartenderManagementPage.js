@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { http, TopBar, logout } from "../../Global.js";
+import { http, TopBar, logout } from "../../../Global.js";
 import { View, FlatList } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { globalStyles, topBarIconStyle } from "../../GlobalStyles.js";
+import { globalStyles, topBarIconStyle } from "../../../GlobalStyles.js";
 import { styles } from "./BartenderManagementPageStyles.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 import { ProductListItem } from "./ProductListItem.js";
-import { beerPhoto } from "../../Global";
+import { beerPhoto } from "../../../Global";
 
 const ENABLED = "enabled";
 const DISABLED = "disabled";

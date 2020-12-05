@@ -1,15 +1,15 @@
 import React from "react";
 import "react-native-gesture-handler";
-import LoginPage from "./src/Login/LoginPage.js";
-import RegistrationPage from "./src/Registration/RegistrationPage.js";
-import ForgottenPasswordPage from "./src/ForgottenPassword/ForgottenPasswordPage.js";
+import LoginPage from "./src/Authentication/Login/LoginPage.js";
+import RegistrationPage from "./src/Authentication/Registration/RegistrationPage.js";
+import ForgottenPasswordPage from "./src/Authentication/ForgottenPassword/ForgottenPasswordPage.js";
 import { NavigationContainer } from "@react-navigation/native";
 import stack from "./Global.js";
-import BartenderOrderPage from "./src/BartenderOrder/BartenderOrderPage.js";
-import BartenderManagementPage from "./src/BartenderProductManagement/BartenderManagementPage.js";
-import ProductDetailsPage from "./src/Products/ProductDetailsPage";
-import ClientOrderPage from "./src/ClientOrderPage/ClientOrderPage";
-import ProductsPage from "./src/Products/ProductsPage";
+import BartenderOrderPage from "./src/Bartender/BartenderOrder/BartenderOrderPage.js";
+import BartenderManagementPage from "./src/Bartender/BartenderProductManagement/BartenderManagementPage.js";
+import ProductDetailsPage from "./src/Client/ClientProductDetails/ProductDetailsPage";
+import ClientOrderPage from "./src/Client/ClientOrderPage/ClientOrderPage";
+import ProductsPage from "./src/Client/ClientProductList/ProductsPage";
 
 export default class App extends React.Component {
   render() {

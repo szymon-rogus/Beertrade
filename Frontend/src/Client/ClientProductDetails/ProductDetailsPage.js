@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { Tooltip} from "react-native-elements";
-import { beerPhoto, http, TopBar, logout } from "../../Global";
+import { beerPhoto, http, TopBar, logout } from "../../../Global";
 import { detailStyles } from "./ProductDetailsPageStyles";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -118,8 +118,8 @@ export default class ProductDetailsPage extends Component {
     };
   }
 
-  orderProduct(id) {
-    http.post("/product/order/" + id).catch((err) => console.log(err));
+  orderProduct(id, price) {
+    http.post("/product/order/" + id, {price: price}).catch((err) => console.log(err));
   }
 
   setProductDetails() {
@@ -186,7 +186,7 @@ export default class ProductDetailsPage extends Component {
         product={this.state.product}
         price={this.state.price}
         onPress={() => {
-          this.orderProduct(this.props.route.params.itemId);
+          this.orderProduct(this.props.route.params.itemId, this.state.price);
           alert("Product ordered.");
         }}
         backIcon={backIcon}

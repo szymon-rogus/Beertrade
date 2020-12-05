@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { http } from '../../Global.js'
+import { http } from '../../../Global.js'
 import { FlatList, SafeAreaView } from "react-native";
-import { globalStyles } from '../../GlobalStyles.js'
+import { globalStyles } from '../../../GlobalStyles.js'
 import { ClientOrderItem } from "./ClientOrderItem";
 
 
