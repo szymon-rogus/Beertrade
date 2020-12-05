@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { Tooltip} from "react-native-elements";
-import { beerPhoto, http, TopBar, logout } from "../../../Global";
-import { detailStyles } from "./ProductDetailsPageStyles";
+import {beerPhoto, http, TopBar, logout, CURRENCY} from "../../../Global";
+import {detailButtonStyleSheet, detailStyles} from "./ProductDetailsPageStyles";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const B = (props) => (
@@ -38,7 +38,7 @@ const Attribute = ({ boldText, text, icon, padding, margin }) => (
   </View>
 );
 
-const ItemDetails = ({ product, onPress, backIcon, topBarIcons, price }) => (
+const ItemDetails = ({ product, price, onPress, buttonEnabled, backIcon, topBarIcons }) => (
   <View style={detailStyles.container}>
     <TopBar backIcon={backIcon} icons={topBarIcons} />
     <View style={detailStyles.titleContainer}>
@@ -82,10 +82,12 @@ const ItemDetails = ({ product, onPress, backIcon, topBarIcons, price }) => (
           padding={6}
           margin={5}
         />
-        <TouchableOpacity style={detailStyles.orderButton} onPress={onPress}>
+        <TouchableOpacity
+            style={detailButtonStyleSheet(buttonEnabled).orderButton} onPress={onPress}
+            disabled={!buttonEnabled}>
           <Text style={detailStyles.buttonText}>
             Order for{"\n"}
-            {price} PLN
+            {price != null ? price.toFixed(2) : price} {CURRENCY}
           </Text>
         </TouchableOpacity>
       </View>
@@ -115,11 +117,26 @@ export default class ProductDetailsPage extends Component {
       product: {},
       price: null,
       checkStamp: null,
+      sessionEnabled: false,
     };
   }
 
   orderProduct(id, price) {
     http.post("/product/order/" + id, {price: price}).catch((err) => console.log(err));
+  }
+
+  checkSession() {
+    http.get("/session").then((response) => {
+      if (response.data === "START") {
+        this.setState({
+          sessionEnabled: true
+        });
+      } else {
+        this.setState({
+          sessionEnabled: false
+        });
+      }
+    });
   }
 
   setProductDetails() {
@@ -147,6 +164,7 @@ export default class ProductDetailsPage extends Component {
   async componentDidMount() {
     await this.setPrice();
     this.setProductDetails();
+    this.checkSession();
     this.interval = setInterval(
       function (self) {
         self.setPrice();
@@ -154,11 +172,36 @@ export default class ProductDetailsPage extends Component {
       15000,
       this
     );
+
+    this.sessionInterval = setInterval(
+        function (self) {
+          self.setPrice();
+        },
+        5000,
+        this
+    );
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
+    clearInterval(this.sessionInterval);
   }
+
+  renderItemDetails = ({ backIcon, topBarIcons }) => {
+    return (
+        <ItemDetails
+            product={this.state.product}
+            price={this.state.price}
+            onPress={() => {
+              this.orderProduct(this.props.route.params.itemId, this.state.price);
+              alert("Product ordered.");
+            }}
+            buttonEnabled={this.state.sessionEnabled && this.props.route.params.isTableSet}
+            backIcon={backIcon}
+            topBarIcons={topBarIcons}
+        />
+    );
+  };
 
   render() {
     const backIcon = [
@@ -182,16 +225,7 @@ export default class ProductDetailsPage extends Component {
       />,
     ];
     return (
-      <ItemDetails
-        product={this.state.product}
-        price={this.state.price}
-        onPress={() => {
-          this.orderProduct(this.props.route.params.itemId, this.state.price);
-          alert("Product ordered.");
-        }}
-        backIcon={backIcon}
-        topBarIcons={topBarIcons}
-      />
+        this.renderItemDetails({backIcon, topBarIcons})
     );
   }
 }

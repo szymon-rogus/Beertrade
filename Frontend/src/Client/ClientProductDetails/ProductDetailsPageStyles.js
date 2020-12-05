@@ -51,15 +51,6 @@ export const detailStyles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
   },
-  orderButton: {
-    backgroundColor: "darkblue",
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    alignItems: "center",
-    marginTop: 30,
-    borderRadius: 10,
-    width: 125,
-  },
   buttonText: {
     color: "white",
     textAlign: "center",
@@ -67,3 +58,16 @@ export const detailStyles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
+export const detailButtonStyleSheet = (isTableSet) =>
+    StyleSheet.create({
+      orderButton: {
+        backgroundColor: isTableSet ? "darkblue" : "grey",
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        alignItems: "center",
+        marginTop: 30,
+        borderRadius: 10,
+        width: 125,
+      },
+    });
