@@ -18,7 +18,8 @@ export class Sorter extends Component {
 
   toggleModal = () => {
     this.setState({
-      isModalVisible: !this.state.isModalVisible
+      isModalVisible: !this.state.isModalVisible,
+      sortBy: this.props.context.state.sortBy
     })
   }
 
@@ -28,12 +29,10 @@ export class Sorter extends Component {
     let products = this.props.context.state.products
     let productsFiltered = this.props.context.state.filteredProducts
 
-    this.props.context.sortThisShit(products, value)
-    this.props.context.sortThisShit(productsFiltered, value)
+    this.props.context.sortByChosenAttr(products, value)
+    this.props.context.sortByChosenAttr(productsFiltered, value)
 
     this.props.context.setState({products: products, filteredProducts: productsFiltered})
-
-    console.log(products)
     this.toggleModal()
   }
 
@@ -90,7 +89,7 @@ export class Sorter extends Component {
                             ]}
             />
           </View>
-          <View style={sorterStyles.filterButtonContainer}>
+          <View style={sorterStyles.sorterButtonContainer}>
             <TouchableOpacity style={sorterStyles.sorterButton} onPress={() => this.toggleModal()}>
               <Text style={{color: 'white'}}>Cancel</Text>
             </TouchableOpacity>

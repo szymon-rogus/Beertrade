@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity, TextInput } from "react-native";
 import { http } from "../../../Global.js";
 import { styles, fontColor, bgColor } from "./ForgottenPasswordPageStyles.js";
+import {globalStyles} from "../../../GlobalStyles";
 
 export default class ForgottenPasswordPage extends Component {
   state = {
@@ -9,7 +10,7 @@ export default class ForgottenPasswordPage extends Component {
   };
 
   handleSend = () => {
-    if (this.state.email != "") {
+    if (this.state.email !== "") {
       http
         .post("/forgottenpass", this.state.email)
         .catch((err) => alert("Server is not responding!"));
@@ -20,9 +21,9 @@ export default class ForgottenPasswordPage extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        <Text style={styles.textStyle}></Text>
+        <Text style={styles.textStyle}/>
         <TextInput
-          style={styles.input}
+          style={globalStyles.input}
           underlineColorAndroid="transparent"
           placeholder="Email"
           placeholderTextColor={fontColor}

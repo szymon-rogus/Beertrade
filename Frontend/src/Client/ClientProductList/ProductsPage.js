@@ -1,18 +1,13 @@
 import React, { Component } from "react";
-import {
-  FlatList,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../../../GlobalStyles";
-import {http, beerPhoto, TopBar, logout, CURRENCY} from "../../../Global";
+import { http, beerPhoto, TopBar, logout, CURRENCY } from "../../../Global";
 import { buttonStyleSheet, styles } from "./ProductsPageStyles";
-import {FontAwesome5, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
+import { FontAwesome5, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { ChooseTableBar } from "./ClientModals/TablePicker/ChooseTableBar";
-import {Sorter} from "./ClientModals/Sorter/Sorter";
+import { Sorter } from "./ClientModals/Sorter/Sorter";
+import Autocomplete from 'react-native-autocomplete-input';
+import { Filter } from "./ClientModals/Filter/Filter";
 
 const Item = ({ item, onPress, navigation, buttonEnabled, isTableSet, price }) => (
   <View style={styles.item}>
@@ -90,6 +85,10 @@ export default class ProductsPage extends Component {
       dataLoaded: false,
       sortBy: 'Name',
       sortAsc: true,
+      alcoholMin: 0,
+      alcoholMax: 10,
+      ibuMin: 5,
+      ibuMax: 80,
     };
   }
 
@@ -126,7 +125,8 @@ export default class ProductsPage extends Component {
     http
       .get("/product/onStore")
       .then((response) => response.data)
-        .then((data) => {this.sortThisShit(data); return data;})
+        .then((data) => {data = this.filterBy(data); return data})
+        .then((data) => {this.sortByChosenAttr(data); return data;})
       .then((data) => this.setState({ products: data }))
       .catch((err) => console.log(err));
     http.get("/session").then((response) => {
@@ -189,10 +189,12 @@ export default class ProductsPage extends Component {
   }
 
   search = (searchText) => {
+    console.log(searchText)
     this.setState({ searchText: searchText });
 
     let filteredData = this.state.products.filter(function (item) {
       return (
+          searchText.length === 0 ? false:
         item.name.substring(0, searchText.length).toLowerCase() ===
         searchText.toLowerCase()
       );
@@ -201,7 +203,7 @@ export default class ProductsPage extends Component {
     this.setState({ filteredProducts: filteredData });
   };
 
-  sortThisShit = (list) => {
+  sortByChosenAttr = (list) => {
     list.sort((a,b) => {
       if(this.state.sortBy === 'Name') {
         return this.state.sortAsc ? a.name.toLowerCase() > b.name.toLowerCase() : a.name.toLowerCase() < b.name.toLowerCase()
@@ -212,6 +214,15 @@ export default class ProductsPage extends Component {
       if(this.state.sortBy === 'Alcohol') {
         return this.state.sortAsc ? a.alcoholPercentage > b.alcoholPercentage : a.alcoholPercentage < b.alcoholPercentage
       }
+    })
+  }
+
+  filterBy = (list) => {
+    return list.filter((item) => {
+      return item.alcoholPercentage <= this.state.alcoholMax
+          && item.alcoholPercentage >= this.state.alcoholMin
+          && item.ibu <= this.state.ibuMax
+          && item.ibu >= this.state.ibuMin
     })
   }
 
@@ -245,27 +256,34 @@ export default class ProductsPage extends Component {
             name="ios-search"
             size={26}
           />
-          <TextInput
-            placeholder="Search..."
-            onChangeText={this.search}
-            autoCorrect={false}
-            value={this.state.searchText}
-            style={{
-              backgroundColor: "white",
-              width: "60%",
-              borderWidth: 1,
-              marginTop: 5,
-            }}
-          />
-          <Ionicons
-            style={{ marginRight: 10, marginLeft: 10, marginTop: 15 }}
-            name="ios-funnel"
-            size={32}
-            color="black"
-          />
+          <View style={styles.autocomplete}>
+            <Autocomplete
+                placeholder="Enter the beer name"
+                autoCapitalize="none"
+                autoCorrect={false}
+                defaultValue={this.state.searchText}
+                data={this.state.filteredProducts}
+                keyExtractor={(item) => item.id}
+                onChangeText={this.search}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => this.search(item.name)}>
+                      <Text>{item.name}</Text>
+                    </TouchableOpacity>
+                )}
+                style={{
+                  backgroundColor: "white",
+                  width: "100%",
+                  borderWidth: 1,
+                }}
+                listContainerStyle={{zIndex: 1, position: 'absolute'}}
+                containerStyle={{zIndex: 1}}
+            />
+
+          </View>
+          <Filter context={this} />
           <Sorter context={this} />
         </View>
-        <View style={{ flex: 0.1, width: "100%" }}>
+        <View style={{ flex: 0.1, width: "100%"}}>
           <ChooseTableBar
             context={this}
             sessionEnabled={this.state.sessionEnabled}

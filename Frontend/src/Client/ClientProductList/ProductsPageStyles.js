@@ -44,7 +44,12 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
+    width: "90%",
+  },
+  autocomplete: {
+    zIndex: 1,
+    width: '70%',
+    marginTop: 15,
   },
   navBar: {
     flex: 0.2,
