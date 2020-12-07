@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+export const bartStyles = StyleSheet.create({
   listBox: {
     flex: 0.9,
     flexDirection: "column",
     justifyContent: "center",
-    width: "90%",
+    width: "95%",
   },
   listTitle: {
     fontSize: 18,

@@ -4,7 +4,7 @@ import { View, FlatList } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { globalStyles, topBarIconStyle } from "../../../GlobalStyles.js";
-import { styles } from "./BartenderManagementPageStyles.js";
+import { bartStyles } from "./BartenderManagementPageStyles.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 import { ProductListItem } from "./ProductListItem.js";
@@ -145,7 +145,7 @@ export default class BartenderManagementPage extends Component {
     return (
       <View style={globalStyles.mainContainer}>
         <TopBar title={"Manage products"} icons={topBarIcons} />
-        <View style={styles.listBox}>
+        <View style={bartStyles.listBox}>
           <SwitchSelector
             initial={0}
             onPress={(value) => this.setState({ chosenItems: value })}
@@ -154,7 +154,7 @@ export default class BartenderManagementPage extends Component {
             buttonColor="black"
             borderColor="black"
             hasPadding
-            style={styles.switchSelector}
+            style={bartStyles.switchSelector}
             options={[
               { label: "Enabled", value: ENABLED },
               { label: "All", value: "all" },
