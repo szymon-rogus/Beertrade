@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
     borderRightWidth: 2,
     borderTopWidth: 2,
     borderBottomWidth: 2,
+    color: "#222",
   },
   title: {
     fontSize: 24,

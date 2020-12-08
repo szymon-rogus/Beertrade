@@ -115,4 +115,15 @@ public class ProductService {
         return productPricesMap;
     }
 
+    public List<ConfigureProductsListItemJTO> getConfigureProductsList() {
+        log.trace("ENTRY - getConfigureRemoveProductsList");
+        final List<ConfigureProductsListItemJTO> configureProductList = productRepository.findAll()
+                .stream()
+                .filter(beer -> !beer.getProductState().equals(ProductState.ARCHIVED))
+                .map(Beer::toConfigureProductsListItemJTO)
+                .collect(Collectors.toList());
+        log.trace("EXIT - getConfigureRemoveProductsList - {}", configureProductList);
+        return configureProductList;
+    }
+
 }

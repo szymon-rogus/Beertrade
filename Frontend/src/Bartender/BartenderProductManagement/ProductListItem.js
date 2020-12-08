@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import { View, Text, Image } from "react-native";
-import { styles } from "./BartenderManagementPageStyles.js";
+import { bartStyles } from "./BartenderManagementPageStyles.js";
 import { listStyles } from "../../../ListStyles.js";
 
 export const ProductListItem = ({ item, actionIcon, photo }) => (
   <View style={listStyles.item}>
-    <View style={styles.listItemImageBox}>
-      <Image style={styles.listImage} source={{ uri: photo }} />
+    <View style={bartStyles.listItemImageBox}>
+      <Image style={bartStyles.listImage} source={{ uri: photo }} />
     </View>
-    <View style={styles.listItemAttributeBox}>
-      <Text style={styles.listTitle}>{item.name}</Text>
-      <Text style={styles.listAttributes}>
+    <View style={bartStyles.listItemAttributeBox}>
+      <Text style={bartStyles.listTitle}>{item.name}</Text>
+      <Text style={bartStyles.listAttributes}>
         {item.type} {item.alcoholPercentage}%
       </Text>
     </View>
-    <View style={styles.listItemIconBox}>{actionIcon}</View>
+    <View style={bartStyles.listItemIconBox}>{actionIcon}</View>
   </View>
 );
