@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FlatList, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { http, TopBar } from "../../Global";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
-import { globalStyles, topBarIconStyle } from "../../GlobalStyles";
+import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../GlobalStyles";
 import { bartStyles } from "../Bartender/BartenderProductManagement/BartenderManagementPageStyles.js";
 import { ownerStyles } from "./OwnerProductListStyles"
 
@@ -72,8 +72,6 @@ export default class OwnerProductList extends Component {
   }
 
   render() {
-    const iconSize = 36;
-    const iconColor = "white";
     const topBarIcons = [
       <FontAwesome5
         key={2}

@@ -3,7 +3,7 @@ import { http, TopBar, logout } from "../../../Global.js";
 import { View, FlatList } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { globalStyles, topBarIconStyle } from "../../../GlobalStyles.js";
+import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../../GlobalStyles.js";
 import { bartStyles } from "./BartenderManagementPageStyles.js";
 import { FontAwesome5 } from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
@@ -122,8 +122,6 @@ export default class BartenderManagementPage extends Component {
       visibleItems.push(...this.state.enabledItems);
       visibleItems.push(...this.state.disabledItems);
     }
-    const iconSize = 36;
-    const iconColor = "white";
     const topBarIcons = [
       <FontAwesome5
         key={2}

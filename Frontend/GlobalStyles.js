@@ -65,6 +65,9 @@ export const topBarIconStyle = (margin) =>
     },
   });
 
+export const iconSize = 36;
+export const iconColor = "white";
+
 export const listItemAttributeTextStyle = (marginLeft) =>
   StyleSheet.create({
     style: {

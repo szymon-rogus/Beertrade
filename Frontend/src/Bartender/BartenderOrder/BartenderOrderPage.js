@@ -4,7 +4,7 @@ import { View, Text, FlatList } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import { globalStyles, topBarIconStyle } from "../../../GlobalStyles.js";
+import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../../GlobalStyles.js";
 import { styles, statisticsValueStyle } from "./BartenderOrderPageStyles.js";
 import * as Progress from "react-native-progress";
 import { OrderItem } from "./OrderItem.js";
@@ -208,8 +208,6 @@ export default class BartenderOrderPage extends Component {
   );
 
   render() {
-    const iconSize = 36;
-    const iconColor = "white";
     const topBarIcons = [
       <MaterialCommunityIcons
         key={1}
