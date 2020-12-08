@@ -1,4 +1,5 @@
 delete from app_order;
+delete from historical_order;
 delete from public.app_user;
 delete from app_table;
 delete from beer;
@@ -16,8 +17,8 @@ insert into app_table(table_number, seats) values (2, 1);
 insert into public.app_user(user_type, id, email, first_name, last_name, login, password, phone_number, table_table_number) values ('BARTENDER','7175c66d-29fe-4e0e-82fe-83736513c2f5','email','bartek','lagosz','admin','$2a$10$0JZhi20JVHUvBONl7XLBhOAwSgmH7dtg/dTgj9qCptKXo1JLLH/2e',123123123, null);
 insert into public.app_user (user_type, id, email, first_name, last_name, login, password, phone_number, table_table_number) values ('CLIENT', '6e0b7333-8214-45b8-9344-3757d42c7ce9', 'a@b.com', 'a', 'b', 'a', '$2a$10$OOunjBzlAIlNp/qLwvcOXecv0aS772nWpWmfIicaAJPxUQkt6l8SC', 567890123, 1);
 insert into public.app_user (user_type, id, email, first_name, last_name, login, password, phone_number, table_table_number) values ('CLIENT', '9ef5e06c-011b-4d80-919e-3589d8929bdf', '1', '1', '1', 'szymon', '$2a$10$.VBYLDZ9F/v89KS.W21rCe3M3fAkzNAK32QXXQdWR7gBZN9VwRSKi', 1, null);
-insert into public.app_user (user_type, id, email, first_name, last_name, login, password, phone_number, table_table_number) values ('OWNER', '247fa3d3-2191-4fc5-8c3b-c651b5f06f67', 1, 1, 1, 'w', '$2a$10$xV6L5J5dHvXxDu3pMmJBE.CqWt1SKKA7t40YVilgU2kUfjMQ6COWC', 1, null);
-
+INSERT INTO public.app_user (user_type, id, email, first_name, last_name, login, password, phone_number, table_table_number) VALUES ('OWNER', 'e4dd6824-b17c-4c3d-9203-726646248e03', 'owner@mail.com', 'owner', 'owner', 'owner', '$2a$10$7OSQXnEV6AXp5PU2rHlyU.A6gRkAKG9jAs4Bvl64jDRNNjwjUG5w2', '123123', null);
+INSERT INTO public.app_user (user_type, id, email, first_name, last_name, login, password, phone_number, table_table_number) VALUES ('OWNER', '247fa3d3-2191-4fc5-8c3b-c651b5f06f67', '1', '1', '1', 'w', '$2a$10$xV6L5J5dHvXxDu3pMmJBE.CqWt1SKKA7t40YVilgU2kUfjMQ6COWC', '1', null);
 
 insert into public.app_order (id, amount, bought_date, order_state, order_view_id, price, client_id, product_id) values ('5a631bab-3f17-4f75-8a21-e85d634962ab', 1, '2020-11-11 21:43:12.766000', 'WAITING', 321, 10, '6e0b7333-8214-45b8-9344-3757d42c7ce9', 'd3e39bee-32a9-4e72-911f-00b6ebf57e60');
 insert into public.app_order (id, amount, bought_date, order_state, order_view_id, price, client_id, product_id) values ('66800d85-2f1c-485b-833d-5b6a3e7f601a', 1, '2020-11-11 21:47:53.772000', 'WAITING', 321, 10, '6e0b7333-8214-45b8-9344-3757d42c7ce9', '411075a0-5b19-40ea-aa37-5f51fcb506f2');
@@ -26,3 +27,9 @@ insert into public.app_order (id, amount, bought_date, order_state, order_view_i
 insert into public.app_order (id, amount, bought_date, order_state, order_view_id, price, client_id, product_id) values ('835af642-857f-4d04-868f-701b346362d4', 1, '2020-11-11 21:48:32.772000', 'WAITING', 321, 10, '6e0b7333-8214-45b8-9344-3757d42c7ce9', '1a07312b-3764-4976-b08c-7ee9cd1de412');
 insert into public.app_order (id, amount, bought_date, order_state, order_view_id, price, client_id, product_id) values ('f56a8902-4afb-4928-b9b1-1d17108c058d', 1, '2020-11-11 21:48:34.027000', 'WAITING', 321, 10, '6e0b7333-8214-45b8-9344-3757d42c7ce9', '1a07312b-3764-4976-b08c-7ee9cd1de412');
 insert into public.session_event(id, date, type) values ('1a07312b-3764-4976-b08c-7ee9cd1de412', '2020-11-11 21:43:12.766000', 'START');
+
+INSERT INTO public.historical_order (id, amount, base_price, bought_date, price, client_id, product_id) VALUES ('aae6f871-dfb7-4323-b4ac-ea1f9598a2cd', 1, 11, '2020-12-05 15:11:04.002000', 11, '9ef5e06c-011b-4d80-919e-3589d8929bdf', '411075a0-5b19-40ea-aa37-5f51fcb506f3');
+INSERT INTO public.historical_order (id, amount, base_price, bought_date, price, client_id, product_id) VALUES ('5b2a520c-b131-426e-95c9-60571d8c1d49', 1, 12, '2020-12-05 15:32:03.314000', 11.375, '9ef5e06c-011b-4d80-919e-3589d8929bdf', '1a07312b-3764-4976-b08c-7ee9cd1de412');
+INSERT INTO public.historical_order (id, amount, base_price, bought_date, price, client_id, product_id) VALUES ('40db8b7b-a8bc-4fb0-8f60-fd0bd8b623a5', 1, 12, '2020-12-05 15:53:23.093000', 10.125, '9ef5e06c-011b-4d80-919e-3589d8929bdf', '411075a0-5b19-40ea-aa37-5f51fcb506f2');
+INSERT INTO public.historical_order (id, amount, base_price, bought_date, price, client_id, product_id) VALUES ('8278eeb4-d270-4b3f-acc3-501f12b93a36', 1, 12, '2020-12-05 15:33:03.615000', 13.875, '9ef5e06c-011b-4d80-919e-3589d8929bdf', '1a07312b-3764-4976-b08c-7ee9cd1de412');
+INSERT INTO public.historical_order (id, amount, base_price, bought_date, price, client_id, product_id) VALUES ('0d658c4f-123f-47f1-b987-4c9faff21957', 1, 12, '2020-12-06 13:53:48.321000', 12, '9ef5e06c-011b-4d80-919e-3589d8929bdf', '411075a0-5b19-40ea-aa37-5f51fcb506f2');
