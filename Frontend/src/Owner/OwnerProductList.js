@@ -8,7 +8,7 @@ import { ownerStyles } from "./OwnerProductListStyles"
 
 const Button = ({text, onPress}) =>
   (
-    <TouchableOpacity style={ownerStyles.button} onPress={() => onPress()}>
+    <TouchableOpacity style={ownerStyles.button}>
       <Text style={ownerStyles.buttonText}>{text}</Text>
     </TouchableOpacity>
   )
