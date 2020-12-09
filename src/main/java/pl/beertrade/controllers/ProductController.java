@@ -93,6 +93,21 @@ public class ProductController {
         return orderedProductList;
     }
 
+    @PostMapping("/basePrice/{productId}/{price}")
+    public ResponseEntity<Beer> setBasePrice(@PathVariable UUID productId, @PathVariable Double price){
+        return ResponseEntity.of(productService.s(productId,price));
+    }
+
+    @PostMapping("/minPrice/{productId}/{price}")
+    public ResponseEntity<Beer> setMinPrice(@PathVariable UUID productId, @PathVariable Double price){
+        return ResponseEntity.of(productService.sMin(productId,price));
+    }
+
+    @PostMapping("/maxPrice/{productId}/{price}")
+    public ResponseEntity<Beer> setMaxPrice(@PathVariable UUID productId, @PathVariable Double price){
+        return ResponseEntity.of(productService.sMax(productId,price));
+    }
+
     @ExceptionHandler({Exception.class})
     public ResponseEntity<String> handleException(Exception e) {
         log.warn(Arrays.toString(e.getStackTrace()));
