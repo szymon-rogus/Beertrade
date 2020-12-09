@@ -10,7 +10,7 @@ import BartenderManagementPage from "./src/Bartender/BartenderProductManagement/
 import ProductDetailsPage from "./src/Client/ClientProductDetails/ProductDetailsPage";
 import ClientOrderPage from "./src/Client/ClientOrderPage/ClientOrderPage";
 import ProductsPage from "./src/Client/ClientProductList/ProductsPage";
-import OwnerProductList from "./src/Owner/OwnerProductList";
+import OwnerProductList from "./src/Owner/OwnerProductList.js";
 import OwnerMainPage from "./src/Owner/MainPage/MainPage.js";
 
 export default class App extends React.Component {

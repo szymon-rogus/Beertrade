@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const fontColor = "black";
+export const fontColor = "white";
 export const bgColor = "darkorchid";
 
 export const styles = StyleSheet.create({
