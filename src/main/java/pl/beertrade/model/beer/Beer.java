@@ -63,12 +63,15 @@ public class Beer {
     private byte[] photo;
 
     @NotNull
+    @Setter
     private Double basePrice;
 
     @NotNull
+    @Setter
     private Double minPrice;
 
     @NotNull
+    @Setter
     private Double maxPrice;
 
     private Double amortizationFactor;
