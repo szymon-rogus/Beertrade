@@ -8,13 +8,19 @@ export const filterStyles = StyleSheet.create({
     paddingVertical: '4%',
   },
   filterTitle: {
-    flex: 0.15,
+    flex: 0.12,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
   filterProperty: {
-    flex: 0.22,
+    flex: 0.23,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  filterPropertyType: {
+    flex: 0.25,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -50,7 +56,7 @@ export const filterStyles = StyleSheet.create({
   },
   filterButtonContainer: {
     flexDirection: 'row',
-    flex: 0.19,
+    flex: 0.17,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
   },
@@ -65,5 +71,9 @@ export const filterStyles = StyleSheet.create({
     fontSize: 15,
     borderRadius: 10,
     width: 80,
+  },
+  dropdownList: {
+    backgroundColor: '#D3D3D3',
+    width: 200
   },
 });

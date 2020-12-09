@@ -1,9 +1,10 @@
 import React, {Component} from "react";
 import Modal from "react-native-modal";
-import {ScrollView, Text, TouchableOpacity, View} from "react-native";
+import {Text, TouchableOpacity, View, SafeAreaView} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {filterStyles} from "./FilterStyles";
 import Slider from '@react-native-community/slider';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export class Filter extends Component {
 
@@ -15,6 +16,7 @@ export class Filter extends Component {
       alcoholMax: this.props.context.state.alcoholMax,
       ibuMin: this.props.context.state.ibuMin,
       ibuMax: this.props.context.state.ibuMax,
+      types: this.props.context.state.types,
     };
   }
 
@@ -30,22 +32,25 @@ export class Filter extends Component {
       alcoholMax: 10,
       ibuMin: 5,
       ibuMax: 80,
+      types: this.props.context.state.types,
     });
     this.props.context.setState({
       alcoholMin: 0,
       alcoholMax: 10,
       ibuMin: 5,
       ibuMax: 80,
+      chosenTypes: this.props.context.state.types,
     });
     this.toggleModal();
   }
 
   filterList = () => {
     this.props.context.setState({
-      alcoholMin: this.state.alcoholMin.toFixed(1),
-      alcoholMax: this.state.alcoholMax.toFixed(1),
-      ibuMin: this.state.ibuMin.toFixed(0),
-      ibuMax: this.state.ibuMax.toFixed(0),
+      alcoholMin: this.state.alcoholMin,
+      alcoholMax: this.state.alcoholMax,
+      ibuMin: this.state.ibuMin,
+      ibuMax: this.state.ibuMax,
+      chosenTypes: this.state.types
     });
     let products = this.props.context.state.products
     let productsFiltered = this.props.context.state.filteredProducts
@@ -57,18 +62,15 @@ export class Filter extends Component {
     this.toggleModal()
   }
 
-  renderT = (products) => {
+  getDistinctTypes = (types) => {
     let distinctProductTypes = []
-    products.forEach((item, i) => {
-      if(!distinctProductTypes.includes(item.type)) {
-        distinctProductTypes.push(item.type)
+    types.forEach((type, i) => {
+      if(!distinctProductTypes.includes(type)) {
+        distinctProductTypes.push({label: type, value: type})
       }
     })
 
     return distinctProductTypes
-        .map((itemType, i) => {
-      return <Text style={{paddingLeft: 10, paddingTop: 5, paddingBottom: 5, backgroundColor: '#DCDCDC'}} key={i}>{itemType}</Text>;
-    });
   }
 
   render() {
@@ -95,7 +97,7 @@ export class Filter extends Component {
             <View style={filterStyles.filterPropertyRow}>
               <Text style={filterStyles.filterBarier}>Min:</Text>
               <View style={filterStyles.filterValue}>
-                <Text>{this.state.alcoholMin.toFixed(1)}</Text>
+                <Text>{this.state.alcoholMin ? this.state.alcoholMin.toFixed(1) : this.state.alcoholMin}</Text>
               </View>
               <Text style={{paddingTop: 10}}>0</Text>
               <Slider
@@ -113,7 +115,7 @@ export class Filter extends Component {
             <View style={filterStyles.filterPropertyRow}>
               <Text style={filterStyles.filterBarier}>Max:</Text>
               <View style={filterStyles.filterValue}>
-                <Text>{this.state.alcoholMax.toFixed(1)}</Text>
+                <Text>{this.state.alcoholMax ? this.state.alcoholMax.toFixed(1) : this.state.alcoholMax}</Text>
               </View>
               <Text style={{paddingTop: 10}}>0</Text>
               <Slider
@@ -135,7 +137,7 @@ export class Filter extends Component {
             <View style={filterStyles.filterPropertyRow}>
               <Text style={filterStyles.filterBarier}>Min:</Text>
               <View style={filterStyles.filterValue}>
-                <Text>{this.state.ibuMin.toFixed(0)}</Text>
+                <Text>{this.state.ibuMin ? this.state.ibuMin.toFixed(0) : this.state.ibuMin}</Text>
               </View>
               <Text style={{paddingTop: 10}}>5</Text>
               <Slider
@@ -153,7 +155,7 @@ export class Filter extends Component {
             <View style={filterStyles.filterPropertyRow}>
               <Text style={filterStyles.filterBarier}>Max:</Text>
               <View style={filterStyles.filterValue}>
-                <Text>{this.state.ibuMax.toFixed(0)}</Text>
+                <Text>{this.state.ibuMax ? this.state.ibuMax.toFixed(0) : this.state.ibuMax}</Text>
               </View>
               <Text style={{paddingTop: 10}}>5</Text>
               <Slider
@@ -170,13 +172,23 @@ export class Filter extends Component {
             </View>
           </View>
 
-          <View style={filterStyles.filterProperty}>
+          <View style={filterStyles.filterPropertyType}>
             <Text style={filterStyles.filterPropertyAttribute}> Beer style</Text>
-            <View style={{flex: 1, marginTop: 10, width: '100%'}}>
-              <ScrollView style={{width: "80%"}}>
-                {this.renderT(this.props.context.state.products)}
-              </ScrollView>
-            </View>
+            <SafeAreaView style={{flex: 1, marginTop: 10, width: '100%', height: '100%'}}>
+                <DropDownPicker
+                    items={this.getDistinctTypes(this.props.context.state.types)}
+                    defaultValue={this.props.context.state.chosenTypes ? this.props.context.state.chosenTypes : this.props.context.state.types}
+                    multiple={true}
+                    style={filterStyles.dropdownList}
+                    onChangeItem={ types => this.setState({
+                      types: types
+                    })}
+                    activeItemStyle={{
+                      backgroundColor: '#1E90FF',
+                    }}
+                    isVisible={true}
+                />
+            </SafeAreaView>
           </View>
 
           <View style={filterStyles.filterButtonContainer}>

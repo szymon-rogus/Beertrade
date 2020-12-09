@@ -89,6 +89,8 @@ export default class ProductsPage extends Component {
       alcoholMax: 10,
       ibuMin: 5,
       ibuMax: 80,
+      types: [],
+      chosenTypes: null,
     };
   }
 
@@ -125,9 +127,10 @@ export default class ProductsPage extends Component {
     http
       .get("/product/onStore")
       .then((response) => response.data)
+        .then((data) => {this.setTypes(data); return data})
         .then((data) => {data = this.filterBy(data); return data})
         .then((data) => {this.sortByChosenAttr(data); return data;})
-      .then((data) => this.setState({ products: data }))
+      .then((data) => this.setState({ products: data}))
       .catch((err) => console.log(err));
     http.get("/session").then((response) => {
       if (response.data === "START") {
@@ -188,8 +191,20 @@ export default class ProductsPage extends Component {
     clearInterval(this.pricesInterval);
   }
 
+  setTypes = (products) => {
+    let types = []
+    products.forEach((item, i) => {
+      if(!types.includes(item.type)) {
+        types.push(item.type)
+      }
+    })
+
+    this.setState({
+      types: types,
+    })
+  }
+
   search = (searchText) => {
-    console.log(searchText)
     this.setState({ searchText: searchText });
 
     let filteredData = this.state.products.filter(function (item) {
@@ -200,7 +215,9 @@ export default class ProductsPage extends Component {
       );
     });
 
-    this.setState({ filteredProducts: filteredData });
+    this.setState({
+      filteredProducts: filteredData
+    });
   };
 
   sortByChosenAttr = (list) => {
@@ -223,6 +240,7 @@ export default class ProductsPage extends Component {
           && item.alcoholPercentage >= this.state.alcoholMin
           && item.ibu <= this.state.ibuMax
           && item.ibu >= this.state.ibuMin
+          && (this.state.chosenTypes ? this.state.chosenTypes.includes(item.type) : true)
     })
   }
 
