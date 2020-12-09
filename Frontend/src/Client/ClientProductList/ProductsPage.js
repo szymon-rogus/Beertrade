@@ -129,6 +129,7 @@ export default class ProductsPage extends Component {
         .then((data) => {this.sortThisShit(data); return data;})
       .then((data) => this.setState({ products: data }))
       .catch((err) => console.log(err));
+    // todo use SessionService#getSession
     http.get("/session").then((response) => {
       if (response.data === "START") {
         this.setState({
