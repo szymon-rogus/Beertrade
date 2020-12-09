@@ -37,6 +37,7 @@ public class Order {
     private Integer orderViewId;
 
     @NotNull
+    @Getter
     private Date boughtDate;
 
     @NotNull
@@ -46,6 +47,7 @@ public class Order {
     private Beer product;
 
     @NotNull
+    @Getter
     private float price;
 
     @NotNull
@@ -54,6 +56,7 @@ public class Order {
 
     @NotNull
     @ManyToOne
+    @Getter
     private Client client;
 
     @NotNull

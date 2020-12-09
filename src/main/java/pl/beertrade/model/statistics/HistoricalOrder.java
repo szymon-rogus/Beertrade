@@ -27,6 +27,7 @@ public class HistoricalOrder {
     private UUID id;
 
     @NotNull
+    @Getter
     private Double basePrice;
 
     @NotNull
@@ -35,12 +36,15 @@ public class HistoricalOrder {
     @NotNull
     @OneToOne
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")
+    @Getter
     private Beer product;
 
     @NotNull
+    @Getter
     private float price;
 
     @NotNull
+    @Getter
     private Integer amount;
 
     @ManyToOne
