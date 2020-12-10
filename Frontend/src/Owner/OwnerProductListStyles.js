@@ -35,7 +35,9 @@ export const ownerStyles = StyleSheet.create({
     borderWidth: 1,
     padding: 0,
     width: '30%',
-    borderRadius: 3
+    borderRadius: 3,
+    textAlign: "right",
+    paddingHorizontal: 5,
   },
   buttons : {
     flexDirection: "row",

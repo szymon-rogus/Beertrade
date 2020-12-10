@@ -14,10 +14,7 @@ import pl.beertrade.model.beer.*;
 import pl.beertrade.services.ProductService;
 import pl.beertrade.util.UserContextProvider;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("product")
@@ -91,6 +88,25 @@ public class ProductController {
         final List<OrderedProductListItemJTO> orderedProductList = productService.getClientOrderedProducts(userContextProvider.getUserAsClient());
         log.trace("EXIT - getUserOrderedProducts - {}", orderedProductList);
         return orderedProductList;
+    }
+
+    @PostMapping("/basePrice/{productId}/{price}")
+    public ResponseEntity<?> setBasePrice(@PathVariable UUID productId, @PathVariable Double price){
+        return simpleResponse(productService.setBasePrice(productId,price));
+    }
+
+    @PostMapping("/minPrice/{productId}/{price}")
+    public ResponseEntity<?> setMinPrice(@PathVariable UUID productId, @PathVariable Double price){
+        return simpleResponse(productService.setMinPrice(productId,price));
+    }
+
+    @PostMapping("/maxPrice/{productId}/{price}")
+    public ResponseEntity<?> setMaxPrice(@PathVariable UUID productId, @PathVariable Double price){
+        return simpleResponse(productService.setMaxPrice(productId,price));
+    }
+
+    private ResponseEntity<?> simpleResponse(Optional<Beer> instance){
+        return instance.isPresent() ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler({Exception.class})
