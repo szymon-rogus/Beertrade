@@ -126,7 +126,7 @@ public class ProductService {
         return configureProductList;
     }
 
-    public Optional<Beer> s(UUID productId, Double basePrice){
+    public Optional<Beer> setBasePrice(UUID productId, Double basePrice){
         Optional<Beer> p = productRepository.findById(productId);
         if(p.isPresent()){
             Beer b = p.get();
@@ -136,7 +136,7 @@ public class ProductService {
         return Optional.empty();
     }
 
-    public Optional<Beer> sMin(UUID productId, Double price){
+    public Optional<Beer> setMinPrice(UUID productId, Double price){
         Optional<Beer> p = productRepository.findById(productId);
         if(p.isPresent()){
             Beer b = p.get();
@@ -145,7 +145,7 @@ public class ProductService {
         }
         return Optional.empty();
     }
-    public Optional<Beer> sMax(UUID productId, Double price){
+    public Optional<Beer> setMaxPrice(UUID productId, Double price){
         Optional<Beer> p = productRepository.findById(productId);
         if(p.isPresent()){
             Beer b = p.get();
