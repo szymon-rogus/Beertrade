@@ -1,6 +1,16 @@
 import {StyleSheet} from "react-native";
 
 export const filterStyles = StyleSheet.create({
+  iconStyle: {
+    marginRight: 10,
+    marginLeft: 10,
+    marginTop: 15
+  },
+  modal: {
+    backgroundColor: 'white',
+    marginTop: 60,
+    marginBottom: 80
+  },
   container: {
     flex: 1,
     flexDirection: 'column',

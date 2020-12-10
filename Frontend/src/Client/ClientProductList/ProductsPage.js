@@ -270,7 +270,7 @@ export default class ProductsPage extends Component {
         <TopBar backIcon={menuIcon} icons={topBarIcons}/>
         <View style={styles.searchBar}>
           <Ionicons
-            style={{ marginRight: 10, marginTop: 5 }}
+            style={styles.searchIcon}
             name="ios-search"
             size={26}
           />
@@ -288,11 +288,7 @@ export default class ProductsPage extends Component {
                       <Text>{item.name}</Text>
                     </TouchableOpacity>
                 )}
-                style={{
-                  backgroundColor: "white",
-                  width: "100%",
-                  borderWidth: 1,
-                }}
+                style={styles.autocompleteElement}
                 listContainerStyle={{zIndex: 1, position: 'absolute'}}
                 containerStyle={{zIndex: 1}}
             />

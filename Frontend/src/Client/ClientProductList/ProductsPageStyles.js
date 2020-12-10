@@ -51,6 +51,11 @@ export const styles = StyleSheet.create({
     width: '70%',
     marginTop: 15,
   },
+  autocompleteElement: {
+    backgroundColor: "white",
+    width: "100%",
+    borderWidth: 1,
+  },
   navBar: {
     flex: 0.2,
     flexDirection: "row",
@@ -61,6 +66,10 @@ export const styles = StyleSheet.create({
     width: 60,
     height: 80,
     alignSelf: "center",
+  },
+  searchIcon: {
+    marginRight: 10,
+    marginTop: 5
   },
 });
 

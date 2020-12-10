@@ -6,6 +6,54 @@ import {filterStyles} from "./FilterStyles";
 import Slider from '@react-native-community/slider';
 import DropDownPicker from 'react-native-dropdown-picker';
 
+const AttributeSlider = ({title, min, max, toFixed, minimumValue, maximumValue, step, onChangeMin, onChangeMax }) => (
+    <View style={filterStyles.filterProperty}>
+      <Text style={filterStyles.filterPropertyAttribute}>{title}</Text>
+      <View style={filterStyles.filterPropertyRow}>
+        <Text style={filterStyles.filterBarier}>Min:</Text>
+        <View style={filterStyles.filterValue}>
+          <Text>{min ? min.toFixed(toFixed) : min}</Text>
+        </View>
+        <Text style={{paddingTop: 10}}>{minimumValue}</Text>
+        <Slider
+            style={{width: 200, height: 40, flex: 0.5}}
+            minimumValue={minimumValue}
+            maximumValue={maximumValue}
+            value={min}
+            step={step}
+            minimumTrackTintColor="red"
+            maximumTrackTintColor="blue"
+            onValueChange={onChangeMin}
+        />
+        <Text style={{paddingTop: 10}}>{maximumValue}</Text>
+      </View>
+      <View style={filterStyles.filterPropertyRow}>
+        <Text style={filterStyles.filterBarier}>Max:</Text>
+        <View style={filterStyles.filterValue}>
+          <Text>{max ? max.toFixed(toFixed) : max}</Text>
+        </View>
+        <Text style={{paddingTop: 10}}>{minimumValue}</Text>
+        <Slider
+            style={{width: 200, height: 40, flex: 0.5}}
+            minimumValue={minimumValue}
+            maximumValue={maximumValue}
+            value={max}
+            step={step}
+            minimumTrackTintColor="red"
+            maximumTrackTintColor="blue"
+            onValueChange={onChangeMax}
+        />
+        <Text style={{paddingTop: 10}}>{maximumValue}</Text>
+      </View>
+    </View>
+);
+
+const ActionButton = ({ text, onPress }) => (
+    <TouchableOpacity style={filterStyles.filterButton} onPress={onPress}>
+      <Text style={{color: 'white'}}>{text}</Text>
+    </TouchableOpacity>
+);
+
 export class Filter extends Component {
 
   constructor(props) {
@@ -77,7 +125,7 @@ export class Filter extends Component {
     return <View style={{marginRight: 10}}>
       <TouchableOpacity onPress={() => this.state.isModalVisible = true}>
         <Ionicons
-            style={{ marginRight: 10, marginLeft: 10, marginTop: 15 }}
+            style={filterStyles.iconStyle}
             name="ios-funnel"
             size={32}
             color="black"
@@ -87,90 +135,21 @@ export class Filter extends Component {
           onBackdropPress={() => this.toggleModal()}
           onSwipeComplete={() => this.toggleModal()}
           swipeDirection="right" isVisible={this.state.isModalVisible}
-          style={{backgroundColor: 'white', marginTop: 60, marginBottom: 80}}>
+          style={filterStyles.modal}>
         <View style={filterStyles.container}>
           <View style={filterStyles.filterTitle}>
             <Text style={filterStyles.filterPropertyTitle}> Filter </Text>
           </View>
-          <View style={filterStyles.filterProperty}>
-            <Text style={filterStyles.filterPropertyAttribute}> Alcohol [%]</Text>
-            <View style={filterStyles.filterPropertyRow}>
-              <Text style={filterStyles.filterBarier}>Min:</Text>
-              <View style={filterStyles.filterValue}>
-                <Text>{this.state.alcoholMin ? this.state.alcoholMin.toFixed(1) : this.state.alcoholMin}</Text>
-              </View>
-              <Text style={{paddingTop: 10}}>0</Text>
-              <Slider
-                  style={{width: 200, height: 40, flex: 0.5}}
-                  minimumValue={0}
-                  maximumValue={10}
-                  value={this.state.alcoholMin}
-                  step={0.1}
-                  minimumTrackTintColor="red"
-                  maximumTrackTintColor="blue"
-                  onValueChange={(value) => this.setState({alcoholMin: value})}
-              />
-              <Text style={{paddingTop: 10}}>10</Text>
-            </View>
-            <View style={filterStyles.filterPropertyRow}>
-              <Text style={filterStyles.filterBarier}>Max:</Text>
-              <View style={filterStyles.filterValue}>
-                <Text>{this.state.alcoholMax ? this.state.alcoholMax.toFixed(1) : this.state.alcoholMax}</Text>
-              </View>
-              <Text style={{paddingTop: 10}}>0</Text>
-              <Slider
-                  style={{width: 200, height: 40, flex: 0.5}}
-                  minimumValue={0}
-                  maximumValue={10}
-                  value={this.state.alcoholMax}
-                  step={0.1}
-                  minimumTrackTintColor="red"
-                  maximumTrackTintColor="blue"
-                  onValueChange={(value) => this.setState({alcoholMax: value})}
-              />
-              <Text style={{paddingTop: 10}}>10</Text>
-            </View>
-          </View>
-
-          <View style={filterStyles.filterProperty}>
-            <Text style={filterStyles.filterPropertyAttribute}> IBU </Text>
-            <View style={filterStyles.filterPropertyRow}>
-              <Text style={filterStyles.filterBarier}>Min:</Text>
-              <View style={filterStyles.filterValue}>
-                <Text>{this.state.ibuMin ? this.state.ibuMin.toFixed(0) : this.state.ibuMin}</Text>
-              </View>
-              <Text style={{paddingTop: 10}}>5</Text>
-              <Slider
-                  style={{width: 200, height: 40, flex: 0.5}}
-                  minimumValue={5}
-                  maximumValue={80}
-                  value={this.state.ibuMin}
-                  step={1}
-                  minimumTrackTintColor="red"
-                  maximumTrackTintColor="blue"
-                  onValueChange={(value) => this.setState({ibuMin: value})}
-              />
-              <Text style={{paddingTop: 10}}>80</Text>
-            </View>
-            <View style={filterStyles.filterPropertyRow}>
-              <Text style={filterStyles.filterBarier}>Max:</Text>
-              <View style={filterStyles.filterValue}>
-                <Text>{this.state.ibuMax ? this.state.ibuMax.toFixed(0) : this.state.ibuMax}</Text>
-              </View>
-              <Text style={{paddingTop: 10}}>5</Text>
-              <Slider
-                  style={{width: 200, height: 40, flex: 0.5}}
-                  minimumValue={5}
-                  maximumValue={80}
-                  value={this.state.ibuMax}
-                  step={1}
-                  minimumTrackTintColor="red"
-                  maximumTrackTintColor="blue"
-                  onValueChange={(value) => this.setState({ibuMax: value})}
-              />
-              <Text style={{paddingTop: 10}}>80</Text>
-            </View>
-          </View>
+          <AttributeSlider title='Alcohol [%]' min={this.state.alcoholMin} max={this.state.alcoholMax} toFixed={1}
+                           minimumValue={0} maximumValue={10} step={0.1}
+                           onChangeMin={(value => this.setState({alcoholMin: value}))}
+                           onChangeMax={(value => this.setState({alcoholMax: value}))}
+          />
+          <AttributeSlider title='IBU' min={this.state.ibuMin} max={this.state.ibuMax} toFixed={0}
+                           minimumValue={5} maximumValue={80} step={1}
+                           onChangeMin={(value => this.setState({ibuMin: value}))}
+                           onChangeMax={(value => this.setState({ibuMax: value}))}
+          />
 
           <View style={filterStyles.filterPropertyType}>
             <Text style={filterStyles.filterPropertyAttribute}> Beer style</Text>
@@ -192,15 +171,9 @@ export class Filter extends Component {
           </View>
 
           <View style={filterStyles.filterButtonContainer}>
-            <TouchableOpacity style={filterStyles.filterButton} onPress={() => this.clear()}>
-              <Text style={{color: 'white'}}>Clear filters</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={filterStyles.filterButton} onPress={() => this.toggleModal()}>
-              <Text style={{color: 'white'}}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={filterStyles.filterButton} onPress={() => this.filterList()}>
-              <Text style={{color: 'white'}}>Filter</Text>
-            </TouchableOpacity>
+            <ActionButton text='Clear filters' onPress={() => this.clear()}/>
+            <ActionButton text='Cancel' onPress={() => this.toggleModal()}/>
+            <ActionButton text='Filter' onPress={() => this.filterList()}/>
           </View>
         </View>
       </Modal>
