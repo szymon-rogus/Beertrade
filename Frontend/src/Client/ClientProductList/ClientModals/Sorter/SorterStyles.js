@@ -48,7 +48,7 @@ export const sorterStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  filterButtonContainer: {
+  sorterButtonContainer: {
     flexDirection: 'row',
     flex: 0.3,
     justifyContent: 'flex-end',

@@ -17,12 +17,12 @@ export default class RegistrationPage extends Component {
 
   handleRegister = () => {
     if (
-      this.state.login != "" &&
-      this.state.password != "" &&
-      this.state.firstName != "" &&
-      this.state.lastName != "" &&
-      this.state.email != "" &&
-      this.state.phoneNumber != ""
+      this.state.login !== "" &&
+      this.state.password !== "" &&
+      this.state.firstName !== "" &&
+      this.state.lastName !== "" &&
+      this.state.email !== "" &&
+      this.state.phoneNumber !== ""
     ) {
       http
         .post("/register", {

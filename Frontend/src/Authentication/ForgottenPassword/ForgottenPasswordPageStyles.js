@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
-export const fontColor = "white";
-export const bgColor = "darkorchid";
+export const fontColor = "darkblue";
+export const bgColor = "white";
 
 export const styles = StyleSheet.create({
   mainContainer: {
@@ -16,15 +16,8 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  input: {
-    margin: 15,
-    height: 40,
-    width: 300,
-    borderColor: "white",
-    borderWidth: 1,
-  },
   buttonStyle: {
-    backgroundColor: "white",
+    backgroundColor: "darkblue",
     elevation: 8,
     paddingVertical: 10,
     paddingHorizontal: 12,
