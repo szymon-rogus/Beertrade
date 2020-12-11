@@ -1,113 +1,118 @@
-import React, { Component } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { Tooltip} from "react-native-elements";
-import {beerPhoto, http, TopBar, logout, CURRENCY} from "../../../Global";
+import React, {Component} from "react";
+import {View, Text, TouchableOpacity, Image} from "react-native";
+import {Tooltip} from "react-native-elements";
+import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
+
+import {beerPhoto, http, TopBar, logout, CURRENCY, asMoney} from "../../../Global";
 import {detailButtonStyleSheet, detailStyles} from "./ProductDetailsPageStyles";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const B = (props) => (
-  <Text style={{ fontWeight: "bold" }}>{props.children}</Text>
+    <Text style={{fontWeight: "bold"}}>{props.children}</Text>
 );
 
 const ToolTipInfo = (text) => {
-  switch(text) {
+  switch (text) {
 
-    case "Type: ":   return <Text style={{color: 'white'}}>Differentiate beers by factors such as colour, flavour, strength etc.</Text>;
-    case "IBU: ":   return <Text style={{color: 'white'}}>IBU Describes bitterness of a beer</Text>;
-    case "BLG: ": return <Text style={{color: 'white'}}>BLG Describes the amount of sugar in a beer</Text>;
-    case "EBC: ":  return <Text style={{color: 'white'}}>EBC Describes the colour of beer and malt</Text>;
-
-    default:      return <Text style={{color: 'white'}}>{text}</Text>
+    case "Type: ":
+      return <Text style={{color: 'white'}}>Differentiate beers by factors such as colour, flavour, strength
+        etc.</Text>;
+    case "IBU: ":
+      return <Text style={{color: 'white'}}>IBU Describes bitterness of a beer</Text>;
+    case "BLG: ":
+      return <Text style={{color: 'white'}}>BLG Describes the amount of sugar in a beer</Text>;
+    case "EBC: ":
+      return <Text style={{color: 'white'}}>EBC Describes the colour of beer and malt</Text>;
+    default:
+      return <Text style={{color: 'white'}}>{text}</Text>
   }
 }
 
-const Attribute = ({ boldText, text, icon, padding, margin }) => (
-  <View style={{ flexDirection: "row" }}>
-    <Tooltip popover={ToolTipInfo(boldText)} width={100} height={100}>
-      <Ionicons
-          name={icon}
-          size={16}
-          color="darkblue"
-          style={{ paddingRight: 5, paddingTop: padding }}
-      />
-    </Tooltip>
-    <Text style={{ marginTop: margin }}>
-      <B>{boldText}</B>
-      {text}
-    </Text>
-  </View>
+const Attribute = ({boldText, text, icon, padding, margin}) => (
+    <View style={{flexDirection: "row"}}>
+      <Tooltip popover={ToolTipInfo(boldText)} width={100} height={100}>
+        <Ionicons
+            name={icon}
+            size={16}
+            color="darkblue"
+            style={{paddingRight: 5, paddingTop: padding}}
+        />
+      </Tooltip>
+      <Text style={{marginTop: margin}}>
+        <B>{boldText}</B>
+        {text}
+      </Text>
+    </View>
 );
 
-const ItemDetails = ({ product, price, onPress, buttonEnabled, backIcon, topBarIcons }) => (
-  <View style={detailStyles.container}>
-    <TopBar backIcon={backIcon} icons={topBarIcons} />
-    <View style={detailStyles.titleContainer}>
-      <Text style={detailStyles.title}>{product.name}</Text>
-    </View>
-    <View style={detailStyles.infoBlock}>
-      <View style={detailStyles.photo}>
-        <Image style={detailStyles.beerImage} source={{ uri: beerPhoto }} />
+const ItemDetails = ({product, price, onPress, buttonEnabled, backIcon, topBarIcons}) => (
+    <View style={detailStyles.container}>
+      <TopBar backIcon={backIcon} icons={topBarIcons}/>
+      <View style={detailStyles.titleContainer}>
+        <Text style={detailStyles.title}>{product.name}</Text>
       </View>
-      <View style={detailStyles.rightBlock}>
-        <Attribute
-          boldText="Type: "
-          text={product.type}
-          icon="ios-information-circle"
-          padding={3}
-          margin={1}
-        />
-        <View style={{ flexDirection: "row" }}>
-          <Text style={{ marginTop: 5, marginLeft: 18 }}>
-            <B>Alcohol: </B> {product.alcoholPercentage}%
-          </Text>
+      <View style={detailStyles.infoBlock}>
+        <View style={detailStyles.photo}>
+          <Image style={detailStyles.beerImage} source={{uri: beerPhoto}}/>
         </View>
-        <Attribute
-          boldText="IBU: "
-          text={product.ibu}
-          icon="ios-information-circle"
-          padding={6}
-          margin={5}
-        />
-        <Attribute
-          boldText="BLG: "
-          text={product.blg}
-          icon="ios-information-circle"
-          padding={6}
-          margin={5}
-        />
-        <Attribute
-          boldText="EBC: "
-          text={product.ebc}
-          icon="ios-information-circle"
-          padding={6}
-          margin={5}
-        />
-        <TouchableOpacity
-            style={detailButtonStyleSheet(buttonEnabled).orderButton} onPress={onPress}
-            disabled={!buttonEnabled}>
-          <Text style={detailStyles.buttonText}>
-            Order for{"\n"}
-            {price != null ? price.toFixed(2) : price} {CURRENCY}
-          </Text>
-        </TouchableOpacity>
+        <View style={detailStyles.rightBlock}>
+          <Attribute
+              boldText="Type: "
+              text={product.type}
+              icon="ios-information-circle"
+              padding={3}
+              margin={1}
+          />
+          <View style={{flexDirection: "row"}}>
+            <Text style={{marginTop: 5, marginLeft: 18}}>
+              <B>Alcohol: </B> {product.alcoholPercentage}%
+            </Text>
+          </View>
+          <Attribute
+              boldText="IBU: "
+              text={product.ibu}
+              icon="ios-information-circle"
+              padding={6}
+              margin={5}
+          />
+          <Attribute
+              boldText="BLG: "
+              text={product.blg}
+              icon="ios-information-circle"
+              padding={6}
+              margin={5}
+          />
+          <Attribute
+              boldText="EBC: "
+              text={product.ebc}
+              icon="ios-information-circle"
+              padding={6}
+              margin={5}
+          />
+          <TouchableOpacity
+              style={detailButtonStyleSheet(buttonEnabled).orderButton} onPress={onPress}
+              disabled={!buttonEnabled}>
+            <Text style={detailStyles.buttonText}>
+              Order for{"\n"} {asMoney(price)} {CURRENCY}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={detailStyles.leftBlock}>
+        <Text>
+          <B>Origin country: </B> {product.origin}
+        </Text>
+        <Text>
+          <B>Brewery: </B> {product.brewery}
+        </Text>
+        <Text>
+          <B>Creation year: </B> {product.year}
+        </Text>
+        <Text style={{marginTop: 10}}>
+          <B>Description:</B>
+        </Text>
+        <Text>{product.description}</Text>
       </View>
     </View>
-    <View style={detailStyles.leftBlock}>
-      <Text>
-        <B>Origin country: </B> {product.origin}
-      </Text>
-      <Text>
-        <B>Brewery: </B> {product.brewery}
-      </Text>
-      <Text>
-        <B>Creation year: </B> {product.year}
-      </Text>
-      <Text style={{ marginTop: 10 }}>
-        <B>Description:</B>
-      </Text>
-      <Text>{product.description}</Text>
-    </View>
-  </View>
 );
 
 export default class ProductDetailsPage extends Component {
@@ -141,24 +146,25 @@ export default class ProductDetailsPage extends Component {
 
   setProductDetails() {
     http
-      .get("/product/" + this.props.route.params.itemId)
-      .then((response) => this.setState({ product: response.data }))
-      .catch((err) => console.log(err));
+        .get("/product/" + this.props.route.params.itemId)
+        .then((response) => this.setState({product: response.data}))
+        .catch((err) => console.log(err));
   }
 
   setPrice = async () => {
     http.get("/price/" + this.props.route.params.itemId)
         .then((response) => {
-      if (response.data.checkStamp === this.state.checkStamp) {
-        this.setPrice();
-      } else {
-        this.setState({
-          price: response.data.price,
-          checkStamp: response.data.checkStamp,
-        });
-      }
-    })
-        .catch((err) => console.log(err));;
+          if (response.data.checkStamp === this.state.checkStamp) {
+            this.setPrice();
+          } else {
+            this.setState({
+              price: response.data.price,
+              checkStamp: response.data.checkStamp,
+            });
+          }
+        })
+        .catch((err) => console.log(err));
+    ;
   };
 
   async componentDidMount() {
@@ -166,11 +172,11 @@ export default class ProductDetailsPage extends Component {
     this.setProductDetails();
     this.checkSession();
     this.interval = setInterval(
-      function (self) {
-        self.setPrice();
-      },
-      15000,
-      this
+        function (self) {
+          self.setPrice();
+        },
+        15000,
+        this
     );
 
     this.sessionInterval = setInterval(
@@ -187,7 +193,7 @@ export default class ProductDetailsPage extends Component {
     clearInterval(this.sessionInterval);
   }
 
-  renderItemDetails = ({ backIcon, topBarIcons }) => {
+  renderItemDetails = ({backIcon, topBarIcons}) => {
     return (
         <ItemDetails
             product={this.state.product}
@@ -206,22 +212,22 @@ export default class ProductDetailsPage extends Component {
   render() {
     const backIcon = [
       <Ionicons
-        key={1}
-        name="md-arrow-round-back"
-        size={36}
-        color="white"
-        style={{ marginLeft: 20 }}
-        onPress={() => this.props.navigation.navigate("productList")}
+          key={1}
+          name="md-arrow-round-back"
+          size={36}
+          color="white"
+          style={{marginLeft: 20}}
+          onPress={() => this.props.navigation.navigate("productList")}
       />,
     ];
     const topBarIcons = [
       <MaterialCommunityIcons
-        key={1}
-        name="logout"
-        size={36}
-        color={"white"}
-        style={{ marginRight: 20 }}
-        onPress={() => logout(this)}
+          key={1}
+          name="logout"
+          size={36}
+          color={"white"}
+          style={{marginRight: 20}}
+          onPress={() => logout(this)}
       />,
     ];
     return (

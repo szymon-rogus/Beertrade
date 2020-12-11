@@ -1,15 +1,16 @@
-import React, { Component } from "react";
-import { http, TopBar, logout } from "../../../Global.js";
-import { View, Text, FlatList } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../../GlobalStyles.js";
-import { styles, statisticsValueStyle } from "./BartenderOrderPageStyles.js";
+import React, {Component} from "react";
+import {View, Text, FlatList} from "react-native";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {Ionicons} from "@expo/vector-icons";
+import {AntDesign} from "@expo/vector-icons";
 import * as Progress from "react-native-progress";
-import { OrderItem } from "./OrderItem.js";
 import SlidingUpPanel from "rn-sliding-up-panel";
+
+import {http, TopBar, logout} from "../../../Global.js";
+import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles.js";
+import {styles, statisticsValueStyle} from "./BartenderOrderPageStyles.js";
 import BartenderSettingsPage from "../BartenderSettings/BartenderSettingsPage.js";
+import {OrderItem} from "./OrderItem.js";
 
 export default class BartenderOrderPage extends Component {
   state = {
@@ -33,32 +34,32 @@ export default class BartenderOrderPage extends Component {
 
   updateItems = async () => {
     http
-      .get("/order/waiting")
-      .then((response) => {
-        let fetchedList = [];
-        fetchedList.push(...response.data);
-        this.state.deletedOrders.forEach((deletedId) => {
-          fetchedList = fetchedList.filter((item) => item.id !== deletedId);
-        });
-        if (this.state.lastOrderPresent) {
-          fetchedList = fetchedList.filter(
-            (item) => item.id !== this.state.lastOrder.id
-          );
-          fetchedList.unshift(this.state.lastOrder);
-        }
-        this.setState({
-          items: fetchedList,
-          waiting: this.state.lastOrderPresent
-            ? fetchedList.length - 1
-            : fetchedList.length,
-        });
-        if (fetchedList.length > this.state.maxOrders) {
-          this.setState({
-            orderBarColor: "red",
+        .get("/order/waiting")
+        .then((response) => {
+          let fetchedList = [];
+          fetchedList.push(...response.data);
+          this.state.deletedOrders.forEach((deletedId) => {
+            fetchedList = fetchedList.filter((item) => item.id !== deletedId);
           });
-        }
-      })
-      .catch((err) => console.log(err));
+          if (this.state.lastOrderPresent) {
+            fetchedList = fetchedList.filter(
+                (item) => item.id !== this.state.lastOrder.id
+            );
+            fetchedList.unshift(this.state.lastOrder);
+          }
+          this.setState({
+            items: fetchedList,
+            waiting: this.state.lastOrderPresent
+                ? fetchedList.length - 1
+                : fetchedList.length,
+          });
+          if (fetchedList.length > this.state.maxOrders) {
+            this.setState({
+              orderBarColor: "red",
+            });
+          }
+        })
+        .catch((err) => console.log(err));
   };
 
   updateStatistics = async () => {
@@ -73,8 +74,8 @@ export default class BartenderOrderPage extends Component {
   sendRequestExecuteItem = (id) => {
     if (!this.state.lastOrderPresent || this.state.lastOrder.id !== id) {
       const itemsToUpdate = this.sendRequestAndPrepareListForUpdate(
-        "/order/execute/",
-        id
+          "/order/execute/",
+          id
       );
       const actualItems = itemsToUpdate[0];
       const newLastOrder = itemsToUpdate[1];
@@ -93,8 +94,8 @@ export default class BartenderOrderPage extends Component {
   sendRequestCancelItem = (id) => {
     if (!this.state.lastOrderPresent || this.state.lastOrder.id !== id) {
       const itemsToUpdate = this.sendRequestAndPrepareListForUpdate(
-        "/order/cancel/",
-        id
+          "/order/cancel/",
+          id
       );
       const actualItems = itemsToUpdate[0];
       const newLastOrder = itemsToUpdate[1];
@@ -116,7 +117,7 @@ export default class BartenderOrderPage extends Component {
     let deletedOrders = this.state.deletedOrders;
     if (this.state.lastOrderPresent) {
       actualItems = actualItems.filter(
-        (item) => item.id !== this.state.lastOrder.id
+          (item) => item.id !== this.state.lastOrder.id
       );
       deletedOrders.push(this.state.lastOrder.id);
     } else {
@@ -178,120 +179,120 @@ export default class BartenderOrderPage extends Component {
     clearInterval(this.updateInterval);
   }
 
-  renderItem = ({ item }) => {
+  renderItem = ({item}) => {
     const shadowLayerValue =
-      this.state.lastOrderPresent && item === this.state.lastOrder ? (
-        <View style={styles.lastOrderLayer}>
-          <Ionicons
-            name="md-refresh"
-            size={40}
-            color="black"
-            onPress={() => this.restoreItem(this.state.lastOrder.id)}
-          />
-        </View>
-      ) : null;
+        this.state.lastOrderPresent && item === this.state.lastOrder ? (
+            <View style={styles.lastOrderLayer}>
+              <Ionicons
+                  name="md-refresh"
+                  size={40}
+                  color="black"
+                  onPress={() => this.restoreItem(this.state.lastOrder.id)}
+              />
+            </View>
+        ) : null;
     return (
-      <OrderItem
-        item={item}
-        executeFunc={this.sendRequestExecuteItem}
-        cancelFunc={this.sendRequestCancelItem}
-        shadowLayer={shadowLayerValue}
-      />
+        <OrderItem
+            item={item}
+            executeFunc={this.sendRequestExecuteItem}
+            cancelFunc={this.sendRequestCancelItem}
+            shadowLayer={shadowLayerValue}
+        />
     );
   };
 
-  StatisticsView = ({ label, value, paddingLeft }) => (
-    <View style={styles.orderStatsInsideBox}>
-      <Text style={styles.statisticsLabel}>{label}</Text>
-      <Text style={statisticsValueStyle(paddingLeft).style}>{value}</Text>
-    </View>
+  StatisticsView = ({label, value, paddingLeft}) => (
+      <View style={styles.orderStatsInsideBox}>
+        <Text style={styles.statisticsLabel}>{label}</Text>
+        <Text style={statisticsValueStyle(paddingLeft).style}>{value}</Text>
+      </View>
   );
 
   render() {
     const topBarIcons = [
       <MaterialCommunityIcons
-        key={1}
-        name="cup"
-        size={iconSize}
-        color={iconColor}
-        style={topBarIconStyle(6).style}
-        onPress={() => this.props.navigation.navigate("bartenderManage")}
+          key={1}
+          name="cup"
+          size={iconSize}
+          color={iconColor}
+          style={topBarIconStyle(6).style}
+          onPress={() => this.props.navigation.navigate("bartenderManage")}
       />,
       <MaterialCommunityIcons
-        key={2}
-        name="logout"
-        size={iconSize}
-        color={iconColor}
-        style={topBarIconStyle(6).style}
-        onPress={() => logout(this)}
+          key={2}
+          name="logout"
+          size={iconSize}
+          color={iconColor}
+          style={topBarIconStyle(6).style}
+          onPress={() => logout(this)}
       />,
     ];
     const slideDownIcon = (
-      <AntDesign
-        style={{ marginTop: 15 }}
-        name="down"
-        size={24}
-        color="blue"
-        onPress={() => this._panel.hide()}
-      />
-    );
-    return (
-      <View style={globalStyles.mainContainer}>
-        <TopBar title={"Orders"} icons={topBarIcons} />
-        <View style={styles.orderListContainer}>
-          <FlatList
-            data={this.state.items}
-            renderItem={this.renderItem}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
-        <View style={styles.bartenderStatisticsBox}>
-          <Progress.Bar
-            progress={this.state.waiting / this.state.maxOrders}
-            width={320}
-            height={10}
-            animated={true}
-            color={this.state.orderBarColor}
-          />
-          <this.StatisticsView
-            label={"In queue"}
-            value={this.state.waiting}
-            paddingLeft={50}
-          />
-          <this.StatisticsView
-            label={"Done"}
-            value={this.state.done}
-            paddingLeft={75}
-          />
-          <this.StatisticsView
-            label={"Cancelled"}
-            value={this.state.cancelled}
-            paddingLeft={40}
-          />
-        </View>
-        <View style={{ flex: 0.05 }}>
-          <AntDesign
-            name="up"
+        <AntDesign
+            style={{marginTop: 15}}
+            name="down"
             size={24}
             color="blue"
-            onPress={() => this._panel.show()}
-          />
-        </View>
-        <SlidingUpPanel
-          ref={(c) => (this._panel = c)}
-          showBackdrop={true}
-          visible={false}
-          allowDragging={false}
-          draggableRange={{ top: 240, bottom: 0 }}
-        >
-          <View style={styles.slideView}>
-            <BartenderSettingsPage
-              slideDownIcon={slideDownIcon}
-              ordersWaiting={this.state.waiting != 0}
+            onPress={() => this._panel.hide()}
+        />
+    );
+    return (
+        <View style={globalStyles.mainContainer}>
+          <TopBar title={"Orders"} icons={topBarIcons}/>
+          <View style={styles.orderListContainer}>
+            <FlatList
+                data={this.state.items}
+                renderItem={this.renderItem}
+                keyExtractor={(item) => item.id}
             />
           </View>
-        </SlidingUpPanel>
-      </View>
+          <View style={styles.bartenderStatisticsBox}>
+            <Progress.Bar
+                progress={this.state.waiting / this.state.maxOrders}
+                width={320}
+                height={10}
+                animated={true}
+                color={this.state.orderBarColor}
+            />
+            <this.StatisticsView
+                label={"In queue"}
+                value={this.state.waiting}
+                paddingLeft={50}
+            />
+            <this.StatisticsView
+                label={"Done"}
+                value={this.state.done}
+                paddingLeft={75}
+            />
+            <this.StatisticsView
+                label={"Cancelled"}
+                value={this.state.cancelled}
+                paddingLeft={40}
+            />
+          </View>
+          <View style={{flex: 0.05}}>
+            <AntDesign
+                name="up"
+                size={24}
+                color="blue"
+                onPress={() => this._panel.show()}
+            />
+          </View>
+          <SlidingUpPanel
+              ref={(c) => (this._panel = c)}
+              showBackdrop={true}
+              visible={false}
+              allowDragging={false}
+              draggableRange={{top: 240, bottom: 0}}
+          >
+            <View style={styles.slideView}>
+              <BartenderSettingsPage
+                  slideDownIcon={slideDownIcon}
+                  ordersWaiting={this.state.waiting !== 0}
+              />
+            </View>
+          </SlidingUpPanel>
+        </View>
     );
   }
 }

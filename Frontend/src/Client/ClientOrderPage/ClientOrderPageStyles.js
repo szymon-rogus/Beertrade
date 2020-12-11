@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   //the only difference with listStyles.js#item is that it has smaller width
@@ -32,6 +32,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end'
   },
-  mediumText: {fontSize: 18, color: 'black'},
-  smallText: {fontSize: 16, color: 'black'},
+  mediumText: {
+    fontSize: 18,
+    color: 'black'
+  },
+  smallText: {
+    fontSize: 16,
+    color: 'black'
+  },
 });

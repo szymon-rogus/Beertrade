@@ -1,10 +1,11 @@
 import React, {Component} from "react";
-import Modal from "react-native-modal";
 import {Text, TouchableOpacity, View} from "react-native";
+import Modal from "react-native-modal";
 import {FontAwesome} from "@expo/vector-icons";
-import {sorterStyles} from "./SorterStyles";
 import DropDownPicker from 'react-native-dropdown-picker';
 import SwitchSelector from "react-native-switch-selector";
+
+import {sorterStyles} from "./SorterStyles";
 
 export class Sorter extends Component {
 
