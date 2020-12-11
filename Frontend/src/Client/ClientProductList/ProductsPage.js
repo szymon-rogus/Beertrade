@@ -76,6 +76,7 @@ export default class ProductsPage extends Component {
     this.state = {
       selectedId: null,
       searchText: "",
+      allProducts: [],
       filteredProducts: [],
       products: [],
       isModalVisible: false,
@@ -86,10 +87,10 @@ export default class ProductsPage extends Component {
       dataLoaded: false,
       sortBy: 'Name',
       sortAsc: true,
-      alcoholMin: 0,
-      alcoholMax: 10,
-      ibuMin: 5,
-      ibuMax: 80,
+      alcoholMin: null,
+      alcoholMax: null,
+      ibuMin: null,
+      ibuMax: null,
       types: [],
       chosenTypes: null,
     };
@@ -128,6 +129,10 @@ export default class ProductsPage extends Component {
     http
         .get("/product/onStore")
         .then((response) => response.data)
+        .then((data) => {
+          this.setState({allProducts: data});
+          return data
+        })
         .then((data) => {
           this.setTypes(data);
           return data
@@ -248,10 +253,10 @@ export default class ProductsPage extends Component {
 
   filterBy = (list) => {
     return list.filter((item) => {
-      return item.alcoholPercentage <= this.state.alcoholMax
-          && item.alcoholPercentage >= this.state.alcoholMin
-          && item.ibu <= this.state.ibuMax
-          && item.ibu >= this.state.ibuMin
+      return (this.state.alcoholMax ? item.alcoholPercentage <= this.state.alcoholMax : true)
+          && (this.state.alcoholMin ? item.alcoholPercentage >= this.state.alcoholMin : true)
+          && (this.state.ibuMax ? item.ibu <= this.state.ibuMax : true)
+          && (this.state.ibuMin ? item.ibu >= this.state.ibuMin : true)
           && (this.state.chosenTypes ? this.state.chosenTypes.includes(item.type) : true)
     })
   }
