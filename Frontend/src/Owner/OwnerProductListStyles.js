@@ -1,7 +1,7 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from "react-native";
 
 export const ownerStyles = StyleSheet.create({
-  item : {
+  item: {
     paddingVertical: "2%",
     paddingHorizontal: "3%",
     marginBottom: "2%",
@@ -15,21 +15,21 @@ export const ownerStyles = StyleSheet.create({
     color: '#245234',
     borderRadius: 3
   },
-  title : {
+  title: {
     fontSize: 23,
     color: '#000'
   },
-  parameterView : {
+  parameterView: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: '1%'
   },
-  parameter : {
+  parameter: {
     color: '#000',
     paddingVertical: 3,
     fontSize: 17,
   },
-  input : {
+  input: {
     height: 30,
     borderColor: `#000`,
     borderWidth: 1,
@@ -39,12 +39,12 @@ export const ownerStyles = StyleSheet.create({
     textAlign: "right",
     paddingHorizontal: 5,
   },
-  buttons : {
+  buttons: {
     flexDirection: "row",
     justifyContent: "space-around",
     marginVertical: "2%",
   },
-  button : {
+  button: {
     borderColor: `#000`,
     borderWidth: 1,
     padding: 5,
@@ -52,7 +52,7 @@ export const ownerStyles = StyleSheet.create({
     backgroundColor: '#eee',
     flex: 0.35,
   },
-  buttonText : {
+  buttonText: {
     color: '#000',
     textAlign: "center"
   }

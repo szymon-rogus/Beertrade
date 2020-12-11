@@ -1,12 +1,13 @@
 import React, {Component} from "react";
-import Modal from "react-native-modal";
 import {Text, TouchableOpacity, View, SafeAreaView} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import {filterStyles} from "./FilterStyles";
+import Modal from "react-native-modal";
+import {Ionicons} from "@expo/vector-icons";
 import Slider from '@react-native-community/slider';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-const AttributeSlider = ({title, min, max, toFixed, minimumValue, maximumValue, step, onChangeMin, onChangeMax }) => (
+import {filterStyles} from "./FilterStyles";
+
+const AttributeSlider = ({title, min, max, toFixed, minimumValue, maximumValue, step, onChangeMin, onChangeMax}) => (
     <View style={filterStyles.filterProperty}>
       <Text style={filterStyles.filterPropertyAttribute}>{title}</Text>
       <View style={filterStyles.filterPropertyRow}>
@@ -48,7 +49,7 @@ const AttributeSlider = ({title, min, max, toFixed, minimumValue, maximumValue, 
     </View>
 );
 
-const ActionButton = ({ text, onPress }) => (
+const ActionButton = ({text, onPress}) => (
     <TouchableOpacity style={filterStyles.filterButton} onPress={onPress}>
       <Text style={{color: 'white'}}>{text}</Text>
     </TouchableOpacity>
@@ -113,7 +114,7 @@ export class Filter extends Component {
   getDistinctTypes = (types) => {
     let distinctProductTypes = []
     types.forEach((type, i) => {
-      if(!distinctProductTypes.includes(type)) {
+      if (!distinctProductTypes.includes(type)) {
         distinctProductTypes.push({label: type, value: type})
       }
     })
@@ -154,19 +155,19 @@ export class Filter extends Component {
           <View style={filterStyles.filterPropertyType}>
             <Text style={filterStyles.filterPropertyAttribute}> Beer style</Text>
             <SafeAreaView style={{flex: 1, marginTop: 10, width: '100%', height: '100%'}}>
-                <DropDownPicker
-                    items={this.getDistinctTypes(this.props.context.state.types)}
-                    defaultValue={this.props.context.state.chosenTypes ? this.props.context.state.chosenTypes : this.props.context.state.types}
-                    multiple={true}
-                    style={filterStyles.dropdownList}
-                    onChangeItem={ types => this.setState({
-                      types: types
-                    })}
-                    activeItemStyle={{
-                      backgroundColor: '#1E90FF',
-                    }}
-                    isVisible={true}
-                />
+              <DropDownPicker
+                  items={this.getDistinctTypes(this.props.context.state.types)}
+                  defaultValue={this.props.context.state.chosenTypes ? this.props.context.state.chosenTypes : this.props.context.state.types}
+                  multiple={true}
+                  style={filterStyles.dropdownList}
+                  onChangeItem={types => this.setState({
+                    types: types
+                  })}
+                  activeItemStyle={{
+                    backgroundColor: '#1E90FF',
+                  }}
+                  isVisible={true}
+              />
             </SafeAreaView>
           </View>
 
