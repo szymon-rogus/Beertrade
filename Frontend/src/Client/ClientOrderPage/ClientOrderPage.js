@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { http } from '../../../Global.js'
-import { FlatList, SafeAreaView } from "react-native";
-import { globalStyles } from '../../../GlobalStyles.js'
-import { ClientOrderItem } from "./ClientOrderItem";
+import React, {Component} from 'react';
+import {FlatList, SafeAreaView} from "react-native";
+
+import {http} from '../../../Global.js'
+import {globalStyles} from '../../../GlobalStyles.js'
+import {ClientOrderItem} from "./ClientOrderItem";
 
 
 export default class ClientOrderPage extends Component {
@@ -37,10 +38,9 @@ export default class ClientOrderPage extends Component {
 
   renderItem = ({item}) => {
     return (
-      <ClientOrderItem item={item}/>
+        <ClientOrderItem item={item}/>
     );
   };
-
 
 
   updateInterval = setInterval(async () => {
@@ -61,13 +61,13 @@ export default class ClientOrderPage extends Component {
 
   render() {
     return (
-      <SafeAreaView style={globalStyles.mainContainer}>
-        <FlatList
-          data={this.state.items}
-          renderItem={this.renderItem}
-          keyExtractor={(item) => item.id}
-        />
-      </SafeAreaView>
+        <SafeAreaView style={globalStyles.mainContainer}>
+          <FlatList
+              data={this.state.items}
+              renderItem={this.renderItem}
+              keyExtractor={(item) => item.id}
+          />
+        </SafeAreaView>
     )
   }
 

@@ -50,6 +50,7 @@
     "@expo/vector-icons": "^10.2.1",
     "babel-jest": "~25.2.6",
     "jest": "~25.2.6",
+    "react-native-autocomplete-input": "^4.2.0",
     "react-test-renderer": "~16.13.1"
   },
   "jest": {

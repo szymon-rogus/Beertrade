@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from "react-native";
 
 export const styles = StyleSheet.create({
   orderListContainer: {
@@ -89,10 +89,10 @@ export const styles = StyleSheet.create({
 });
 
 export const statisticsValueStyle = (paddingLeft) =>
-  StyleSheet.create({
-    style: {
-      fontSize: 16,
-      color: "black",
-      paddingLeft: paddingLeft,
-    },
-  });
+    StyleSheet.create({
+      style: {
+        fontSize: 16,
+        color: "black",
+        paddingLeft: paddingLeft,
+      },
+    });

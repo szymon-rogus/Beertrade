@@ -1,54 +1,55 @@
 import React, {Component} from "react";
-import Modal from "react-native-modal";
 import {Text, TouchableOpacity, View, SafeAreaView} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import {filterStyles} from "./FilterStyles";
+import Modal from "react-native-modal";
+import {Ionicons} from "@expo/vector-icons";
 import Slider from '@react-native-community/slider';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-const AttributeSlider = ({title, min, max, toFixed, minimumValue, maximumValue, step, onChangeMin, onChangeMax }) => (
+import {filterStyles} from "./FilterStyles";
+
+const AttributeSlider = ({title, min, max, toFixed, range, step, onChangeMin, onChangeMax}) => (
     <View style={filterStyles.filterProperty}>
       <Text style={filterStyles.filterPropertyAttribute}>{title}</Text>
       <View style={filterStyles.filterPropertyRow}>
         <Text style={filterStyles.filterBarier}>Min:</Text>
         <View style={filterStyles.filterValue}>
-          <Text>{min ? min.toFixed(toFixed) : min}</Text>
+          <Text>{min ? min.toFixed(toFixed) : range.from}</Text>
         </View>
-        <Text style={{paddingTop: 10}}>{minimumValue}</Text>
+        <Text style={{paddingTop: 10}}>{range.from}</Text>
         <Slider
             style={{width: 200, height: 40, flex: 0.5}}
-            minimumValue={minimumValue}
-            maximumValue={maximumValue}
-            value={min}
+            minimumValue={range.from}
+            maximumValue={range.to}
+            value={min ? min : range.from}
             step={step}
             minimumTrackTintColor="red"
             maximumTrackTintColor="blue"
             onValueChange={onChangeMin}
         />
-        <Text style={{paddingTop: 10}}>{maximumValue}</Text>
+        <Text style={{paddingTop: 10}}>{range.to}</Text>
       </View>
       <View style={filterStyles.filterPropertyRow}>
         <Text style={filterStyles.filterBarier}>Max:</Text>
         <View style={filterStyles.filterValue}>
-          <Text>{max ? max.toFixed(toFixed) : max}</Text>
+          <Text>{max ? max.toFixed(toFixed) : range.to}</Text>
         </View>
-        <Text style={{paddingTop: 10}}>{minimumValue}</Text>
+        <Text style={{paddingTop: 10}}>{range.from}</Text>
         <Slider
             style={{width: 200, height: 40, flex: 0.5}}
-            minimumValue={minimumValue}
-            maximumValue={maximumValue}
-            value={max}
+            minimumValue={range.from}
+            maximumValue={range.to}
+            value={max ? max : range.to}
             step={step}
             minimumTrackTintColor="red"
             maximumTrackTintColor="blue"
             onValueChange={onChangeMax}
         />
-        <Text style={{paddingTop: 10}}>{maximumValue}</Text>
+        <Text style={{paddingTop: 10}}>{range.to}</Text>
       </View>
     </View>
 );
 
-const ActionButton = ({ text, onPress }) => (
+const ActionButton = ({text, onPress}) => (
     <TouchableOpacity style={filterStyles.filterButton} onPress={onPress}>
       <Text style={{color: 'white'}}>{text}</Text>
     </TouchableOpacity>
@@ -60,11 +61,11 @@ export class Filter extends Component {
     super(props);
     this.state = {
       isModalVisible: false,
-      alcoholMin: this.props.context.state.alcoholMin,
-      alcoholMax: this.props.context.state.alcoholMax,
-      ibuMin: this.props.context.state.ibuMin,
-      ibuMax: this.props.context.state.ibuMax,
-      types: this.props.context.state.types,
+      alcoholMin: null,
+      alcoholMax: null,
+      ibuMin: null,
+      ibuMax: null,
+      types: null,
     };
   }
 
@@ -75,18 +76,20 @@ export class Filter extends Component {
   }
 
   clear = () => {
+    let alcoholRange = this.getRange(this.props.context.state.allProducts.map(item => item.alcoholPercentage));
+    let ibuRange = this.getRange(this.props.context.state.allProducts.map(item => item.ibu));
     this.setState({
-      alcoholMin: 0,
-      alcoholMax: 10,
-      ibuMin: 5,
-      ibuMax: 80,
+      alcoholMin: alcoholRange.from,
+      alcoholMax: alcoholRange.to,
+      ibuMin: ibuRange.from,
+      ibuMax: ibuRange.to,
       types: this.props.context.state.types,
     });
     this.props.context.setState({
-      alcoholMin: 0,
-      alcoholMax: 10,
-      ibuMin: 5,
-      ibuMax: 80,
+      alcoholMin: alcoholRange.from,
+      alcoholMax: alcoholRange.to,
+      ibuMin: ibuRange.from,
+      ibuMax: ibuRange.to,
       chosenTypes: this.props.context.state.types,
     });
     this.toggleModal();
@@ -112,13 +115,19 @@ export class Filter extends Component {
 
   getDistinctTypes = (types) => {
     let distinctProductTypes = []
-    types.forEach((type, i) => {
-      if(!distinctProductTypes.includes(type)) {
+    types.forEach((type) => {
+      if (!distinctProductTypes.includes(type)) {
         distinctProductTypes.push({label: type, value: type})
       }
     })
-
     return distinctProductTypes
+  }
+
+  getRange = (propertyList) => {
+    let acc = propertyList.find(x => x)
+    return propertyList.reduce((range, value) => {
+      return {from: Math.min(range.from, value), to: Math.max(range.to, value)}
+    }, {from: acc, to: acc})
   }
 
   render() {
@@ -140,13 +149,21 @@ export class Filter extends Component {
           <View style={filterStyles.filterTitle}>
             <Text style={filterStyles.filterPropertyTitle}> Filter </Text>
           </View>
-          <AttributeSlider title='Alcohol [%]' min={this.state.alcoholMin} max={this.state.alcoholMax} toFixed={1}
-                           minimumValue={0} maximumValue={10} step={0.1}
+          <AttributeSlider title='Alcohol [%]'
+                           min={this.state.alcoholMin}
+                           max={this.state.alcoholMax}
+                           toFixed={1}
+                           range={this.getRange(this.props.context.state.allProducts.map(item => item.alcoholPercentage))}
+                           step={0.1}
                            onChangeMin={(value => this.setState({alcoholMin: value}))}
                            onChangeMax={(value => this.setState({alcoholMax: value}))}
           />
-          <AttributeSlider title='IBU' min={this.state.ibuMin} max={this.state.ibuMax} toFixed={0}
-                           minimumValue={5} maximumValue={80} step={1}
+          <AttributeSlider title='IBU'
+                           min={this.state.ibuMin}
+                           max={this.state.ibuMax}
+                           toFixed={0}
+                           range={this.getRange(this.props.context.state.allProducts.map(item => item.ibu))}
+                           step={1}
                            onChangeMin={(value => this.setState({ibuMin: value}))}
                            onChangeMax={(value => this.setState({ibuMax: value}))}
           />
@@ -154,19 +171,21 @@ export class Filter extends Component {
           <View style={filterStyles.filterPropertyType}>
             <Text style={filterStyles.filterPropertyAttribute}> Beer style</Text>
             <SafeAreaView style={{flex: 1, marginTop: 10, width: '100%', height: '100%'}}>
-                <DropDownPicker
-                    items={this.getDistinctTypes(this.props.context.state.types)}
-                    defaultValue={this.props.context.state.chosenTypes ? this.props.context.state.chosenTypes : this.props.context.state.types}
-                    multiple={true}
-                    style={filterStyles.dropdownList}
-                    onChangeItem={ types => this.setState({
-                      types: types
-                    })}
-                    activeItemStyle={{
-                      backgroundColor: '#1E90FF',
-                    }}
-                    isVisible={true}
-                />
+              <DropDownPicker
+                  items={this.getDistinctTypes(this.props.context.state.types)}
+                  defaultValue={this.props.context.state.chosenTypes
+                      ? this.props.context.state.chosenTypes
+                      : this.props.context.state.types}
+                  multiple={true}
+                  style={filterStyles.dropdownList}
+                  onChangeItem={types => this.setState({
+                    types: types
+                  })}
+                  activeItemStyle={{
+                    backgroundColor: '#1E90FF',
+                  }}
+                  isVisible={true}
+              />
             </SafeAreaView>
           </View>
 

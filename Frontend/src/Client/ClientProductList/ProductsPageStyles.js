@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet } from "react-native";
+import {StatusBar, StyleSheet} from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -75,14 +75,14 @@ export const styles = StyleSheet.create({
 });
 
 export const buttonStyleSheet = (isTableSet) =>
-  StyleSheet.create({
-    orderButton: {
-      backgroundColor: isTableSet ? "darkblue" : "grey",
-      elevation: 8,
-      paddingVertical: 3,
-      paddingHorizontal: 12,
-      marginTop: 5,
-      fontSize: 12,
-      borderRadius: 10,
-    },
-  });
+    StyleSheet.create({
+      orderButton: {
+        backgroundColor: isTableSet ? "darkblue" : "grey",
+        elevation: 8,
+        paddingVertical: 3,
+        paddingHorizontal: 12,
+        marginTop: 5,
+        fontSize: 12,
+        borderRadius: 10,
+      },
+    });
