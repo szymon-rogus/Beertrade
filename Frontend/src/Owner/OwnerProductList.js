@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { FlatList, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { asMoneyString, CURRENCY, http, TopBar } from "../../Global";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../GlobalStyles";
 import { bartStyles } from "../Bartender/BartenderProductManagement/BartenderManagementPageStyles.js";
 import { ownerStyles } from "./OwnerProductListStyles"
-import { SAVED } from "./SaveChangesComponent/SaveChangesComponent";
 import { getSession } from "../services/SessionService";
 import { changesSaver } from "./SaveChangesComponent/SaveChangesComponentStyles";
 
@@ -32,12 +31,15 @@ const Item = ({item, onVarChange, sessionEnabled}) =>
       <Text style={ownerStyles.title}>{item.name}</Text>
       <View style={ownerStyles.parameterView}>
         <Text style={ownerStyles.parameter}>Base price:</Text>
-        <MyTextInput varName="basePrice" initValue={item.basePrice} onVarChange={onVarChange} id={item.id} editable={!sessionEnabled} />
+        <MyTextInput varName="basePrice" initValue={item.basePrice} onVarChange={onVarChange} id={item.id}
+                     editable={!sessionEnabled}/>
       </View>
       <View style={ownerStyles.parameterView}>
-        <MyTextInput varName="minPrice" initValue={item.minPrice} onVarChange={onVarChange} id={item.id} editable={!sessionEnabled}/>
+        <MyTextInput varName="minPrice" initValue={item.minPrice} onVarChange={onVarChange} id={item.id}
+                     editable={!sessionEnabled}/>
         <Text style={ownerStyles.parameter}>&lt; price range &lt;</Text>
-        <MyTextInput varName="maxPrice" initValue={item.maxPrice} onVarChange={onVarChange} id={item.id} editable={!sessionEnabled}/>
+        <MyTextInput varName="maxPrice" initValue={item.maxPrice} onVarChange={onVarChange} id={item.id}
+                     editable={!sessionEnabled}/>
       </View>
       <View style={ownerStyles.buttons}>
         <Button text="Statistics"/>
@@ -83,7 +85,7 @@ export default class OwnerProductList extends Component {
       this.setState({
         sessionEnabled: sessionEnabled
       });
-      if(sessionEnabled) this.setState({infoBar: "Disable session in order to configure prices"})
+      if (sessionEnabled) this.setState({infoBar: "Disable session in order to configure prices"})
     })
   }
 
@@ -101,14 +103,14 @@ export default class OwnerProductList extends Component {
 
   render() {
     const topBarIcons = [
-      <FontAwesome5
-        key={2}
-        name="th-list"
-        size={iconSize}
-        color={iconColor}
-        style={topBarIconStyle(6).style}
-        onPress={() => {
-        }}
+      <AntDesign name="barschart"
+                 key={2}
+                 size={iconSize}
+                 color={iconColor}
+                 style={topBarIconStyle(6).style}
+                 onPress={() => {
+                   this.props.navigation.navigate("ownerMainPage")
+                 }}
       />,
       <MaterialCommunityIcons
         key={3}

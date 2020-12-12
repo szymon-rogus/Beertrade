@@ -19,6 +19,8 @@ target 'Frontend' do
 
   pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
 
+  pod 'react-native-slider', :path => '../node_modules/@react-native-community/slider'
+
   post_install do |installer|
     flipper_post_install(installer)
   end
