@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import { FlatList, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { asMoneyString, CURRENCY, http, TopBar } from "../../Global";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
-import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../GlobalStyles";
-import { bartStyles } from "../Bartender/BartenderProductManagement/BartenderManagementPageStyles.js";
-import { ownerStyles } from "./OwnerProductListStyles"
-import { SAVED } from "./SaveChangesComponent/SaveChangesComponent";
-import { getSession } from "../services/SessionService";
-import { changesSaver } from "./SaveChangesComponent/SaveChangesComponentStyles";
+import React, {Component} from "react";
+import {FlatList, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
+
+import {asMoney, asMoneyString, CURRENCY, http, TopBar} from "../../Global";
+import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../GlobalStyles";
+import {bartStyles} from "../Bartender/BartenderProductManagement/BartenderManagementPageStyles.js";
+import {ownerStyles} from "./OwnerProductListStyles"
+import {getSession} from "../services/SessionService";
+import {changesSaver} from "./SaveChangesComponent/SaveChangesComponentStyles";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 const Button = ({text}) => (
     <TouchableOpacity style={ownerStyles.button}>
@@ -16,12 +17,12 @@ const Button = ({text}) => (
 )
 
 const MyTextInput = ({varName, initValue, onVarChange, id, editable}) => (
-  <TextInput style={ownerStyles.input}
-             onChangeText={varValue => onVarChange(id, varValue, varName)}
-             defaultValue={asMoneyString(initValue)}
-             keyboardType="decimal-pad"
-             editable={editable}
-  />
+    <TextInput style={ownerStyles.input}
+               onChangeText={varValue => onVarChange(id, varValue, varName)}
+               defaultValue={asMoneyString(initValue)}
+               keyboardType="decimal-pad"
+               editable={editable}
+    />
 )
 
 
@@ -70,12 +71,12 @@ export default class OwnerProductList extends Component {
 
   setProducts() {
     http.get("/product/configure/all")
-      .then((response) => response.data)
-      .then(data => {
-        return data;
-      })
-      .then((data) => this.setState({products: data}))
-      .catch((err) => console.log(err));
+        .then((response) => response.data)
+        .then(data => {
+          return data;
+        })
+        .then((data) => this.setState({products: data}))
+        .catch((err) => console.log(err));
   }
 
   componentDidMount() {
