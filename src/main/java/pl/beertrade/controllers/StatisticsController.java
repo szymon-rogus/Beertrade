@@ -9,6 +9,7 @@ import pl.beertrade.services.StatisticsService;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
@@ -22,9 +23,9 @@ public class StatisticsController {
     @PostMapping("/all")
     public OwnerMainPageJTO getOwnerMainPageData(@RequestBody DatePeriodJTO datePeriodJTO) throws ParseException {
         log.trace("ENTRY - getOwnerMainPageData");
-        final Date dateFrom = DateFormat.getDateInstance()
+        final Date dateFrom = new SimpleDateFormat("yyyy-MM-dd")
                 .parse(datePeriodJTO.getDateFrom());
-        final Date dateTo = DateFormat.getDateInstance()
+        final Date dateTo = new SimpleDateFormat("yyyy-MM-dd")
                 .parse(datePeriodJTO.getDateTo());
         final OwnerMainPageJTO ownerMainPageJTO = statisticsService.getAllProductsStatisticsFromPeriod(dateFrom, dateTo);
         log.trace("EXIT - getOwnerMainPageData - {}", ownerMainPageJTO);
