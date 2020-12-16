@@ -98,10 +98,10 @@ export default class OwnerProductList extends Component {
     )
   }
 
-  addProduct() {
-  }
+
 
   render() {
+    console.log(this.state.products)
     const topBarIcons = [
       <AntDesign
         name="barschart"
@@ -119,7 +119,7 @@ export default class OwnerProductList extends Component {
           size={iconSize}
           color={iconColor}
           style={topBarIconStyle(6).style}
-          onPress={() => this.addProduct()}
+          onPress={() => this.props.navigation.navigate("ownerAddProduct")}
       />,
     ];
     return (
