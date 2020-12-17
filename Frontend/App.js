@@ -12,6 +12,7 @@ import ClientOrderPage from "./src/Client/ClientOrderPage/ClientOrderPage";
 import ProductsPage from "./src/Client/ClientProductList/ProductsPage";
 import OwnerProductList from "./src/Owner/OwnerProductList.js";
 import OwnerMainPage from "./src/Owner/MainPage/MainPage.js";
+import StatisticsPage from "./src/Owner/StatisticsPage/StatisticsPage.js";
 
 export default class App extends React.Component {
   render() {
@@ -66,6 +67,11 @@ export default class App extends React.Component {
           <stack.Screen
             name="ownerProductList"
             component={OwnerProductList}
+            options={{ headerShown: false }}
+          />
+          <stack.Screen
+            name="ownerProductStats"
+            component={StatisticsPage}
             options={{ headerShown: false }}
           />
         </stack.Navigator>
