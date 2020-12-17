@@ -46,6 +46,13 @@ public class ProductService {
         log.trace("EXIT - addProduct");
     }
 
+
+    public Optional<FullProductJTO> getProduct(@NonNull UUID id) {
+        log.trace("ENTRY - getProduct - {}", id);
+        return  productRepository.findById(id).map(Beer::toFullProductJTO);
+
+    }
+
     public void orderProduct(@NonNull UUID id, Float price, @NonNull Client client) throws NotFoundException {
         log.trace("ENTRY - orderProduct - {} {}", id, client);
         final Optional<Order> boughtBeerOptional = productRepository.findById(id)

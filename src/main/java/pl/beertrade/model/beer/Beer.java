@@ -4,10 +4,7 @@ import lombok.*;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.annotations.GenericGenerator;
 import pl.beertrade.model.beer.enums.ProductState;
-import pl.beertrade.model.beer.jto.ConfigureProductsListItemJTO;
-import pl.beertrade.model.beer.jto.ManageProductsListItemJTO;
-import pl.beertrade.model.beer.jto.ProductDetailsJTO;
-import pl.beertrade.model.beer.jto.ProductListItemJTO;
+import pl.beertrade.model.beer.jto.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -110,6 +107,28 @@ public class Beer {
                 .alcoholPercentage(alcoholPercentage)
                 .encodedPhoto(Base64.encodeBase64String(photo))
                 .productState(productState)
+                .build();
+    }
+
+    public FullProductJTO toFullProductJTO(){
+        return FullProductJTO.builder()
+                .id(id)
+                .name(name)
+                .type(type)
+                .alcoholPercentage(alcoholPercentage)
+                .encodedPhoto(Base64.encodeBase64String(photo))
+                .productState(productState)
+                .basePrice(basePrice)
+                .minPrice(minPrice)
+                .maxPrice(maxPrice)
+                .amortizationFactor(amortizationFactor)
+                .ibu(ibu)
+                .blg(blg)
+                .ebc(ebc)
+                .origin(origin)
+                .brewery(brewery)
+                .year(year)
+                .description(description)
                 .build();
     }
 
