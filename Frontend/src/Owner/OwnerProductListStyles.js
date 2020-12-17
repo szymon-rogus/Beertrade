@@ -45,15 +45,12 @@ export const ownerStyles = StyleSheet.create({
     marginVertical: "2%",
   },
   button: {
-    borderColor: `#000`,
+    height: 30,
+    width: 100,
+    backgroundColor: 'lightgrey',
     borderWidth: 1,
-    padding: 5,
-    borderRadius: 3,
-    backgroundColor: '#eee',
-    flex: 0.35,
+    borderRadius: 2,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  buttonText: {
-    color: '#000',
-    textAlign: "center"
-  }
 });

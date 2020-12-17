@@ -30,9 +30,11 @@ public class HistoricalPrices {
     private Beer product;
 
     @NotNull
+    @Getter
     private Double price;
 
     @NotNull
+    @Getter
     private Date date;
 
 }
