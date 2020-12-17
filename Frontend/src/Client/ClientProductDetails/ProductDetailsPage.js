@@ -146,7 +146,7 @@ export default class ProductDetailsPage extends Component {
 
   setProductDetails() {
     http
-        .get("/product/" + this.props.route.params.itemId)
+        .get("/product/details/" + this.props.route.params.itemId)
         .then((response) => this.setState({product: response.data}))
         .catch((err) => console.log(err));
   }

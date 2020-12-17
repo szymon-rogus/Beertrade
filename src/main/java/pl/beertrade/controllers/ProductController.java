@@ -58,7 +58,7 @@ public class ProductController {
         return manageProductsListItem;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/details/{id}")
     public ProductDetailsJTO getProductDetails(@PathVariable UUID id) throws NotFoundException {
         log.trace("ENTRY - getProductDetails - {}", id);
         final ProductDetailsJTO productDetails = productService.getProductDetails(id);
@@ -71,6 +71,14 @@ public class ProductController {
         log.trace("ENTRY - addProduct - {}", product);
         productService.addProduct(product);
         log.trace("EXIT - addProduct");
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FullProductJTO> getProduct(@PathVariable UUID id) {
+        log.trace("ENTRY - getProductDetails - {}", id);
+        Optional<FullProductJTO> product = productService.getProduct(id);
+        log.trace("EXIT - getProductDetails - {}", product);
+        return ResponseEntity.of(product);
     }
 
     @PostMapping("/order/{id}")

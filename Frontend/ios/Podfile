@@ -21,6 +21,8 @@ target 'Frontend' do
 
   pod 'react-native-slider', :path => '../node_modules/@react-native-community/slider'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   post_install do |installer|
     flipper_post_install(installer)
   end

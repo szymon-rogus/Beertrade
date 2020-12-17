@@ -5,10 +5,16 @@ export const styles = StyleSheet.create({
     flex: 0.1,
     flexDirection: "row",
     alignItems: "flex-start",
+    justifyContent: "flex-start",
+    width: "100%",
   },
   title: {
     fontSize: 40,
     color: "black",
+    textAlign: "left",
+    alignSelf: "flex-start",
+    marginTop: 5,
+    marginLeft: 10,
   },
   dateSection: {
     flex: 0.1,
@@ -54,10 +60,13 @@ export const styles = StyleSheet.create({
   },
   overallStatsLabel: {
     fontSize: 16,
-    fontWeight: "bold",
     color: "black",
   },
   plotBox: {
     flex: 0.26,
+    width: "100%",
   },
+  plotTitle: {
+    fontSize: 16, color: "black", fontWeight: "bold"
+  }
 });

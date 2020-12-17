@@ -3,7 +3,7 @@ import {Text, View, TouchableOpacity, TextInput} from "react-native";
 
 import {http, setAuthorizationToken, APP_TITLE} from "../../../Global.js";
 import {globalStyles} from "../../../GlobalStyles.js";
-import {styles, fontColor, bgColor} from "./LoginPageStyles.js";
+import {loginStyles, fontColor, bgColor} from "./LoginPageStyles.js";
 
 export default class LoginPage extends Component {
   state = {
@@ -67,19 +67,19 @@ export default class LoginPage extends Component {
           <View style={globalStyles.buttonContainer}>
             <TouchableOpacity
                 onPress={this.handleAuth}
-                style={styles.logInPageButton}
+                style={loginStyles.logInPageButton}
             >
               <Text style={{color: bgColor}}>Log in</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 onPress={() => this.props.navigation.navigate("registration")}
-                style={styles.logInPageButton}
+                style={loginStyles.logInPageButton}
             >
               <Text style={{color: bgColor}}>Register</Text>
             </TouchableOpacity>
           </View>
           <Text
-              style={styles.forgottenPasswordText}
+              style={loginStyles.forgottenPasswordText}
               onPress={() => this.props.navigation.navigate("forgottenpass")}
           >
             Forgotten password
