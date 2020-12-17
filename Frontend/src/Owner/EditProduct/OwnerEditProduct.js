@@ -1,29 +1,25 @@
 import React, { Component } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { beerPhoto, http, TopBar } from "../../../Global";
+import { http, TopBar } from "../../../Global";
 import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../../GlobalStyles";
 import { loginStyles } from "../../Authentication/Login/LoginPageStyles";
 import { bgColor } from "../../Authentication/Registration/RegistrationPageStyles";
 import { Item } from "../AddProduct/OwnerAddProduct";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { detailStyles } from "../../Client/ClientProductDetails/ProductDetailsPageStyles";
 import { launchImageLibrary } from "react-native-image-picker/src/index";
 
 export default class OwnerEditProduct extends Component {
   constructor(props) {
     super(props);
-    const { id , ctx} = props.route.params;
-    this.state={
+    const {id, ctx} = props.route.params;
+    this.state = {
       productId: id,
       ctx: ctx
     }
-
-
   }
 
   componentDidMount() {
     this.setProduct(this.state.productId)
-    console.log("products set")
   }
 
   setProduct(id) {
@@ -48,7 +44,7 @@ export default class OwnerEditProduct extends Component {
         year: r.year,
         productState: r.productState
       })
-    }).then(_ => console.log(this.state.ibu))
+    })
 
   }
 
@@ -104,7 +100,7 @@ export default class OwnerEditProduct extends Component {
   }
 
 
-  render(){
+  render() {
     const topBarIcons = [
       <AntDesign
         name="close"
@@ -117,7 +113,6 @@ export default class OwnerEditProduct extends Component {
         }}
       />
     ];
-    console.log(this.state.ibu);
     return (
       <View style={globalStyles.mainContainer}>
         <TopBar title={"Edit product"} icons={topBarIcons}/>
@@ -127,13 +122,14 @@ export default class OwnerEditProduct extends Component {
               <TouchableOpacity style={loginStyles.logInPageButton} onPress={() => this.selectImage()}>
                 <Text style={{color: "#fff",}}>Select image</Text>
               </TouchableOpacity>
-              <View><Image style={{width:20, height:40, marginTop: 15}} source={{uri: "data:image/jpeg;base64," + this.state.photo}}/></View>
-              <View style={{}}><Text style={{ paddingVertical: 10, width:"60%",
-                paddingHorizontal: 2, flexWrap: "wrap", }}>{this.state.photoPath}</Text>
+              <View><Image style={{width: 20, height: 40, marginTop: 15}}
+                           source={{uri: "data:image/jpeg;base64," + this.state.photo}}/></View>
+              <View style={{}}><Text style={{
+                paddingVertical: 10, width: "60%",
+                paddingHorizontal: 2, flexWrap: "wrap",
+              }}>{this.state.photoPath}</Text>
               </View>
             </View>
-            {/*<CameraRollPicker*/}
-            {/*  callback={this.getSelectedImages} />*/}
             <Item
               name="Name"
               onChange={(text) => {
