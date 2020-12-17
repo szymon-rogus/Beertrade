@@ -1,46 +1,39 @@
 import React, { Component } from "react";
-import { FlatList, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 
 import AntDesign from "react-native-vector-icons/AntDesign";
-import SaveChangesComponent, { SAVED, UNSAVED } from "../SaveChangesComponent/SaveChangesComponent";
-import { ownerStyles } from "../OwnerProductListStyles";
+import { SAVED, UNSAVED } from "../SaveChangesComponent/SaveChangesComponent";
 import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../../GlobalStyles";
 import { http, TopBar } from "../../../Global";
-import { bgColor, buttonFontColor, fontColor, styles } from "../../Authentication/Registration/RegistrationPageStyles";
-import { bartStyles } from "../../Bartender/BartenderProductManagement/BartenderManagementPageStyles";
-import { ScrollView } from "react-native";
+import { bgColor } from "../../Authentication/Registration/RegistrationPageStyles";
 import { loginStyles } from "../../Authentication/Login/LoginPageStyles";
 import { launchImageLibrary } from 'react-native-image-picker/src';
-import CameraRollPicker from "react-native-camera-roll-picker";
 
 
-
-const Item = ({name, onChange, example, multiline}) => (
+export const Item = ({name, onChange, example, defaultValue, multiline}) => (
   <View>
-  <Text style={globalStyles.blackInputLabel }> {name} </Text>
-  <TextInput
-    multiline={multiline}
-    style={multiline ? [globalStyles.blackInput, {height: 60}] : globalStyles.blackInput}
-    underlineColorAndroid="transparent"
-    // placeholder={example}
-    placeholderTextColor={"#000"}
-    autoCapitalize="none"
-    onChangeText={(text) => onChange(text)}
+    <Text style={globalStyles.blackInputLabel}> {name} </Text>
+    <TextInput
+      multiline={multiline}
+      style={multiline ? [globalStyles.blackInput, {height: 60}] : globalStyles.blackInput}
+      underlineColorAndroid="transparent"
+      // placeholder={example}
+      defaultValue={defaultValue ? defaultValue : ""}
+      placeholderTextColor={"#000"}
+      autoCapitalize="none"
+      onChangeText={(text) => onChange(text)}
 
-  />
-  {/*<Text style={{color:"red", marginLeft: 16, }}>error</Text>*/}
+    />
   </View>
 )
-
-
 
 
 export default class OwnerAddProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      changes : SAVED,
+      changes: SAVED,
       name: "",
       alcoholPercentage: 0.0,
       amortizationFactor: 0,
@@ -62,24 +55,10 @@ export default class OwnerAddProduct extends Component {
     };
   }
 
-  componentDidMount() {
-    setInterval(() => {
-
-    },500)
-  }
-
-
-  renderItem = ({item}) => {
-    return (
-      <Item name={item.name}
-            onChange={item.onChange}
-      />
-    )
-  }
-
   changes() {
-    this.setState({changes:UNSAVED})
+    this.setState({changes: UNSAVED})
   }
+
 
   onSave() {
     http.post("/product", {
@@ -102,10 +81,7 @@ export default class OwnerAddProduct extends Component {
       productState: this.state.productState
     }).catch((_) => alert("Failed to add the product")).then(() => this.props.navigation.navigate("ownerProductList"));
   }
-  getSelectedImages = (r, c) => {
-  console.log(r)
-    console.log(c)
-  }
+
 
   render() {
     const topBarIcons = [
@@ -129,12 +105,12 @@ export default class OwnerAddProduct extends Component {
               <TouchableOpacity style={loginStyles.logInPageButton} onPress={() => this.selectImage()}>
                 <Text style={{color: "#fff",}}>Select image</Text>
               </TouchableOpacity>
-              <View style={{width: "100%"}}><Text style={{ paddingVertical: 10, width:"60%",
-                paddingHorizontal: 2, flexWrap: "wrap", }}>{this.state.photoPath}</Text>
+              <View style={{width: "100%"}}><Text style={{
+                paddingVertical: 10, width: "60%",
+                paddingHorizontal: 2, flexWrap: "wrap",
+              }}>{this.state.photoPath}</Text>
               </View>
             </View>
-            {/*<CameraRollPicker*/}
-            {/*  callback={this.getSelectedImages} />*/}
             <Item
               name="Name"
               onChange={(text) => {
@@ -218,7 +194,7 @@ export default class OwnerAddProduct extends Component {
 
   selectImage() {
     let options = {
-        includeBase64: true,
+      includeBase64: true,
     };
     launchImageLibrary(options, (response) => {
 
