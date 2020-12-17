@@ -5,7 +5,7 @@ import DatePicker from "react-native-datepicker-yaya";
 import moment from "moment";
 import {BarChart} from "react-native-charts-wrapper";
 
-import {http, TopBar, logout} from "../../../Global.js";
+import {http, TopBar, logout, asMoney} from "../../../Global.js";
 import {styles} from "./MainPageStyles.js";
 import {globalStyles, topBarIconStyle} from "../../../GlobalStyles.js";
 
@@ -70,7 +70,7 @@ export default class OwnerMainPage extends Component {
   renderColumn = (value) => {
     return (
         <View style={styles.columnLabel}>
-          <Text style={styles.columnValueText}>{value} zł</Text>
+          <Text style={styles.columnValueText}>{asMoney(value)} zł</Text>
         </View>
     );
   };
@@ -115,7 +115,7 @@ export default class OwnerMainPage extends Component {
   renderOverallStatsValues = (value) => {
     return (
         <View style={styles.overallStatsValueCell}>
-          <Text style={styles.overallStatsValues}>{value} zł</Text>
+          <Text style={styles.overallStatsValues}>{asMoney(value)} zł</Text>
         </View>
     );
   };
