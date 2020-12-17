@@ -9,9 +9,13 @@ import { http, TopBar, logout, asMoney } from "../../../Global.js";
 import { styles } from "./StatisticsPageStyles.js";
 import { globalStyles } from "../../../GlobalStyles.js";
 
+const YEAR_MONTH_DAY_FORMAT = "YYYY-MM-DD";
+const DATE_WITH_HOUR_FORMAT = "MM/dd/YYYY HH:mm:ss";
+const HOUR_FORMAT = "HH:mm";
+
 export default class StatisticsPage extends Component {
   state = {
-    date: moment(new Date()).format("YYYY-MM-DD"),
+    date: moment(new Date()).format(YEAR_MONTH_DAY_FORMAT),
     overallIncome: 0.0,
     overallAlgorithmIncome: 0.0,
     pricesAndTime: [],
@@ -20,7 +24,7 @@ export default class StatisticsPage extends Component {
   };
 
   onDateChange = (selectedDate) => {
-    this.fetchData(moment(selectedDate).format("YYYY-MM-DD"));
+    this.fetchData(moment(selectedDate).format(YEAR_MONTH_DAY_FORMAT));
   };
 
   fetchData = (date) => {
@@ -56,7 +60,7 @@ export default class StatisticsPage extends Component {
         mode="date"
         useNativeDriver={true}
         placeholder="Select date"
-        format="YYYY-MM-DD"
+        format={YEAR_MONTH_DAY_FORMAT}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         customStyles={{
@@ -116,8 +120,8 @@ export default class StatisticsPage extends Component {
           values: this.state.demandAndTime.map((item) => {
             return {
               x:
-                moment(item.time, "MM/dd/YYYY HH:mm:ss").hours() +
-                moment(item.time, "MM/dd/YYYY HH:mm:ss").minutes() / 60,
+                moment(item.time, DATE_WITH_HOUR_FORMAT).hours() +
+                moment(item.time, DATE_WITH_HOUR_FORMAT).minutes() / 60,
               y: item.demandValue,
             };
           }),
@@ -133,8 +137,8 @@ export default class StatisticsPage extends Component {
             values: this.state.pricesAndTime.map((item) => {
               return {
                 x:
-                  moment(item.time, "MM/dd/YYYY HH:mm:ss").hours() +
-                  moment(item.time, "MM/dd/YYYY HH:mm:ss").minutes() / 60,
+                  moment(item.time, DATE_WITH_HOUR_FORMAT).hours() +
+                  moment(item.time, DATE_WITH_HOUR_FORMAT).minutes() / 60,
                 y: item.priceValue,
               };
             }),
@@ -154,7 +158,7 @@ export default class StatisticsPage extends Component {
       granularity: 1,
       position: "BOTTOM",
       valueFormatter: "date",
-      valueFormatterPattern: "HH:mm",
+      valueFormatterPattern: HOUR_FORMAT,
       timeUnit: "HOURS",
     };
     if (this.state.fetchedData) {

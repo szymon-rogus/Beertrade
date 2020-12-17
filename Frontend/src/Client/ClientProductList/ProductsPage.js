@@ -223,13 +223,13 @@ export default class ProductsPage extends Component {
   componentDidMount() {
     this.setProductsAndSession();
     this.setPrices();
-    this.interval = setInterval(
-      function (self) {
-        self.setProductsAndSession();
-      },
-      5000,
-      this
-    );
+    // this.interval = setInterval(
+    //   function (self) {
+    //     self.setProductsAndSession();
+    //   },
+    //   5000,
+    //   this
+    // );
     this.pricesInterval = setInterval(
       function (self) {
         self.setPrices();
