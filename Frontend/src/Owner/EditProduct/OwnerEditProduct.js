@@ -12,19 +12,24 @@ import { launchImageLibrary } from "react-native-image-picker/src/index";
 export default class OwnerEditProduct extends Component {
   constructor(props) {
     super(props);
-    const { id } = props.route.params;
+    const { id , ctx} = props.route.params;
     this.state={
-      productId: id
+      productId: id,
+      ctx: ctx
     }
+
+
   }
 
   componentDidMount() {
     this.setProduct(this.state.productId)
+    console.log("products set")
   }
 
   setProduct(id) {
     http.get("/product/" + id).then(r => r.data).then(r => {
       this.setState({
+        id: id,
         name: r.name,
         alcoholPercentage: r.alcoholPercentage,
         amortizationFactor: r.amortizationFactor,
@@ -43,12 +48,13 @@ export default class OwnerEditProduct extends Component {
         year: r.year,
         productState: r.productState
       })
-    }).then(_ => console.log(this.state))
+    }).then(_ => console.log(this.state.ibu))
 
   }
 
   onSave() {
     http.post("/product", {
+      id: this.state.id,
       name: this.state.name,
       alcoholPercentage: this.state.alcoholPercentage,
       amortizationFactor: this.state.amortizationFactor,
@@ -66,7 +72,11 @@ export default class OwnerEditProduct extends Component {
       type: this.state.type,
       year: this.state.year,
       productState: this.state.productState
-    }).catch((_) => alert("Failed to add the product")).then(() => this.props.navigation.navigate("ownerProductList"));
+    }).catch((_) => alert("Failed to add the product")).then(() => {
+      this.state.ctx.setProducts()
+      this.props.navigation.navigate("ownerProductList")
+    });
+
   }
 
   selectImage() {
@@ -107,6 +117,7 @@ export default class OwnerEditProduct extends Component {
         }}
       />
     ];
+    console.log(this.state.ibu);
     return (
       <View style={globalStyles.mainContainer}>
         <TopBar title={"Edit product"} icons={topBarIcons}/>

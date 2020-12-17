@@ -61,6 +61,7 @@ export default class OwnerAddProduct extends Component {
 
 
   onSave() {
+    console.log(this.state)
     http.post("/product", {
       name: this.state.name,
       alcoholPercentage: this.state.alcoholPercentage,
