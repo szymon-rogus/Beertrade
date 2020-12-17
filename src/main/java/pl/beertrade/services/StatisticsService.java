@@ -85,7 +85,7 @@ public class StatisticsService {
             nextCalendarDate.setTime(iterDate);
             nextCalendarDate.add(Calendar.MINUTE, 15);
             final Date dateAfter = nextCalendarDate.getTime();
-            for (int j = i; j < historicalOrders.size() && historicalOrders.get(j).getBoughtDate().after(iterDate); j++) {
+            for (int j = i; j < historicalOrders.size() && historicalOrders.get(j).getBoughtDate().before(dateAfter) && historicalOrders.get(j).getBoughtDate().after(iterDate); j++) {
                 number += historicalOrders.get(j).getAmount();
                 i = j;
             }

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { asMoney, asMoneyString, CURRENCY, http, TopBar } from "../../Global";
 import {
@@ -19,12 +19,6 @@ import { bartStyles } from "../Bartender/BartenderProductManagement/BartenderMan
 import { ownerStyles } from "./OwnerProductListStyles";
 import { getSession } from "../services/SessionService";
 import { changesSaver } from "./SaveChangesComponent/SaveChangesComponentStyles";
-
-const Button = ({ text }) => (
-  <TouchableOpacity style={ownerStyles.button}>
-    <Text style={ownerStyles.buttonText}>{text}</Text>
-  </TouchableOpacity>
-);
 
 const MyTextInput = ({ varName, initValue, onVarChange, id, editable }) => (
   <TextInput
@@ -68,7 +62,7 @@ const Item = ({ item, onVarChange, sessionEnabled, context }) => (
     </View>
     <View style={ownerStyles.buttons}>
       <TouchableOpacity
-        style={{ height: 30, width: 50 }}
+        style={ownerStyles.button}
         onPress={() =>
           context.props.navigation.navigate("ownerProductStats", {
             productId: item.id,
@@ -76,9 +70,13 @@ const Item = ({ item, onVarChange, sessionEnabled, context }) => (
           })
         }
       >
-        <Text>Statistics</Text>
+        <Text style={{color: 'black'}}>Statistics</Text>
       </TouchableOpacity>
-      <Button text="Edit details" />
+      <TouchableOpacity
+        style={{ height: 30, width: 100, backgroundColor: 'lightgrey', borderWidth: 1, borderRadius: 2, alignItems: 'center', justifyContent: 'center'}}
+      >
+        <Text style={{color: 'black'}}>Edit details</Text>
+      </TouchableOpacity>
     </View>
   </View>
 );
@@ -144,7 +142,6 @@ export default class OwnerProductList extends Component {
 
   render() {
     const topBarIcons = [
-<<<<<<< HEAD
       <AntDesign
         name="barschart"
          key={2}

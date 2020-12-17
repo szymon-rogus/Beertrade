@@ -5,7 +5,7 @@ import DatePicker from "react-native-datepicker-yaya";
 import moment from "moment";
 import { LineChart } from "react-native-charts-wrapper";
 
-import { http, TopBar, logout } from "../../../Global.js";
+import { http, TopBar, logout, asMoney } from "../../../Global.js";
 import { styles } from "./StatisticsPageStyles.js";
 import { globalStyles } from "../../../GlobalStyles.js";
 
@@ -75,7 +75,7 @@ export default class StatisticsPage extends Component {
   renderOverallStatsValues = (value) => {
     return (
       <View style={styles.overallStatsValueCell}>
-        <Text style={styles.overallStatsValues}>{value} zł</Text>
+        <Text style={styles.overallStatsValues}>{asMoney(value)} zł</Text>
       </View>
     );
   };
