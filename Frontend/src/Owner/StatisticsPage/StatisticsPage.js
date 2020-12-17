@@ -165,10 +165,11 @@ export default class StatisticsPage extends Component {
       return (
         <View style={globalStyles.mainContainer}>
           <TopBar backIcon={backIcon} icons={topBarIcons} />
-          <View style={styles.dateSection}>
-            <Text style={[styles.title, { marginRight: "70%" }]}>
+          <View style={[styles.titleSection]}>
+            <Text style={[styles.title]}>
               {this.props.route.params.productName}
             </Text>
+
           </View>
           <View style={styles.dateSection}>
             <Text style={styles.dateSectionLabel}>Date:</Text>
@@ -183,13 +184,13 @@ export default class StatisticsPage extends Component {
             {this.renderOverallStatsLabels("Algorithm bonus")}
           </View>
           <View style={{ flex: 0.03 }}>
-            <Text style={{ fontSize: 16, color: "black" }}>
+            <Text style={styles.plotTitle}>
               Demand changes in time
             </Text>
           </View>
           <View style={styles.plotBox}>
             <LineChart
-              style={{ flex: 1, width: "100%" }}
+              style={{ flex: 1}}
               data={demandData}
               chartDescription={{ text: "Demand" }}
               xAxis={xAxis}
@@ -197,7 +198,6 @@ export default class StatisticsPage extends Component {
               borderWidth={1}
               drawBorders={false}
               marker={marker}
-              width={400}
               autoScaleMinMaxEnabled={false}
               touchEnabled={true}
               dragEnabled={true}
@@ -217,13 +217,13 @@ export default class StatisticsPage extends Component {
             />
           </View>
           <View style={{ flex: 0.03 }}>
-            <Text style={{ fontSize: 16, color: "black" }}>
+            <Text style={styles.plotTitle}>
               Price changes in time
             </Text>
           </View>
           <View style={styles.plotBox}>
             <LineChart
-              style={{ flex: 1, width: "100%" }}
+              style={{ flex: 1 }}
               data={pricesData}
               chartDescription={{ text: "Prices" }}
               xAxis={xAxis}
@@ -231,7 +231,6 @@ export default class StatisticsPage extends Component {
               borderWidth={1}
               drawBorders={false}
               marker={marker}
-              width={400}
               autoScaleMinMaxEnabled={false}
               touchEnabled={true}
               dragEnabled={true}
