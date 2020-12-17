@@ -31,6 +31,7 @@ public class HistoricalOrder {
     private Double basePrice;
 
     @NotNull
+    @Getter
     private Date boughtDate;
 
     @NotNull

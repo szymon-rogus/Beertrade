@@ -32,6 +32,9 @@ public class PricesServiceImpl implements PricesService {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private StatisticsService statisticsService;
+
     private final Semaphore readBlock = new Semaphore(1);
 
     private final Semaphore writeBlock = new Semaphore(1);
@@ -73,6 +76,7 @@ public class PricesServiceImpl implements PricesService {
             }
             writeMutex.release();
             writeBlock.acquire();
+            statisticsService.archivePrices(prices);
             buys.keySet().forEach(key -> {
                 if (prices.containsKey(key.getId())) {
                     filteredPrices.put(key.getId(), prices.get(key.getId()));

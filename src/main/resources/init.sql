@@ -4,6 +4,7 @@ delete from public.app_user;
 delete from app_table;
 delete from beer;
 delete from session_event;
+delete from historical_prices;
 
 INSERT INTO public.beer (id, alcohol_percentage, amortization_factor, base_price, blg, brewery, description, ebc, ibu, max_price, min_price, name, product_state, origin, photo, type, year) VALUES ('1a07312b-3764-4976-b08c-7ee9cd1de412', 5.5, 5, 12, 8, 'Brovar', 'The aroma of craft beer comes mainly from the hops, malt, and yeast strain.', 8, 12, 21, 7, 'Brovar', 'ON_STORE', 'USA', null, 'Dark', '2010');
 INSERT INTO public.beer (id, alcohol_percentage, amortization_factor, base_price, blg, brewery, description, ebc, ibu, max_price, min_price, name, product_state, origin, photo, type, year) VALUES ('d3e39bee-32a9-4e72-911f-00b6ebf57e60', 5.5, 5, 12, 8, 'Camerg', 'The aroma of craft beer comes mainly from the hops, malt, and yeast strain.', 8, 12, 21, 7, 'Camerg', 'ON_STORE', 'USA', null, 'Dark', '2010');
