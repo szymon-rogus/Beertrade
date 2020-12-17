@@ -127,6 +127,7 @@ public class ProductService {
         final List<ConfigureProductsListItemJTO> configureProductList = productRepository.findAll()
                 .stream()
                 .filter(beer -> !beer.getProductState().equals(ProductState.ARCHIVED))
+                .sorted(Comparator.comparing(b -> b.getName().toLowerCase()))
                 .map(Beer::toConfigureProductsListItemJTO)
                 .collect(Collectors.toList());
         log.trace("EXIT - getConfigureRemoveProductsList - {}", configureProductList);
