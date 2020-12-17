@@ -102,7 +102,7 @@ export default class BartenderManagementPage extends Component {
             />
         );
     const encodedPhoto =
-        item.encodedPhoto !== null ? item.encodedPhoto : beerPhoto;
+        item.encodedPhoto !== null ? "data:image/jpeg;base64," + item.encodedPhoto : beerPhoto;
     return (
         <ProductListItem
             item={item}

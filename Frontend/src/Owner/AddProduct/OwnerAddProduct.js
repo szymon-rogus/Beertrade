@@ -217,13 +217,6 @@ export default class OwnerAddProduct extends Component {
   }
 
   selectImage() {
-    // let options = {
-    //   storageOptions: {
-    //     skipBackup: true,
-    //     path: 'images',
-    //     includeBase64: true,
-    //   },
-    // };
     let options = {
         includeBase64: true,
     };
@@ -245,14 +238,6 @@ export default class OwnerAddProduct extends Component {
         });
       }
     });
-
-
-    // launchImageLibrary({
-    //   mediaType: "photo",
-    //   includeBase64: true
-    // }, function (responseObject) {
-    //   console.log(responseObject)
-    // });
   }
 
 }
