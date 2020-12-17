@@ -14,6 +14,7 @@ import OwnerProductList from "./src/Owner/OwnerProductList.js";
 import OwnerMainPage from "./src/Owner/MainPage/MainPage.js";
 import StatisticsPage from "./src/Owner/StatisticsPage/StatisticsPage.js";
 import OwnerAddProduct from "./src/Owner/AddProduct/OwnerAddProduct";
+import OwnerEditProduct from "./src/Owner/EditProduct/OwnerEditProduct";
 
 export default class App extends React.Component {
   render() {
@@ -78,6 +79,11 @@ export default class App extends React.Component {
           <stack.Screen
             name="ownerAddProduct"
             component={OwnerAddProduct}
+            options={{ headerShown: false }}
+          />
+          <stack.Screen
+            name="ownerEditProduct"
+            component={OwnerEditProduct}
             options={{ headerShown: false }}
           />
         </stack.Navigator>

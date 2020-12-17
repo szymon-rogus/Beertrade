@@ -1,24 +1,19 @@
-import React, { Component } from "react";
-import {
-  FlatList,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import React, {Component} from "react";
+import {FlatList, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {AntDesign, MaterialCommunityIcons} from "@expo/vector-icons";
 
-import { asMoney, asMoneyString, CURRENCY, http, TopBar } from "../../Global";
-import {
-  globalStyles,
-  iconColor,
-  iconSize,
-  topBarIconStyle,
-} from "../../GlobalStyles";
-import { bartStyles } from "../Bartender/BartenderProductManagement/BartenderManagementPageStyles.js";
-import { ownerStyles } from "./OwnerProductListStyles";
-import { getSession } from "../services/SessionService";
-import { changesSaver } from "./SaveChangesComponent/SaveChangesComponentStyles";
+import {asMoney, asMoneyString, CURRENCY, http, TopBar} from "../../Global";
+import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../GlobalStyles";
+import {bartStyles} from "../Bartender/BartenderProductManagement/BartenderManagementPageStyles.js";
+import {ownerStyles} from "./OwnerProductListStyles"
+import {getSession} from "../services/SessionService";
+import {changesSaver} from "./SaveChangesComponent/SaveChangesComponentStyles";
+
+const Button = ({text, onPressButton, item}) => (
+    <TouchableOpacity style={ownerStyles.button} onPress={() => onPressButton(item)}>
+      <Text style={ownerStyles.buttonText}>{text}</Text>
+    </TouchableOpacity>
+)
 
 const MyTextInput = ({ varName, initValue, onVarChange, id, editable }) => (
   <TextInput
@@ -30,56 +25,28 @@ const MyTextInput = ({ varName, initValue, onVarChange, id, editable }) => (
   />
 );
 
-const Item = ({ item, onVarChange, sessionEnabled, context }) => (
-  <View style={ownerStyles.item}>
-    <Text style={ownerStyles.title}>{item.name}</Text>
-    <View style={ownerStyles.parameterView}>
-      <Text style={ownerStyles.parameter}>Base price:</Text>
-      <MyTextInput
-        varName="basePrice"
-        initValue={asMoney(item.basePrice)}
-        onVarChange={onVarChange}
-        id={item.id}
-        editable={!sessionEnabled}
-      />
+
+const Item = ({item, onVarChange, sessionEnabled, editProduct, openStatistics}) => (
+    <View style={ownerStyles.item}>
+      <Text style={ownerStyles.title}>{item.name}</Text>
+      <View style={ownerStyles.parameterView}>
+        <Text style={ownerStyles.parameter}>Base price:</Text>
+        <MyTextInput varName="basePrice" initValue={asMoney(item.basePrice)} onVarChange={onVarChange} id={item.id}
+                     editable={!sessionEnabled}/>
+      </View>
+      <View style={ownerStyles.parameterView}>
+        <MyTextInput varName="minPrice" initValue={asMoney(item.minPrice)} onVarChange={onVarChange} id={item.id}
+                     editable={!sessionEnabled}/>
+        <Text style={ownerStyles.parameter}>&lt; price range &lt;</Text>
+        <MyTextInput varName="maxPrice" initValue={asMoney(item.maxPrice)} onVarChange={onVarChange} id={item.id}
+                     editable={!sessionEnabled}/>
+      </View>
+      <View style={ownerStyles.buttons}>
+        <Button text="Statistics" onPressButton={openStatistics} item={item}/>
+        <Button text="Edit details" onPressButton={editProduct} item={item} />
+      </View>
     </View>
-    <View style={ownerStyles.parameterView}>
-      <MyTextInput
-        varName="minPrice"
-        initValue={asMoney(item.minPrice)}
-        onVarChange={onVarChange}
-        id={item.id}
-        editable={!sessionEnabled}
-      />
-      <Text style={ownerStyles.parameter}>&lt; price range &lt;</Text>
-      <MyTextInput
-        varName="maxPrice"
-        initValue={asMoney(item.maxPrice)}
-        onVarChange={onVarChange}
-        id={item.id}
-        editable={!sessionEnabled}
-      />
-    </View>
-    <View style={ownerStyles.buttons}>
-      <TouchableOpacity
-        style={ownerStyles.button}
-        onPress={() =>
-          context.props.navigation.navigate("ownerProductStats", {
-            productId: item.id,
-            productName: item.name,
-          })
-        }
-      >
-        <Text style={{color: 'black'}}>Statistics</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{ height: 30, width: 100, backgroundColor: 'lightgrey', borderWidth: 1, borderRadius: 2, alignItems: 'center', justifyContent: 'center'}}
-      >
-        <Text style={{color: 'black'}}>Edit details</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-);
+)
 
 export default class OwnerProductList extends Component {
   constructor(props) {
@@ -127,18 +94,29 @@ export default class OwnerProductList extends Component {
     });
   }
 
-  renderItem = ({ item }) => {
-    return (
-      <Item
-        item={item}
-        onVarChange={this.onVarChange.bind(this)}
-        sessionEnabled={this.state.sessionEnabled}
-        context={this}
-      />
-    );
-  };
+  openStatistics(item) {
+    this.props.navigation.navigate("ownerProductStats", {
+      productId: item.id,
+      productName: item.name,
+    })
+  }
 
-  addProduct() {}
+  editProduct(item) {
+    this.props.navigation.navigate("ownerEditProduct", {id: item.id})
+  }
+
+  renderItem = ({item}) => {
+    return (
+        <Item item={item}
+              onVarChange={this.onVarChange.bind(this)}
+              sessionEnabled={this.state.sessionEnabled}
+              editProduct={this.editProduct.bind(this)}
+              openStatistics={this.openStatistics.bind(this)}
+        />
+    )
+  }
+
+
 
   render() {
     const topBarIcons = [
@@ -153,29 +131,23 @@ export default class OwnerProductList extends Component {
          }}
       />,
       <MaterialCommunityIcons
-        key={3}
-        name="plus"
-        size={iconSize}
-        color={iconColor}
-        style={topBarIconStyle(6).style}
-        onPress={() => this.addProduct()}
+          key={3}
+          name="plus"
+          size={iconSize}
+          color={iconColor}
+          style={topBarIconStyle(6).style}
+          onPress={() => this.props.navigation.navigate("ownerAddProduct")}
       />,
     ];
     return (
-      <View style={globalStyles.mainContainer}>
-        <TopBar title={"Configure products"} icons={topBarIcons} />
-        <View style={changesSaver.bar}>
-          <Text style={changesSaver.text}>{this.state.infoBar}</Text>
+        <View style={globalStyles.mainContainer}>
+          <TopBar title={"Configure products"} icons={topBarIcons}/>
+          <View style={changesSaver.bar}><Text style={changesSaver.text}>{this.state.infoBar}</Text></View>
+          {/*todo to listStyles*/}
+          <View style={bartStyles.listBox}>
+            <FlatList data={this.state.products} renderItem={this.renderItem} keyExtractor={(item) => item.id}/>
+          </View>
         </View>
-        {/*todo to listStyles*/}
-        <View style={bartStyles.listBox}>
-          <FlatList
-            data={this.state.products}
-            renderItem={this.renderItem}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
-      </View>
-    );
+    )
   }
 }
