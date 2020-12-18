@@ -8,6 +8,7 @@ import {BarChart} from "react-native-charts-wrapper";
 import {http, TopBar, logout, asMoney} from "../../../Global.js";
 import {styles} from "./MainPageStyles.js";
 import {globalStyles, topBarIconStyle} from "../../../GlobalStyles.js";
+import { tr } from "../../../text";
 
 export default class OwnerMainPage extends Component {
   state = {
@@ -172,7 +173,7 @@ export default class OwnerMainPage extends Component {
         },
         {
           values: productAlgorithmIncomeValues,
-          label: "Algorithm income",
+          label: tr("algorithm_balance"),
           config: this.chartConfig("green"),
         },
       ],
@@ -222,7 +223,7 @@ export default class OwnerMainPage extends Component {
           </View>
           <View style={styles.overallStatsLabelsBox}>
             {this.renderOverallStatsLabels("Total income")}
-            {this.renderOverallStatsLabels("Algorithm bonus")}
+            {this.renderOverallStatsLabels(tr("algorithm_balance"))}
           </View>
           <View style={styles.tableLabelBox}>
             <Text style={styles.tableLabel}>Income per product</Text>
@@ -230,7 +231,7 @@ export default class OwnerMainPage extends Component {
           <View style={styles.columnLabelsBox}>
             {this.renderColumnLabel("Product name")}
             {this.renderColumnLabel("Income")}
-            {this.renderColumnLabel("Saved")}
+            {this.renderColumnLabel(tr("balance"))}
           </View>
           <View style={styles.tableBox}>
             <FlatList
@@ -240,7 +241,7 @@ export default class OwnerMainPage extends Component {
             />
           </View>
           <View style={styles.plotTitleBox}>
-            <Text style={styles.plotTitleText}>Income comparison</Text>
+            <Text style={styles.tableLabel}>{tr("income_and_balance_chart_title")}</Text>
           </View>
           <View style={styles.plotBox}>
             <BarChart

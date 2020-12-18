@@ -8,6 +8,7 @@ import { LineChart } from "react-native-charts-wrapper";
 import { http, TopBar, logout, asMoney } from "../../../Global.js";
 import { styles } from "./StatisticsPageStyles.js";
 import { globalStyles } from "../../../GlobalStyles.js";
+import { tr } from "../../../text";
 
 const YEAR_MONTH_DAY_FORMAT = "YYYY-MM-DD";
 const DATE_WITH_HOUR_FORMAT = "MM/dd/YYYY HH:mm:ss";
@@ -181,7 +182,7 @@ export default class StatisticsPage extends Component {
           </View>
           <View style={styles.overallStatsLabelsBox}>
             {this.renderOverallStatsLabels("Total income")}
-            {this.renderOverallStatsLabels("Algorithm bonus")}
+            {this.renderOverallStatsLabels(tr("algorithm_balance"))}
           </View>
           <View style={{ flex: 0.03 }}>
             <Text style={styles.plotTitle}>

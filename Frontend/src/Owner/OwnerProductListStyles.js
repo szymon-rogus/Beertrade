@@ -47,10 +47,14 @@ export const ownerStyles = StyleSheet.create({
   button: {
     height: 30,
     width: 100,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#eee',
     borderWidth: 1,
     borderRadius: 2,
     alignItems: 'center',
     justifyContent: 'center'
+
   },
+  buttonText: {
+    color: "#000",
+  }
 });
