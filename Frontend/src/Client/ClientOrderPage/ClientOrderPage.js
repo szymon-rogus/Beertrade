@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {FlatList, SafeAreaView, View} from "react-native";
+import {FlatList, SafeAreaView, View, Text} from "react-native";
 import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 import {http} from '../../../Global.js'
 import {globalStyles} from '../../../GlobalStyles.js'
@@ -52,6 +53,15 @@ export default class ClientOrderPage extends Component {
         <ClientOrderItem item={item}/>
     );
   };
+
+  renderEmpty = () => {
+    return (
+        <View style={clientOrderStyles.empty}>
+          <AntDesign name="exclamationcircle" size={144} color="black" style={clientOrderStyles.emptyIcon} />
+          <Text style={clientOrderStyles.emptyText}>Nothing here</Text>
+        </View>
+    );
+  }
 
 
   updateInterval = setInterval(async () => {
@@ -119,6 +129,7 @@ export default class ClientOrderPage extends Component {
                 data={this.getItems()}
                 renderItem={this.renderItem}
                 keyExtractor={(item) => item.id}
+                ListEmptyComponent={this.renderEmpty()}
             />
           </View>
         </SafeAreaView>

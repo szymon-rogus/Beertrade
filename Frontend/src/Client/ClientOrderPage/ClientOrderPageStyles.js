@@ -53,4 +53,21 @@ export const clientOrderStyles = StyleSheet.create({
     marginLeft: 12,
     width: "90%",
   },
+  empty: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  emptyIcon: {
+    marginTop: 100,
+    flex: 0.8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyText: {
+    flex: 0.2,
+    fontSize: 24,
+    marginTop: 20,
+  }
 });

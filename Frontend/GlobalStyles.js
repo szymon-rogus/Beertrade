@@ -28,6 +28,7 @@ export const globalStyles = StyleSheet.create({
     width: 300,
     borderColor: "darkblue",
     borderWidth: 1,
+    backgroundColor: "white",
   },
   blackInput: {
     marginTop: 10,
