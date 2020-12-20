@@ -3,7 +3,7 @@ import {FlatList, Image, Text, TouchableOpacity, View} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import Autocomplete from "react-native-autocomplete-input";
 
-import {http, beerPhoto, TopBar, logout, CURRENCY, asMoney} from "../../../Global";
+import {http, beerPhoto, TopBar, logout, CURRENCY, asMoney, snackBar} from "../../../Global";
 import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
 import {buttonStyleSheet, styles} from "./ProductsPageStyles";
 import {ChooseTableBar} from "./ClientModals/TablePicker/ChooseTableBar";
@@ -124,7 +124,7 @@ export default class ProductsPage extends Component {
             onPress={() => {
               this.setState({selectedId: item.id});
               this.orderProduct(item.id, this.getPrice(item));
-              alert("Product ordered.");
+              snackBar('Product ordered!')
             }}
             navigation={this.props.navigation}
         />

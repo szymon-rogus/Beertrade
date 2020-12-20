@@ -23,6 +23,8 @@ target 'Frontend' do
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
+  pod 'RNSnackbar', :path => '../node_modules/react-native-snackbar'
+
   post_install do |installer|
     flipper_post_install(installer)
   end

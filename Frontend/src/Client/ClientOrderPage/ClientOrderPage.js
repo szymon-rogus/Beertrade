@@ -7,6 +7,13 @@ import {globalStyles} from '../../../GlobalStyles.js'
 import {ClientOrderItem} from "./ClientOrderItem";
 import {logout, TopBar} from "../../../Global";
 import {iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
+import SwitchSelector from "react-native-switch-selector";
+import {clientOrderStyles} from "./ClientOrderPageStyles";
+
+const ALL = "ALL";
+const WAITING = "WAITING";
+const DONE = "DONE";
+const CANCELLED = "CANCELLED";
 
 
 export default class ClientOrderPage extends Component {
@@ -19,7 +26,8 @@ export default class ClientOrderPage extends Component {
     cancelled: 0,
     lastOrderPresent: false,
     lastOrder: null,
-    lastOrderExecuted: false
+    lastOrderExecuted: false,
+    chosenItems: ALL,
   }
 
   constructor(props) {
@@ -62,6 +70,12 @@ export default class ClientOrderPage extends Component {
     clearInterval(this.updateInterval);
   }
 
+  getItems = () => {
+    return this.state.items.filter((item) => {
+      return item.orderState === this.state.chosenItems || this.state.chosenItems === "ALL"
+    })
+  }
+
   render() {
     const topBarIcons = [
       <FontAwesome5
@@ -84,9 +98,25 @@ export default class ClientOrderPage extends Component {
     return (
         <SafeAreaView style={globalStyles.mainContainer}>
           <TopBar title={"My orders"} icons={topBarIcons}/>
-          <View style={{ flex: 0.9}}>
+          <View style={clientOrderStyles.listBox}>
+            <SwitchSelector
+                initial={0}
+                onPress={(value) => this.setState({chosenItems: value})}
+                textColor="black"
+                selectedColor="white"
+                buttonColor="black"
+                borderColor="black"
+                hasPadding
+                style={clientOrderStyles.selector}
+                options={[
+                  {label: ALL, value: ALL},
+                  {label: WAITING, value: WAITING},
+                  {label: DONE, value: DONE},
+                  {label: CANCELLED, value: CANCELLED},
+                ]}
+            />
             <FlatList
-                data={this.state.items}
+                data={this.getItems()}
                 renderItem={this.renderItem}
                 keyExtractor={(item) => item.id}
             />

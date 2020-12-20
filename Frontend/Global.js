@@ -4,6 +4,7 @@ import React from "react";
 import {View, Text} from "react-native";
 
 import {globalStyles} from "./GlobalStyles.js";
+import Snackbar from "react-native-snackbar";
 
 export const http = axios.create({
   baseURL: "http://10.0.2.2:8080/",
@@ -57,3 +58,10 @@ export const asMoney = (num) => {
 export const asMoneyString = (num) => {
   return typeof num == 'number' ? num.toFixed(2).toString() : num
 }
+
+export const snackBar = (message) => Snackbar.show({
+  text: message,
+  duration: Snackbar.LENGTH_LONG,
+  textColor: 'white',
+  backgroundColor: 'darkblue',
+});

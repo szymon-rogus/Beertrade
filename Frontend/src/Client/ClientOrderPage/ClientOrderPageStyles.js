@@ -1,7 +1,14 @@
 import {StyleSheet} from 'react-native';
 
-export const styles = StyleSheet.create({
+export const clientOrderStyles = StyleSheet.create({
   //the only difference with listStyles.js#item is that it has smaller width
+  listBox: {
+    flex: 0.9,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+
+  },
   item: {
     flex: 0.25,
     elevation: 8,
@@ -39,5 +46,11 @@ export const styles = StyleSheet.create({
   smallText: {
     fontSize: 16,
     color: 'black'
+  },
+  selector: {
+    marginTop: 12,
+    marginRight: 12,
+    marginLeft: 12,
+    width: "90%",
   },
 });

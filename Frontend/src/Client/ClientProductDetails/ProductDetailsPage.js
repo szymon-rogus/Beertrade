@@ -4,7 +4,7 @@ import {Tooltip} from "react-native-elements";
 import {Ionicons} from "@expo/vector-icons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
-import {beerPhoto, http, TopBar, CURRENCY, asMoney} from "../../../Global";
+import {beerPhoto, http, TopBar, CURRENCY, asMoney, snackBar} from "../../../Global";
 import {detailButtonStyleSheet, detailStyles} from "./ProductDetailsPageStyles";
 import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
 
@@ -202,7 +202,7 @@ export default class ProductDetailsPage extends Component {
             price={this.state.price}
             onPress={() => {
               this.orderProduct(this.props.route.params.itemId, this.state.price);
-              alert("Product ordered.");
+              snackBar('Product ordered!')
             }}
             buttonEnabled={this.state.sessionEnabled && this.props.route.params.isTableSet}
             backIcon={backIcon}
