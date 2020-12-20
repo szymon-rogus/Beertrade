@@ -5,7 +5,7 @@ import React from "react";
 export const globalStyles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#F0FFFF",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",

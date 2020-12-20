@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import {FlatList, SafeAreaView} from "react-native";
+import {FlatList, SafeAreaView, View} from "react-native";
+import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 
 import {http} from '../../../Global.js'
 import {globalStyles} from '../../../GlobalStyles.js'
 import {ClientOrderItem} from "./ClientOrderItem";
+import {logout, TopBar} from "../../../Global";
+import {iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
 
 
 export default class ClientOrderPage extends Component {
@@ -60,13 +63,34 @@ export default class ClientOrderPage extends Component {
   }
 
   render() {
+    const topBarIcons = [
+      <FontAwesome5
+          key={1}
+          name="th-list"
+          size={iconSize}
+          color={iconColor}
+          style={topBarIconStyle(6).style}
+          onPress={() => this.props.navigation.navigate("productList")}
+      />,
+      <MaterialCommunityIcons
+          key={2}
+          name="logout"
+          size={iconSize}
+          color={iconColor}
+          style={topBarIconStyle(6).style}
+          onPress={() => logout(this)}
+      />,
+    ];
     return (
         <SafeAreaView style={globalStyles.mainContainer}>
-          <FlatList
-              data={this.state.items}
-              renderItem={this.renderItem}
-              keyExtractor={(item) => item.id}
-          />
+          <TopBar title={"My orders"} icons={topBarIcons}/>
+          <View style={{ flex: 0.9}}>
+            <FlatList
+                data={this.state.items}
+                renderItem={this.renderItem}
+                keyExtractor={(item) => item.id}
+            />
+          </View>
         </SafeAreaView>
     )
   }

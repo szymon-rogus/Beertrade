@@ -3,21 +3,21 @@ import {StyleSheet} from "react-native";
 export const styles = StyleSheet.create({
   orderListContainer: {
     flex: 0.7,
-    backgroundColor: "white",
+    backgroundColor: "#F0FFFF",
     flexDirection: "column",
     justifyContent: "center",
     width: "90%",
   },
   bartenderStatisticsBox: {
     flex: 0.15,
-    backgroundColor: "white",
+    backgroundColor: "#F0FFFF",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
   },
   orderStatsInsideBox: {
     flex: 0.3,
-    backgroundColor: "white",
+    backgroundColor: "#F0FFFF",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

@@ -42,7 +42,6 @@ export const styles = StyleSheet.create({
   searchBar: {
     flex: 0.1,
     flexDirection: "row",
-    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
     width: "90%",

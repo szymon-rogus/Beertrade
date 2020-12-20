@@ -1,10 +1,12 @@
 import React, {Component} from "react";
 import {View, Text, TouchableOpacity, Image} from "react-native";
 import {Tooltip} from "react-native-elements";
-import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
+import {Ionicons} from "@expo/vector-icons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
-import {beerPhoto, http, TopBar, logout, CURRENCY, asMoney} from "../../../Global";
+import {beerPhoto, http, TopBar, CURRENCY, asMoney} from "../../../Global";
 import {detailButtonStyleSheet, detailStyles} from "./ProductDetailsPageStyles";
+import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
 
 const B = (props) => (
     <Text style={{fontWeight: "bold"}}>{props.children}</Text>
@@ -45,8 +47,8 @@ const Attribute = ({boldText, text, icon, padding, margin}) => (
 );
 
 const ItemDetails = ({product, price, onPress, buttonEnabled, backIcon, topBarIcons}) => (
-    <View style={detailStyles.container}>
-      <TopBar backIcon={backIcon} icons={topBarIcons}/>
+    <View style={globalStyles.mainContainer}>
+      <TopBar title={"Product details"} icons={topBarIcons}/>
       <View style={detailStyles.titleContainer}>
         <Text style={detailStyles.title}>{product.name}</Text>
       </View>
@@ -210,28 +212,20 @@ export default class ProductDetailsPage extends Component {
   };
 
   render() {
-    const backIcon = [
-      <Ionicons
-          key={1}
-          name="md-arrow-round-back"
-          size={36}
-          color="white"
-          style={{marginLeft: 20}}
-          onPress={() => this.props.navigation.navigate("productList")}
-      />,
-    ];
     const topBarIcons = [
-      <MaterialCommunityIcons
-          key={1}
-          name="logout"
-          size={36}
-          color={"white"}
-          style={{marginRight: 20}}
-          onPress={() => logout(this)}
-      />,
+      <AntDesign
+          name="close"
+          key={2}
+          size={iconSize}
+          color={iconColor}
+          style={topBarIconStyle(6).style}
+          onPress={() => {
+            this.props.navigation.navigate("productList")
+          }}
+      />
     ];
     return (
-        this.renderItemDetails({backIcon, topBarIcons})
+        this.renderItemDetails({topBarIcons})
     );
   }
 }

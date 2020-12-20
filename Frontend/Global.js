@@ -37,7 +37,7 @@ export const removeAuthorizationToken = () => {
 
 export const TopBar = ({backIcon, title, icons}) => (
     <View style={globalStyles.topBar}>
-      <View style={{display: backIcon ? "flex" : "none"}}>{backIcon}</View>
+      <View style={{display: backIcon ? "flex" : "none", marginRight: 100, marginLeft: 6}}>{backIcon}</View>
       <View style={globalStyles.titleBox}>
         <Text style={globalStyles.topBarTitle}>{title}</Text>
       </View>

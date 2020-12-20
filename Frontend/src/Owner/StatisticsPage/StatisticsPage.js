@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
-import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import DatePicker from "react-native-datepicker-yaya";
 import moment from "moment";
 import { LineChart } from "react-native-charts-wrapper";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
-import { http, TopBar, logout, asMoney } from "../../../Global.js";
+import { http, TopBar, asMoney } from "../../../Global.js";
 import { styles } from "./StatisticsPageStyles.js";
 import { globalStyles } from "../../../GlobalStyles.js";
 import { tr } from "../../../text";
+import {iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
 
 const YEAR_MONTH_DAY_FORMAT = "YYYY-MM-DD";
 const DATE_WITH_HOUR_FORMAT = "MM/dd/YYYY HH:mm:ss";
@@ -94,25 +95,17 @@ export default class StatisticsPage extends Component {
   };
 
   render() {
-    const backIcon = [
-      <Ionicons
-        key={1}
-        name="md-arrow-round-back"
-        size={36}
-        color="white"
-        style={{ marginLeft: 20 }}
-        onPress={() => this.props.navigation.navigate("ownerProductList")}
-      />,
-    ];
     const topBarIcons = [
-      <MaterialCommunityIcons
-        key={1}
-        name="logout"
-        size={36}
-        color={"white"}
-        style={{ marginRight: 20 }}
-        onPress={() => logout(this)}
-      />,
+      <AntDesign
+          name="close"
+          key={2}
+          size={iconSize}
+          color={iconColor}
+          style={topBarIconStyle(6).style}
+          onPress={() => {
+            this.props.navigation.navigate("ownerProductList")
+          }}
+      />
     ];
 
     let demandData = {
@@ -165,7 +158,7 @@ export default class StatisticsPage extends Component {
     if (this.state.fetchedData) {
       return (
         <View style={globalStyles.mainContainer}>
-          <TopBar backIcon={backIcon} icons={topBarIcons} />
+          <TopBar title={"Detailed statistics"} icons={topBarIcons} />
           <View style={[styles.titleSection]}>
             <Text style={[styles.title]}>
               {this.props.route.params.productName}
