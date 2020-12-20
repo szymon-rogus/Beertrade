@@ -62,7 +62,7 @@ public class ProductService {
                         .product(beer)
                         .price(price)
                         .boughtDate(Date.from(Instant.now()))
-                        .orderViewId(UniqueOrderIdView.getUniqueOrderId())
+                        .orderViewId(UniqueOrderIdView.getUniqueOrderId(orderRepository))
                         .orderState(OrderState.WAITING)
                         .amount(1)
                         .build());
