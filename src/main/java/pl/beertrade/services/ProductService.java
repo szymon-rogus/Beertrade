@@ -61,18 +61,18 @@ public class ProductService {
 
     }
 
-    public void orderProduct(@NonNull UUID id, Float price, @NonNull Client client) throws NotFoundException {
+    public void orderProduct(@NonNull UUID id, Float price, Integer amount, @NonNull Client client) throws NotFoundException {
         log.trace("ENTRY - orderProduct - {} {}", id, client);
         globalLock.lock();
         final Optional<Order> boughtBeerOptional = productRepository.findById(id)
                 .map((beer) -> Order.builder()
                         .client(client)
                         .product(beer)
-                        .price(price)
+                        .price(price*amount)
                         .boughtDate(Date.from(Instant.now()))
                         .orderViewId(++counter)
                         .orderState(OrderState.WAITING)
-                        .amount(1)
+                        .amount(amount)
                         .build());
         final Order order = boughtBeerOptional.orElseThrow(() ->
                 new NotFoundException(Beer.class.getName(), id.toString()));

@@ -7,6 +7,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import {beerPhoto, http, TopBar, CURRENCY, asMoney, snackBar} from "../../../Global";
 import {detailButtonStyleSheet, detailStyles} from "./ProductDetailsPageStyles";
 import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
+import DialogInput from "react-native-dialog-input";
 
 const B = (props) => (
     <Text style={{fontWeight: "bold"}}>{props.children}</Text>
@@ -46,7 +47,7 @@ const Attribute = ({boldText, text, icon, padding, margin}) => (
     </View>
 );
 
-const ItemDetails = ({product, price, onPress, buttonEnabled, backIcon, topBarIcons}) => (
+const ItemDetails = ({context, product, price, onPress, buttonEnabled, topBarIcons}) => (
     <View style={globalStyles.mainContainer}>
       <TopBar title={"Product details"} icons={topBarIcons}/>
       <View style={detailStyles.titleContainer}>
@@ -99,6 +100,24 @@ const ItemDetails = ({product, price, onPress, buttonEnabled, backIcon, topBarIc
           </TouchableOpacity>
         </View>
       </View>
+      <DialogInput title={"Amount"}
+                   isDialogVisible={context.state.amountDialog}
+                   message={"Choose amount"}
+                   hintInput={context.state.amountInput}
+                   submitInput={(amount) => {
+                     if(amount) {
+                       context.orderProduct(context.props.route.params.itemId, context.state.price, amount);
+                       snackBar('Product ordered!')
+                       context.setState({amountInput: "Enter amount", amountDialog: false})
+                     } else {
+                       context.setState({amountInput: "No amount given"})
+                     }
+                   }}
+                   closeDialog={() => {context.setState({amountDialog: false})}}
+                   textInputProps={{keyboardType: 'numeric'}}
+                   submitText={"Order"}
+      >
+      </DialogInput>
       <View style={detailStyles.leftBlock}>
         <Text>
           <B>Origin country: </B> {product.origin}
@@ -125,11 +144,13 @@ export default class ProductDetailsPage extends Component {
       price: null,
       checkStamp: null,
       sessionEnabled: false,
+      amountDialog: false,
     };
   }
 
-  orderProduct(id, price) {
-    http.post("/product/order/" + id, {price: price}).catch((err) => console.log(err));
+  orderProduct(id, price, amount) {
+    http.post("/product/order/" + id, {price: price, amount: amount})
+        .catch((err) => console.log(err));
   }
 
   checkSession() {
@@ -198,11 +219,13 @@ export default class ProductDetailsPage extends Component {
   renderItemDetails = ({backIcon, topBarIcons}) => {
     return (
         <ItemDetails
+            context={this}
             product={this.state.product}
             price={this.state.price}
             onPress={() => {
-              this.orderProduct(this.props.route.params.itemId, this.state.price);
-              snackBar('Product ordered!')
+              this.setState({amountDialog: true})
+              // this.orderProduct(this.props.route.params.itemId, this.state.price);
+              // snackBar('Product ordered!')
             }}
             buttonEnabled={this.state.sessionEnabled && this.props.route.params.isTableSet}
             backIcon={backIcon}

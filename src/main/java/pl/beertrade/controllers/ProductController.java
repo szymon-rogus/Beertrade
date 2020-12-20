@@ -82,9 +82,9 @@ public class ProductController {
     }
 
     @PostMapping("/order/{id}")
-    public ResponseEntity<?> orderProduct(@PathVariable UUID id, @RequestBody LinkedHashMap<String, Float> price) throws NotFoundException {
+    public ResponseEntity<?> orderProduct(@PathVariable UUID id, @RequestBody LinkedHashMap<String, Float> data) throws NotFoundException {
         log.trace("ENTRY - orderProduct - {}", id);
-        productService.orderProduct(id, price.get("price"), userContextProvider.getUserAsClient());
+        productService.orderProduct(id, data.get("price"), data.get("amount").intValue(), userContextProvider.getUserAsClient());
         log.trace("EXIT - orderProduct");
         return ResponseEntity.ok()
                 .build();

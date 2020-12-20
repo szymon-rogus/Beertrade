@@ -98,7 +98,7 @@ public class Order {
                 .beerName(product.getName())
                 .amount(amount)
                 .orderState(orderState)
-                .totalPrice(amount * price)
+                .totalPrice(price)
                 .build();
     }
 }

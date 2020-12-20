@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {FlatList, Image, Text, TouchableOpacity, View} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import Autocomplete from "react-native-autocomplete-input";
+import DialogInput from 'react-native-dialog-input';
 
 import {http, beerPhoto, TopBar, logout, CURRENCY, asMoney, snackBar, EmptyView} from "../../../Global";
 import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
@@ -55,7 +56,7 @@ export default class ProductsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedId: null,
+      selectedItem: null,
       searchText: "",
       allProducts: [],
       filteredProducts: [],
@@ -74,12 +75,13 @@ export default class ProductsPage extends Component {
       ibuMax: null,
       types: [],
       chosenTypes: null,
+      amountDialog: false,
+      amountInput: "Enter amount",
     };
   }
 
-  orderProduct(id, price) {
-    http
-        .post("/product/order/" + id, {price: price})
+  orderProduct(id, price, amount) {
+    http.post("/product/order/" + id, {price: price, amount: amount})
         .catch((err) => console.log(err));
   }
 
@@ -100,11 +102,7 @@ export default class ProductsPage extends Component {
             }
             buttonEnabled={this.state.isTableSet && this.state.sessionEnabled}
             isTableSet={this.state.isTableSet}
-            onPress={() => {
-              this.setState({selectedId: item.id});
-              this.orderProduct(item.id, this.getPrice(item));
-              snackBar('Product ordered!')
-            }}
+            onPress={() => {this.setState({selectedItem: item, amountDialog: true})}}
             navigation={this.props.navigation}
         />
     );
@@ -112,7 +110,7 @@ export default class ProductsPage extends Component {
 
   renderEmpty = () => {
     return (
-        <EmptyView />
+        <EmptyView/>
     );
   }
 
@@ -315,6 +313,24 @@ export default class ProductsPage extends Component {
                 productPageDataLoaded={this.state.dataLoaded}
             />
           </View>
+          <DialogInput title={"Amount"}
+                       isDialogVisible={this.state.amountDialog}
+                       message={"Choose amount"}
+                       hintInput={this.state.amountInput}
+                       submitInput={(amount) => {
+                         if(amount) {
+                           this.orderProduct(this.state.selectedItem.id, this.getPrice(this.state.selectedItem), amount);
+                           snackBar('Product ordered!')
+                           this.setState({amountInput: "Enter amount", amountDialog: false})
+                         } else {
+                           this.setState({amountInput: "No amount given"})
+                         }
+                       }}
+                       closeDialog={() => {this.setState({amountDialog: false})}}
+                       textInputProps={{keyboardType: 'numeric'}}
+                       submitText={"Order"}
+          >
+          </DialogInput>
           <View style={{flex: 0.8, width: "100%"}}>
             <FlatList
                 data={
@@ -324,7 +340,7 @@ export default class ProductsPage extends Component {
                 }
                 renderItem={this.renderItem}
                 keyExtractor={(item) => item.id}
-                extraData={this.selectedId}
+                extraData={this.selectedItem}
                 ListEmptyComponent={this.renderEmpty}
             />
           </View>
