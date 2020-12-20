@@ -24,6 +24,24 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 2,
     color: "#222",
   },
+  itemLeft: {
+    flex: 0.3,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  itemCenter: {
+    flex: 0.4,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+  },
+  itemRight: {
+    flex: 0.3,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-end",
+  },
   title: {
     fontSize: 24,
     marginBottom: 25,

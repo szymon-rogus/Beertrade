@@ -185,7 +185,7 @@ export default class ProductDetailsPage extends Component {
         function (self) {
           self.setPrice();
         },
-        5000,
+        15000,
         this
     );
   }

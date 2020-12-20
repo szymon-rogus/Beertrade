@@ -12,38 +12,17 @@ import {Filter} from "./ClientModals/Filter/Filter";
 
 const Item = ({item, onPress, navigation, buttonEnabled, isTableSet, price,}) => (
     <View style={styles.item}>
-      <View
-          style={{
-            flex: 0.3,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-      >
+      <View style={styles.itemLeft}>
         <Image style={styles.beerImage} source={{uri: beerPhoto}}/>
       </View>
-      <View
-          style={{
-            flex: 0.4,
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "stretch",
-          }}
-      >
+      <View style={styles.itemCenter}>
         <Text style={styles.title}>{item.name}</Text>
         <Text style={styles.attributes}>
           {item.type} {item.alcoholPercentage}%
         </Text>
         <Text style={styles.attributes}>IBU {item.ibu}</Text>
       </View>
-      <View
-          style={{
-            flex: 0.3,
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "flex-end",
-          }}
-      >
+      <View style={styles.itemRight}>
         <TouchableOpacity>
           <Ionicons
               name="ios-information-circle"
@@ -195,16 +174,16 @@ export default class ProductsPage extends Component {
         .catch((err) => console.log(err));
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setProductsAndSession();
-    this.setPrices();
-    // this.interval = setInterval(
-    //   function (self) {
-    //     self.setProductsAndSession();
-    //   },
-    //   5000,
-    //   this
-    // );
+    await this.setPrices();
+    this.interval = setInterval(
+        function (self) {
+          self.setProductsAndSession();
+        },
+        15000,
+        this
+    );
     this.pricesInterval = setInterval(
         function (self) {
           self.setPrices();
