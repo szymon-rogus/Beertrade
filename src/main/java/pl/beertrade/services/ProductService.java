@@ -13,6 +13,7 @@ import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.user.Client;
 import pl.beertrade.repositories.OrderRepository;
 import pl.beertrade.repositories.ProductRepository;
+import pl.beertrade.util.UniqueOrderIdView;
 
 import java.time.Instant;
 import java.util.*;
@@ -61,7 +62,7 @@ public class ProductService {
                         .product(beer)
                         .price(price)
                         .boughtDate(Date.from(Instant.now()))
-                        .orderViewId(orderViewId)
+                        .orderViewId(UniqueOrderIdView.getUniqueOrderId())
                         .orderState(OrderState.WAITING)
                         .amount(1)
                         .build());
