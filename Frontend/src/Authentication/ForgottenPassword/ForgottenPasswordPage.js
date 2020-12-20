@@ -21,7 +21,7 @@ export default class ForgottenPasswordPage extends Component {
 
   render() {
     return (
-        <View style={styles.mainContainer}>
+        <View style={globalStyles.mainContainer}>
           <Text style={styles.textStyle}/>
           <TextInput
               style={globalStyles.input}

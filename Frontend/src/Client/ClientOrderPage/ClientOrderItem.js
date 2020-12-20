@@ -3,7 +3,7 @@ import {Text, View} from "react-native";
 import {AntDesign, FontAwesome5, MaterialIcons} from "@expo/vector-icons";
 
 import {asMoney, CURRENCY} from "../../../Global";
-import {styles} from "./ClientOrderPageStyles";
+import {clientOrderStyles} from "./ClientOrderPageStyles";
 import {listStyles} from "../../../ListStyles";
 
 const glass = (<FontAwesome5 name="glass-whiskey" size={20} color="black"/>)
@@ -16,7 +16,7 @@ function ItemAmount(props) {
     }
     return (<View style={{flexDirection: "row"}}>{beers}</View>)
   } else {
-    return (<View style={{flexDirection: "row"}}>{glass}<Text style={styles.smallText}>x{props.amount}</Text></View>)
+    return (<View style={{flexDirection: "row"}}>{glass}<Text style={clientOrderStyles.smallText}>x{props.amount}</Text></View>)
   }
 }
 
@@ -34,25 +34,25 @@ function OrderState(props) {
 
 
 export const ClientOrderItem = ({item}) => (
-    <View style={styles.item}>
-      <View style={styles.leftSection}>
+    <View style={clientOrderStyles.item}>
+      <View style={clientOrderStyles.leftSection}>
         <View style={listStyles.attributeView}>
           <Text style={{fontSize: 20, color: 'black'}}>{item.beerName} </Text>
         </View>
         <ItemAmount amount={item.amount}/>
         <View>
-          <Text style={styles.mediumText}>Total: {asMoney(item.totalPrice)} {CURRENCY}</Text>
+          <Text style={clientOrderStyles.mediumText}>Total: {asMoney(item.totalPrice)} {CURRENCY}</Text>
         </View>
       </View>
-      <View style={styles.rightSection}>
+      <View style={clientOrderStyles.rightSection}>
         <View style={{flex: 0.2, flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center'}}>
-          <Text style={styles.smallText}> #{item.orderViewId}</Text>
+          <Text style={clientOrderStyles.smallText}> #{item.orderViewId}</Text>
         </View>
-        <View style={styles.listItemIconRow}>
+        <View style={clientOrderStyles.listItemIconRow}>
           <OrderState orderState={item.orderState}/>
         </View>
         <View style={{flex: 0.2, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center'}}>
-          <Text style={styles.smallText}>{item.timeOrdered}</Text>
+          <Text style={clientOrderStyles.smallText}>{item.timeOrdered}</Text>
         </View>
       </View>
     </View>

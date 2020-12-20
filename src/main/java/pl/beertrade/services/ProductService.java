@@ -14,20 +14,28 @@ import pl.beertrade.model.user.Client;
 import pl.beertrade.repositories.OrderRepository;
 import pl.beertrade.repositories.ProductRepository;
 
+import javax.annotation.PostConstruct;
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class ProductService {
-    private static final int orderViewId = 321;
+    private ReentrantLock globalLock = new ReentrantLock();
+    private int counter;
 
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @PostConstruct
+    private void setCounter() {
+        counter = orderRepository.findAll().size();
+    }
 
     public List<ProductListItemJTO> getAllProductOnStoreList() {
         log.trace("ENTRY - getAllProductList");
@@ -55,19 +63,21 @@ public class ProductService {
 
     public void orderProduct(@NonNull UUID id, Float price, @NonNull Client client) throws NotFoundException {
         log.trace("ENTRY - orderProduct - {} {}", id, client);
+        globalLock.lock();
         final Optional<Order> boughtBeerOptional = productRepository.findById(id)
                 .map((beer) -> Order.builder()
                         .client(client)
                         .product(beer)
                         .price(price)
                         .boughtDate(Date.from(Instant.now()))
-                        .orderViewId(orderViewId)
+                        .orderViewId(++counter)
                         .orderState(OrderState.WAITING)
                         .amount(1)
                         .build());
         final Order order = boughtBeerOptional.orElseThrow(() ->
                 new NotFoundException(Beer.class.getName(), id.toString()));
         orderRepository.save(order);
+        globalLock.unlock();
         log.trace("EXIT - orderProduct - {}", order);
     }
 

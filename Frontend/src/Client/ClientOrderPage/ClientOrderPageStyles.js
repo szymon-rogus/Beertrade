@@ -1,7 +1,13 @@
 import {StyleSheet} from 'react-native';
 
-export const styles = StyleSheet.create({
-  //the only difference with listStyles.js#item is that it has smaller width
+export const clientOrderStyles = StyleSheet.create({
+  listBox: {
+    flex: 0.9,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+
+  },
   item: {
     flex: 0.25,
     elevation: 8,
@@ -40,4 +46,27 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black'
   },
+  selector: {
+    marginTop: 12,
+    marginRight: 12,
+    marginLeft: 12,
+    width: "90%",
+  },
+  empty: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  emptyIcon: {
+    marginTop: 100,
+    flex: 0.8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyText: {
+    flex: 0.2,
+    fontSize: 24,
+    marginTop: 20,
+  }
 });

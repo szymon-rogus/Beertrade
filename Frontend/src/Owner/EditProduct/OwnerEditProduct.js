@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { launchImageLibrary } from "react-native-image-picker/src/index";
+
 import { http, TopBar } from "../../../Global";
 import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../../GlobalStyles";
 import { loginStyles } from "../../Authentication/Login/LoginPageStyles";
 import { bgColor } from "../../Authentication/Registration/RegistrationPageStyles";
 import { Item } from "../AddProduct/OwnerAddProduct";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import { launchImageLibrary } from "react-native-image-picker/src/index";
 
 export default class OwnerEditProduct extends Component {
   constructor(props) {
