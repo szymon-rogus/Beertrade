@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class ProductService {
-    private static final int orderViewId = 321;
 
     @Autowired
     private ProductRepository productRepository;

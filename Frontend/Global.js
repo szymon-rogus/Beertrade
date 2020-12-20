@@ -5,6 +5,8 @@ import {View, Text} from "react-native";
 
 import {globalStyles} from "./GlobalStyles.js";
 import Snackbar from "react-native-snackbar";
+import {clientOrderStyles} from "./src/Client/ClientOrderPage/ClientOrderPageStyles";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 export const http = axios.create({
   baseURL: "http://10.0.2.2:8080/",
@@ -43,6 +45,13 @@ export const TopBar = ({backIcon, title, icons}) => (
         <Text style={globalStyles.topBarTitle}>{title}</Text>
       </View>
       <View style={globalStyles.navIconsBox}>{icons}</View>
+    </View>
+);
+
+export const EmptyView = () => (
+    <View style={clientOrderStyles.empty}>
+      <AntDesign name="exclamationcircle" size={144} color="black" style={clientOrderStyles.emptyIcon} />
+      <Text style={clientOrderStyles.emptyText}>Nothing here</Text>
     </View>
 );
 

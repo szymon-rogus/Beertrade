@@ -1,7 +1,6 @@
 import {StyleSheet} from 'react-native';
 
 export const clientOrderStyles = StyleSheet.create({
-  //the only difference with listStyles.js#item is that it has smaller width
   listBox: {
     flex: 0.9,
     flexDirection: "column",

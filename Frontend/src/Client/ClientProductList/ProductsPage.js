@@ -3,12 +3,14 @@ import {FlatList, Image, Text, TouchableOpacity, View} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import Autocomplete from "react-native-autocomplete-input";
 
-import {http, beerPhoto, TopBar, logout, CURRENCY, asMoney, snackBar} from "../../../Global";
+import {http, beerPhoto, TopBar, logout, CURRENCY, asMoney, snackBar, EmptyView} from "../../../Global";
 import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
 import {buttonStyleSheet, styles} from "./ProductsPageStyles";
 import {ChooseTableBar} from "./ClientModals/TablePicker/ChooseTableBar";
 import {Sorter} from "./ClientModals/Sorter/Sorter";
 import {Filter} from "./ClientModals/Filter/Filter";
+import {clientOrderStyles} from "../ClientOrderPage/ClientOrderPageStyles";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 const Item = ({item, onPress, navigation, buttonEnabled, isTableSet, price,}) => (
     <View style={styles.item}>
@@ -130,6 +132,12 @@ export default class ProductsPage extends Component {
         />
     );
   };
+
+  renderEmpty = () => {
+    return (
+        <EmptyView />
+    );
+  }
 
   setProductsAndSession() {
     http
@@ -340,6 +348,7 @@ export default class ProductsPage extends Component {
                 renderItem={this.renderItem}
                 keyExtractor={(item) => item.id}
                 extraData={this.selectedId}
+                ListEmptyComponent={this.renderEmpty}
             />
           </View>
         </View>
