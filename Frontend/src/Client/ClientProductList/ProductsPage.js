@@ -9,8 +9,6 @@ import {buttonStyleSheet, styles} from "./ProductsPageStyles";
 import {ChooseTableBar} from "./ClientModals/TablePicker/ChooseTableBar";
 import {Sorter} from "./ClientModals/Sorter/Sorter";
 import {Filter} from "./ClientModals/Filter/Filter";
-import {clientOrderStyles} from "../ClientOrderPage/ClientOrderPageStyles";
-import AntDesign from "react-native-vector-icons/AntDesign";
 
 const Item = ({item, onPress, navigation, buttonEnabled, isTableSet, price,}) => (
     <View style={styles.item}>

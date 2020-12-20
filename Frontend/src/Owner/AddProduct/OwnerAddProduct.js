@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-
-
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { launchImageLibrary } from 'react-native-image-picker/src';
+
 import { SAVED, UNSAVED } from "../SaveChangesComponent/SaveChangesComponent";
 import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../../GlobalStyles";
 import { http, TopBar } from "../../../Global";
 import { bgColor } from "../../Authentication/Registration/RegistrationPageStyles";
 import { loginStyles } from "../../Authentication/Login/LoginPageStyles";
-import { launchImageLibrary } from 'react-native-image-picker/src';
 
 
 export const Item = ({name, onChange, example, defaultValue, multiline}) => (
