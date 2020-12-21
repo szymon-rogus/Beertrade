@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {FlatList, Text, TouchableOpacity, View} from "react-native";
 import Modal from "react-native-modal";
 
-import {http} from "../../../../../Global";
+import {http, snackBar} from "../../../../../Global";
 import {listStyles} from "../../../../../ListStyles";
 import {chooseTablePopupStyles, tableStyles} from "./TableStyles";
 
@@ -122,7 +122,7 @@ export class ChooseTableBar extends Component {
             <View style={chooseTablePopup.tableListBox}>
               <FlatList
                   data={this.state.tables}
-                  renderItem={({item, index, separators}) => (
+                  renderItem={({item}) => (
                       <Item
                           item={item}
                           onPress={() => {
@@ -131,7 +131,6 @@ export class ChooseTableBar extends Component {
                                 this.setTable(this)
                             );
                             this.toggleModal();
-                            alert("You've chosen table " + item.tableNumber);
                           }}
                           style={listStyles.item}
                       />

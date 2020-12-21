@@ -4,6 +4,7 @@ import {Text, View, TouchableOpacity, TextInput} from "react-native";
 import {http, setAuthorizationToken, APP_TITLE} from "../../../Global.js";
 import {globalStyles} from "../../../GlobalStyles.js";
 import {loginStyles, fontColor, bgColor} from "./LoginPageStyles.js";
+import {getErrorMessage, NETWORK_ERROR, snackBar} from "../../../Global";
 
 export default class LoginPage extends Component {
   state = {
@@ -35,7 +36,9 @@ export default class LoginPage extends Component {
               this.props.navigation.navigate("productList");
             }
           })
-          .catch((_) => alert("Invalid login or password!"));
+          .catch((error) => {
+            getErrorMessage(error)
+          });
     }
   };
 
