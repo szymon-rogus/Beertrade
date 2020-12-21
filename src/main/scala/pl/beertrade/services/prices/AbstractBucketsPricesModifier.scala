@@ -6,14 +6,14 @@ import scala.collection.breakOut
 
 import scala.math.abs
 
-abstract class AbstractBucketsPricesModifier extends PricesModifier{
+abstract class AbstractBucketsPricesModifier[I] extends PricesModifier[I]{
 
-  case class Repr(productId: UUID, buys: Int, sumPref: Int = 0)
+  case class Repr(productId: I, buys: Int, sumPref: Int = 0)
 
-  def finalize(toIncrease: List[Repr], toDecrease: List[Repr], initPrices: Map[UUID, Double]): Map[UUID, Double]
+  def finalize(toIncrease: List[Repr], toDecrease: List[Repr], initPrices: Map[I, Double]): Map[I, Double]
 
-  private def decideWhichBest(pricesIfLeft: Map[UUID, Double], pricesIfRight: Map[UUID, Double], borderSet: List[Repr], indexedInitPrices: Map[UUID, Double]): Map[UUID,Double] = {
-    def calcSum(prices: Map[UUID,Double]) = borderSet.map(x => prices(x.productId)).sum
+  private def decideWhichBest(pricesIfLeft: Map[I, Double], pricesIfRight: Map[I, Double], borderSet: List[Repr], indexedInitPrices: Map[I, Double]): Map[I,Double] = {
+    def calcSum(prices: Map[I,Double]) = borderSet.map(x => prices(x.productId)).sum
 
     val sumPlain = calcSum(indexedInitPrices)
 
@@ -32,11 +32,11 @@ abstract class AbstractBucketsPricesModifier extends PricesModifier{
   }
 
 
-  override def countNewPrices(inputPrices: java.util.Map[UUID, java.lang.Double], buys: java.util.Map[UUID, java.lang.Integer]): java.util.Map[UUID, java.lang.Double] = {
-    val scalaInputPrices: Map[UUID, Double] = inputPrices.asScala.map{case (k, v) => (k, v.doubleValue)}(breakOut)
-    val scalaBuys: Map[UUID, Int] = buys.asScala.map{case (k, v) => (k, v.intValue())}(breakOut)
+  override def countNewPrices(inputPrices: java.util.Map[I, java.lang.Double], buys: java.util.Map[I, java.lang.Integer]): java.util.Map[I, java.lang.Double] = {
+    val scalaInputPrices: Map[I, Double] = inputPrices.asScala.map{case (k, v) => (k, v.doubleValue)}(breakOut)
+    val scalaBuys: Map[I, Int] = buys.asScala.map{case (k, v) => (k, v.intValue())}(breakOut)
     val indexedBuys: List[Repr] = scalaInputPrices.keys.map {
-      productId: UUID => Repr(productId = productId, buys = scalaBuys(productId))
+      productId: I => Repr(productId = productId, buys = scalaBuys(productId))
     }.toList
     val sortedIndexedBuys: List[Repr] = indexedBuys.sortWith(_.buys < _.buys)
     val justSums = sortedIndexedBuys.map(a => a.buys)
@@ -87,7 +87,7 @@ abstract class AbstractBucketsPricesModifier extends PricesModifier{
 
   }
 
-  private def mapToJava(scalaMap: Map[UUID, Double]): java.util.Map[UUID, java.lang.Double] = {
+  private def mapToJava(scalaMap: Map[I, Double]): java.util.Map[I, java.lang.Double] = {
     scalaMap.map { case (k, v) => k -> new java.lang.Double(v) }.asJava
   }
 }
