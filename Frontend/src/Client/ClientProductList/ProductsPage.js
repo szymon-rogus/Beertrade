@@ -196,6 +196,14 @@ export default class ProductsPage extends Component {
     clearInterval(this.pricesInterval);
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.amountDialog && !this.state.amountDialog) {
+      setTimeout(() => {
+        snackBar('Product ordered!')
+      }, 500)
+    }
+  }
+
   setTypes = (products) => {
     let types = [];
     products.forEach((item, i) => {
@@ -315,15 +323,13 @@ export default class ProductsPage extends Component {
           </View>
           <DialogInput title={"Amount"}
                        isDialogVisible={this.state.amountDialog}
-                       message={"Choose amount"}
                        hintInput={this.state.amountInput}
                        submitInput={(amount) => {
-                         if(amount) {
-                           this.orderProduct(this.state.selectedItem.id, this.getPrice(this.state.selectedItem), amount);
-                           snackBar('Product ordered!')
+                         if(Number.isInteger(parseFloat(amount))) {
                            this.setState({amountInput: "Enter amount", amountDialog: false})
+                           this.orderProduct(this.state.selectedItem.id, this.getPrice(this.state.selectedItem), amount);
                          } else {
-                           this.setState({amountInput: "No amount given"})
+                           this.setState({amountInput: "Incorrect amount"})
                          }
                        }}
                        closeDialog={() => {this.setState({amountDialog: false})}}

@@ -102,15 +102,13 @@ const ItemDetails = ({context, product, price, onPress, buttonEnabled, topBarIco
       </View>
       <DialogInput title={"Amount"}
                    isDialogVisible={context.state.amountDialog}
-                   message={"Choose amount"}
                    hintInput={context.state.amountInput}
                    submitInput={(amount) => {
-                     if(amount) {
-                       context.orderProduct(context.props.route.params.itemId, context.state.price, amount);
-                       snackBar('Product ordered!')
+                     if(Number.isInteger(parseFloat(amount))) {
                        context.setState({amountInput: "Enter amount", amountDialog: false})
+                       context.orderProduct(context.props.route.params.itemId, context.state.price, amount);
                      } else {
-                       context.setState({amountInput: "No amount given"})
+                       context.setState({amountInput: "Incorrect amount"})
                      }
                    }}
                    closeDialog={() => {context.setState({amountDialog: false})}}
@@ -145,6 +143,7 @@ export default class ProductDetailsPage extends Component {
       checkStamp: null,
       sessionEnabled: false,
       amountDialog: false,
+      amountInput: "Enter amount",
     };
   }
 
@@ -216,6 +215,14 @@ export default class ProductDetailsPage extends Component {
     clearInterval(this.sessionInterval);
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.amountDialog && !this.state.amountDialog) {
+      setTimeout(() => {
+        snackBar('Product ordered!')
+      }, 500)
+    }
+  }
+
   renderItemDetails = ({backIcon, topBarIcons}) => {
     return (
         <ItemDetails
@@ -224,8 +231,6 @@ export default class ProductDetailsPage extends Component {
             price={this.state.price}
             onPress={() => {
               this.setState({amountDialog: true})
-              // this.orderProduct(this.props.route.params.itemId, this.state.price);
-              // snackBar('Product ordered!')
             }}
             buttonEnabled={this.state.sessionEnabled && this.props.route.params.isTableSet}
             backIcon={backIcon}
