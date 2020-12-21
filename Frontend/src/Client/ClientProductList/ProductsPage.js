@@ -77,6 +77,7 @@ export default class ProductsPage extends Component {
       chosenTypes: null,
       amountDialog: false,
       amountInput: "Enter amount",
+      ordered: false,
     };
   }
 
@@ -197,9 +198,10 @@ export default class ProductsPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevState.amountDialog && !this.state.amountDialog) {
+    if (!prevState.ordered && this.state.ordered) {
       setTimeout(() => {
         snackBar('Product ordered!')
+        this.setState({ordered: false})
       }, 500)
     }
   }
@@ -326,7 +328,7 @@ export default class ProductsPage extends Component {
                        hintInput={this.state.amountInput}
                        submitInput={(amount) => {
                          if(Number.isInteger(parseFloat(amount))) {
-                           this.setState({amountInput: "Enter amount", amountDialog: false})
+                           this.setState({amountInput: "Enter amount", amountDialog: false, ordered: true})
                            this.orderProduct(this.state.selectedItem.id, this.getPrice(this.state.selectedItem), amount);
                          } else {
                            this.setState({amountInput: "Incorrect amount"})

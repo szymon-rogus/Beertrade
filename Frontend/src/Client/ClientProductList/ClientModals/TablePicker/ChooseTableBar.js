@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {FlatList, Text, TouchableOpacity, View} from "react-native";
 import Modal from "react-native-modal";
 
-import {http, snackBar} from "../../../../../Global";
+import {http} from "../../../../../Global";
 import {listStyles} from "../../../../../ListStyles";
 import {chooseTablePopupStyles, tableStyles} from "./TableStyles";
 

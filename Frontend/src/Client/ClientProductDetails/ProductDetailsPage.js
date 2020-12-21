@@ -105,7 +105,7 @@ const ItemDetails = ({context, product, price, onPress, buttonEnabled, topBarIco
                    hintInput={context.state.amountInput}
                    submitInput={(amount) => {
                      if(Number.isInteger(parseFloat(amount))) {
-                       context.setState({amountInput: "Enter amount", amountDialog: false})
+                       context.setState({amountInput: "Enter amount", amountDialog: false, ordered: true})
                        context.orderProduct(context.props.route.params.itemId, context.state.price, amount);
                      } else {
                        context.setState({amountInput: "Incorrect amount"})
@@ -144,6 +144,7 @@ export default class ProductDetailsPage extends Component {
       sessionEnabled: false,
       amountDialog: false,
       amountInput: "Enter amount",
+      ordered: false,
     };
   }
 
@@ -216,9 +217,10 @@ export default class ProductDetailsPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevState.amountDialog && !this.state.amountDialog) {
+    if (!prevState.ordered && this.state.ordered) {
       setTimeout(() => {
         snackBar('Product ordered!')
+        this.setState({ordered: false})
       }, 500)
     }
   }
