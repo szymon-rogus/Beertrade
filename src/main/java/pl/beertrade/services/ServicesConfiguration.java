@@ -16,9 +16,9 @@ public class ServicesConfiguration {
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", true);
         prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.host", "smtp.elasticemail.com");
-        prop.put("mail.smtp.port", "2525");
-        prop.put("mail.smtp.ssl.trust", "smtp.elasticemail.com");
+        prop.put("mail.smtp.host", "smtp-relay.sendinblue.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.ssl.trust", "smtp-relay.sendinblue.com");
         return prop;
     }
 

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {View, Text, FlatList, processColor} from "react-native";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {MaterialCommunityIcons, AntDesign} from "@expo/vector-icons";
 import DatePicker from "react-native-datepicker-yaya";
 import moment from "moment";
 import {BarChart} from "react-native-charts-wrapper";
@@ -10,6 +10,12 @@ import {styles} from "./MainPageStyles.js";
 import {globalStyles, topBarIconStyle} from "../../../GlobalStyles.js";
 import { tr } from "../../../text";
 
+const SORT_TYPE_ASC = "ASC";
+const SORT_TYPE_DESC = "DESC";
+const PRODUCT_NAME_SORT = "PRODUCT_NAME"
+const INCOME_SORT = "INCOME"
+const SAVED_SORT = "SAVED"
+
 export default class OwnerMainPage extends Component {
   state = {
     fromDate: moment(new Date()).subtract(7, "day").format("YYYY-MM-DD"),
@@ -18,6 +24,8 @@ export default class OwnerMainPage extends Component {
     overallAlgorithmIncome: 0.0,
     productsStats: [],
     productIncomeValues: [],
+    sortType: SORT_TYPE_ASC,
+    sortAttribute: PRODUCT_NAME_SORT
   };
 
   onFromDateChange = (selectedDate) => {
@@ -76,6 +84,46 @@ export default class OwnerMainPage extends Component {
     );
   };
 
+  setSortStateIfPossible = (sortWith, state) => {
+    if (sortWith == state) {
+      if(this.state.sortAttribute != state || this.state.sortType == SORT_TYPE_DESC) {
+        this.setState({
+          sortType: SORT_TYPE_ASC,
+        })
+      } else {
+        this.setState({
+          sortType: SORT_TYPE_DESC,
+        })
+      }
+      this.setState({
+        sortAttribute: state
+      });
+    }
+  }
+
+  sortWith = (sortWith) => {
+    this.setSortStateIfPossible(sortWith, INCOME_SORT);
+    this.setSortStateIfPossible(sortWith, SAVED_SORT);
+    this.setSortStateIfPossible(sortWith, PRODUCT_NAME_SORT);
+    this.state.productsStats.sort((a, b) => {
+      if (sortWith === PRODUCT_NAME_SORT) {
+        return this.state.sortType == SORT_TYPE_DESC
+          ? a.productName.toLowerCase() > b.productName.toLowerCase()
+          : a.productName.toLowerCase() < b.productName.toLowerCase();
+      }
+      if (sortWith === INCOME_SORT) {
+        return this.state.sortType == SORT_TYPE_DESC
+          ? a.productIncome > b.productIncome 
+          : a.productIncome < b.productIncome;
+      }
+      if (sortWith === SAVED_SORT) {
+        return this.state.sortType == SORT_TYPE_DESC
+          ? a.algorithmIncome > b.algorithmIncome
+          : a.algorithmIncome < b.algorithmIncome;
+      }
+    });
+  }
+
   componentDidMount = () => {
     this.fetchData(this.state.fromDate, this.state.toDate);
   };
@@ -129,10 +177,15 @@ export default class OwnerMainPage extends Component {
     );
   };
 
-  renderColumnLabel = (text) => {
+  renderColumnLabel = (text, sortedByThis, sortWith) => {
+    let arrow = null;
+    if(sortedByThis) {
+      arrow = this.state.sortType == SORT_TYPE_ASC ? <AntDesign name="arrowup" style={{marginTop: '2%'}} size={16} color="lightblue" /> : <AntDesign name="arrowdown" size={16} color="lightblue" style={{marginTop: '2%'}} />;
+    }
     return (
         <View style={styles.columnLabel}>
-          <Text style={styles.columnLabelText}>{text}</Text>
+          <Text onPress={() => this.sortWith(sortWith)} style={[styles.columnLabelText, {color: sortedByThis ? "lightblue" : "black"}]}>{text}</Text>
+          {arrow}
         </View>
     );
   };
@@ -229,9 +282,9 @@ export default class OwnerMainPage extends Component {
             <Text style={styles.tableLabel}>Income per product</Text>
           </View>
           <View style={styles.columnLabelsBox}>
-            {this.renderColumnLabel("Product name")}
-            {this.renderColumnLabel("Income")}
-            {this.renderColumnLabel(tr("balance"))}
+            {this.renderColumnLabel("Product name", this.state.sortAttribute == PRODUCT_NAME_SORT, PRODUCT_NAME_SORT)}
+            {this.renderColumnLabel("Income", this.state.sortAttribute == INCOME_SORT, INCOME_SORT)}
+            {this.renderColumnLabel("Saved", this.state.sortAttribute == SAVED_SORT, SAVED_SORT)}
           </View>
           <View style={styles.tableBox}>
             <FlatList

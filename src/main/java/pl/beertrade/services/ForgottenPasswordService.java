@@ -20,9 +20,9 @@ import java.util.Random;
 @Service
 public class ForgottenPasswordService {
 
-    private static final String EMAIL_FROM = "bartekeragon@gmail.com";
+    private static final String EMAIL_FROM = "bartekeragon1@gmail.com";
 
-    private static final String PASSWORD = "3AEF43388222BCA3B982F1650D55CDE829CF";
+    private static final String PASSWORD = "0rdkz2fLn4cjO3Nt";
 
     private static final String SUBJECT = "New Password!";
 
