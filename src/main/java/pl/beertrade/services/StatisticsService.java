@@ -108,12 +108,12 @@ public class StatisticsService {
             nextCalendarDate.setTime(iterDate);
             nextCalendarDate.add(Calendar.MINUTE, Math.toIntExact(numberOfMinutesInterval));
             final Date dateAfter = nextCalendarDate.getTime();
-            for (int j = historicalOrdersIterator; j < historicalOrders.size() && historicalOrders.get(j).getBoughtDate().before(dateAfter) && historicalOrders.get(j).getBoughtDate().after(iterDate); j++) {
+            for (int j = historicalOrdersIterator; j < historicalOrders.size() && historicalOrderDateInRange(historicalOrders.get(j), iterDate, dateAfter); j++) {
                 number += historicalOrders.get(j).getAmount();
                 historicalOrdersIterator = j;
             }
 
-            for (int j = historicalPricesIterator; j < historicalPricesList.size() && historicalPricesList.get(j).getDate().before(dateAfter) && (historicalPricesList.get(j).getDate().after(iterDate) || iterDate.toInstant().getEpochSecond() == historicalPricesList.get(j).getDate().toInstant().getEpochSecond()); j++) {
+            for (int j = historicalPricesIterator; j < historicalPricesList.size() && historicalPriceDateInRange(historicalPricesList.get(j), iterDate, dateAfter); j++) {
                 listSize++;
                 sum += historicalPricesList.get(j)
                         .getPrice();
@@ -146,6 +146,14 @@ public class StatisticsService {
                 .build();
         log.trace("EXIT - getProductStatistics - {}", productStatisticsJTO);
         return productStatisticsJTO;
+    }
+
+    private boolean historicalOrderDateInRange(HistoricalOrder historicalOrder, Date dateBefore, Date dateAfter) {
+        return historicalOrder.getBoughtDate().before(dateAfter) && historicalOrder.getBoughtDate().after(dateBefore);
+    }
+
+    private boolean historicalPriceDateInRange(HistoricalPrices historicalPrices, Date dateBefore, Date dateAfter) {
+        return historicalPrices.getDate().before(dateAfter) && (historicalPrices.getDate().after(dateBefore) || dateBefore.toInstant().getEpochSecond() == historicalPrices.getDate().toInstant().getEpochSecond());
     }
 
     public void archivePrices(Map<UUID, Double> prices) {

@@ -111,6 +111,11 @@ export default class StatisticsPage extends Component {
     );
   };
 
+  getXAxisTimeValue = (item) => {
+    return this.state.sameDay ? moment(item.time, DATE_WITH_HOUR_FORMAT).hours() +
+      moment(item.time, DATE_WITH_HOUR_FORMAT).minutes() / 60 : moment(item.time, DATE_WITH_HOUR_FORMAT_2).valueOf();
+  }
+
   render() {
     const topBarIcons = [
       <AntDesign
@@ -131,8 +136,7 @@ export default class StatisticsPage extends Component {
           values: this.state.demandAndTime.map((item) => {
             return {
               x:
-                this.state.sameDay ? moment(item.time, DATE_WITH_HOUR_FORMAT).hours() +
-                moment(item.time, DATE_WITH_HOUR_FORMAT).minutes() / 60 : moment(item.time, DATE_WITH_HOUR_FORMAT_2).valueOf(),
+                this.getXAxisTimeValue(item),
               y: item.demandValue,
             };
           }),
@@ -148,8 +152,7 @@ export default class StatisticsPage extends Component {
             values: this.state.pricesAndTime.map((item) => {
               return {
                 x:
-                this.state.sameDay ? moment(item.time, DATE_WITH_HOUR_FORMAT).hours() +
-                moment(item.time, DATE_WITH_HOUR_FORMAT).minutes() / 60 : moment(item.time, DATE_WITH_HOUR_FORMAT_2).valueOf(),
+                this.getXAxisTimeValue(item),
                 y: item.priceValue,
               };
             }),
