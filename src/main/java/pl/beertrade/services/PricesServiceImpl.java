@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import pl.beertrade.model.beer.Beer;
 import pl.beertrade.model.beer.jto.PriceJTO;
 import pl.beertrade.model.beer.jto.PricesJTO;
-import pl.beertrade.services.prices.PricesModifier;
-import pl.beertrade.services.prices.PricesService;
+import pl.beertrade.services.prices.*;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Type;
@@ -24,7 +23,7 @@ import java.util.concurrent.Semaphore;
 public class PricesServiceImpl implements PricesService {
 
     @Autowired
-    private PricesModifier pricesModifier;
+    private PricesModifier<UUID> pricesModifier;
 
     @Autowired
     private OrderService orderService;
@@ -84,6 +83,11 @@ public class PricesServiceImpl implements PricesService {
                     filteredPrices.put(key.getId(), key.getBasePrice());
                 }
             });
+            if(pricesModifier instanceof PricesAmorthizedModifierImpl){
+                PricesAmorthizedModifierImpl<UUID> forBorderPrices = (PricesAmorthizedModifierImpl<UUID>) pricesModifier;
+                Map<UUID, BorderPrices> borderPrices = productService.getBorderPrices();
+                forBorderPrices.updateBorderPrices(borderPrices);
+            }
             prices = pricesModifier.countNewPrices(filteredPrices, mappedBuys);
             pricesCheckStamp = UUID.randomUUID();
             writeBlock.release();
@@ -94,7 +98,7 @@ public class PricesServiceImpl implements PricesService {
             }
             writeMutex.release();
         } catch (InterruptedException e) {
-            log.error("Error in thread managing in PriceServie: ", e);
+            log.error("Error in thread managing in PricesService: ", e);
         }
     }
 
