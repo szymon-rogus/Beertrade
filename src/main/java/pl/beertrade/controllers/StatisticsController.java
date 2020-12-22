@@ -39,11 +39,13 @@ public class StatisticsController {
     }
 
     @PostMapping("/product/{id}")
-    public ProductStatisticsJTO getProductStatistics(@RequestBody DateJTO dateJTO, @PathVariable("id") UUID productId) throws ParseException, NotFoundException {
-        log.trace("ENTRY - getProductStatistics - {}", dateJTO);
-        final Date date = new SimpleDateFormat("yyyy-MM-dd")
-                .parse(dateJTO.getDate());
-        final ProductStatisticsJTO productStatisticsJTO = statisticsService.getProductStatistics(date, productId);
+    public ProductStatisticsJTO getProductStatistics(@RequestBody DatePeriodJTO datePeriodJTO, @PathVariable("id") UUID productId) throws ParseException, NotFoundException {
+        log.trace("ENTRY - getProductStatistics - {}", datePeriodJTO);
+        final Date dateFrom = new SimpleDateFormat("yyyy-MM-dd")
+                .parse(datePeriodJTO.getDateFrom());
+        final Date dateTo = new SimpleDateFormat("yyyy-MM-dd")
+                .parse(datePeriodJTO.getDateTo());
+        final ProductStatisticsJTO productStatisticsJTO = statisticsService.getProductStatistics(dateFrom, dateTo, productId);
         log.trace("EXIT - getProductStatistics - {}", productStatisticsJTO);
         return productStatisticsJTO;
     }
