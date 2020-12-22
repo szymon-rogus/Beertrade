@@ -9,14 +9,12 @@ import pl.beertrade.model.beer.enums.ProductState;
 import pl.beertrade.model.beer.jto.*;
 import pl.beertrade.model.order.Order;
 import pl.beertrade.model.beer.*;
-import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.user.Client;
 import pl.beertrade.repositories.OrderRepository;
 import pl.beertrade.repositories.ProductRepository;
 import pl.beertrade.services.prices.BorderPrices;
 
 import javax.annotation.PostConstruct;
-import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
@@ -66,15 +64,7 @@ public class ProductService {
         log.trace("ENTRY - orderProduct - {} {}", id, client);
         globalLock.lock();
         final Optional<Order> boughtBeerOptional = productRepository.findById(id)
-                .map((beer) -> Order.builder()
-                        .client(client)
-                        .product(beer)
-                        .price(price*amount)
-                        .boughtDate(Date.from(Instant.now()))
-                        .orderViewId(++counter)
-                        .orderState(OrderState.WAITING)
-                        .amount(amount)
-                        .build());
+                .map(beer -> beer.saveAsOrder(client, price, amount, ++counter));
         final Order order = boughtBeerOptional.orElseThrow(() ->
                 new NotFoundException(Beer.class.getName(), id.toString()));
         orderRepository.save(order);

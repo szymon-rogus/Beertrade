@@ -55,16 +55,8 @@ public class SessionService {
     public void clearSession() {
         log.trace("ENTRY clearSession");
         final List<Order> orders = orderRepository.findByOrderState(OrderState.DONE);
-        final List<HistoricalOrder> historicalOrders = orders.stream().map(order -> HistoricalOrder.builder()
-                .id(UUID.randomUUID())
-                .amount(order.getAmount())
-                .basePrice(order.getProduct()
-                        .getBasePrice())
-                .boughtDate(order.getBoughtDate())
-                .client(order.getClient())
-                .price(order.getPrice())
-                .product(order.getProduct())
-                .build())
+        final List<HistoricalOrder> historicalOrders = orders.stream()
+                .map(order -> order.toHistoricalOrderJTO(order))
                 .collect(Collectors.toList());
         historicalOrderRepository.saveAll(historicalOrders);
         orderRepository.deleteAll();

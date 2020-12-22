@@ -7,6 +7,7 @@ import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.order.jto.Bartender.BartenderOrderProductJTO;
 import pl.beertrade.model.beer.jto.OrderedProductListItemJTO;
 import pl.beertrade.model.order.jto.Client.ClientOrderProductJTO;
+import pl.beertrade.model.statistics.HistoricalOrder;
 import pl.beertrade.model.user.Client;
 
 import javax.persistence.*;
@@ -99,6 +100,19 @@ public class Order {
                 .amount(amount)
                 .orderState(orderState)
                 .totalPrice(price)
+                .build();
+    }
+
+    public HistoricalOrder toHistoricalOrderJTO(Order order) {
+        return HistoricalOrder.builder()
+                .id(UUID.randomUUID())
+                .amount(order.getAmount())
+                .basePrice(order.getProduct()
+                        .getBasePrice())
+                .boughtDate(order.getBoughtDate())
+                .client(order.getClient())
+                .price(order.getPrice())
+                .product(order.getProduct())
                 .build();
     }
 }
