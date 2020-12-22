@@ -5,6 +5,7 @@ import base64 from "react-native-base64";
 import {http} from "../../../Global.js";
 import {globalStyles} from "../../../GlobalStyles";
 import {styles, fontColor, bgColor} from "./RegistrationPageStyles.js";
+import {getErrorMessage, NETWORK_ERROR, snackBar} from "../../../Global";
 
 export default class RegistrationPage extends Component {
   state = {
@@ -33,9 +34,13 @@ export default class RegistrationPage extends Component {
             lastName: base64.encode(this.state.lastName),
             email: base64.encode(this.state.email),
             phoneNumber: base64.encode(this.state.phoneNumber),
+          }).then((response) => {
+            this.props.navigation.navigate("login");
+            snackBar("Account created")
           })
-          .catch((err) => alert("Server is not responding!"));
-      this.props.navigation.navigate("login");
+          .catch((error) => {
+            getErrorMessage(error)
+          });
     }
   };
 

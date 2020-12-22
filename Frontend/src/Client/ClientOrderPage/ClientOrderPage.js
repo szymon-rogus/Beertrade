@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {FlatList, SafeAreaView, View, Text} from "react-native";
 import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
-import AntDesign from "react-native-vector-icons/AntDesign";
 
 import {http} from '../../../Global.js'
 import {globalStyles} from '../../../GlobalStyles.js'

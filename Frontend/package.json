@@ -30,6 +30,8 @@
     "react-native-camera-roll-picker": "^2.0.0",
     "react-native-charts-wrapper": "^0.5.7",
     "react-native-datepicker-yaya": "^1.7.7",
+    "react-native-dialog": "^6.1.2",
+    "react-native-dialog-input": "^1.0.8",
     "react-native-dropdown-picker": "^3.7.1",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "^1.8.0",

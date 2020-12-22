@@ -36,7 +36,7 @@ public class ForgottenPasswordService {
 
     public void sendEmailWithPassword(@NotNull String email) throws Exception {
         final Optional<Client> clientOptional = clientRepository.findByEmail(email);
-        final Client client = clientOptional.orElseThrow(() -> new NotFoundException(Client.class.getName(), email));
+        final Client client = clientOptional.orElseThrow(() -> new NotFoundException(email));
         final String randomPassword = generateRandomPassword();
         client.setPassword(Decoder.encodeBcrypt(randomPassword));
         clientRepository.save(client);

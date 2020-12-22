@@ -4,6 +4,7 @@ import {Text, View, TouchableOpacity, TextInput} from "react-native";
 import {http} from "../../../Global.js";
 import {globalStyles} from "../../../GlobalStyles";
 import {styles, fontColor, bgColor} from "./ForgottenPasswordPageStyles.js";
+import {getErrorMessage, NETWORK_ERROR, snackBar} from "../../../Global";
 
 export default class ForgottenPasswordPage extends Component {
   state = {
@@ -14,8 +15,13 @@ export default class ForgottenPasswordPage extends Component {
     if (this.state.email !== "") {
       http
           .post("/forgottenpass", this.state.email)
-          .catch((err) => alert("Server is not responding!"));
-      this.props.navigation.navigate("login");
+          .then((response) => {
+            this.props.navigation.navigate("login");
+            snackBar("Check your email for new credentials")
+          })
+          .catch((error) => {
+            getErrorMessage(error)
+          });
     }
   };
 
