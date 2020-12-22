@@ -71,6 +71,7 @@ export default class OwnerProductList extends Component {
   }
 
   setProducts() {
+    console.log("refreshing products")
     http
       .get("/product/configure/all")
       .then((response) => response.data)
@@ -102,7 +103,7 @@ export default class OwnerProductList extends Component {
   }
 
   editProduct(item) {
-    this.props.navigation.navigate("ownerEditProduct", {id: item.id})
+    this.props.navigation.navigate("ownerEditProduct", {id: item.id, ctx: this, update: true})
   }
 
   renderItem = ({item}) => {
