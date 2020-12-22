@@ -78,7 +78,7 @@ export default class OwnerMainPage extends Component {
 
   renderColumn = (value) => {
     return (
-        <View style={styles.columnLabel}>
+        <View style={styles.columnLabelValue}>
           <Text style={styles.columnValueText}>{asMoney(value)} zł</Text>
         </View>
     );
@@ -177,13 +177,18 @@ export default class OwnerMainPage extends Component {
     );
   };
 
-  renderColumnLabel = (text, sortedByThis, sortWith) => {
+  renderColumnLabel = (text, sortedByThis, sortWith, toLeft) => {
     let arrow = null;
     if(sortedByThis) {
-      arrow = this.state.sortType == SORT_TYPE_ASC ? <AntDesign name="arrowup" style={{marginTop: '2%'}} size={16} color="lightblue" /> : <AntDesign name="arrowdown" size={16} color="lightblue" style={{marginTop: '2%'}} />;
+      arrow = this.state.sortType === SORT_TYPE_ASC ? <AntDesign name="arrowup" style={{marginTop: '2%'}} size={16} color="lightblue" /> : <AntDesign name="arrowdown" size={16} color="lightblue" style={{marginTop: '2%'}} />;
     }
-    return (
+    return toLeft ? (
         <View style={styles.columnLabel}>
+          <Text onPress={() => this.sortWith(sortWith)} style={[styles.columnLabelText, {color: sortedByThis ? "lightblue" : "black"}]}>{text}</Text>
+          {arrow}
+        </View>
+    ) : (
+        <View style={styles.columnLabelValue}>
           <Text onPress={() => this.sortWith(sortWith)} style={[styles.columnLabelText, {color: sortedByThis ? "lightblue" : "black"}]}>{text}</Text>
           {arrow}
         </View>
@@ -281,10 +286,12 @@ export default class OwnerMainPage extends Component {
           <View style={styles.tableLabelBox}>
             <Text style={styles.tableLabel}>Income per product</Text>
           </View>
-          <View style={styles.columnLabelsBox}>
-            {this.renderColumnLabel("Product name", this.state.sortAttribute == PRODUCT_NAME_SORT, PRODUCT_NAME_SORT)}
-            {this.renderColumnLabel("Income", this.state.sortAttribute == INCOME_SORT, INCOME_SORT)}
-            {this.renderColumnLabel("Saved", this.state.sortAttribute == SAVED_SORT, SAVED_SORT)}
+          <View style={styles.titleBox}>
+            <View style={styles.columnLabelsBox}>
+              {this.renderColumnLabel("Product name", this.state.sortAttribute === PRODUCT_NAME_SORT, PRODUCT_NAME_SORT, true)}
+              {this.renderColumnLabel("Income", this.state.sortAttribute === INCOME_SORT, INCOME_SORT, false)}
+              {this.renderColumnLabel("Saved", this.state.sortAttribute === SAVED_SORT, SAVED_SORT, false)}
+            </View>
           </View>
           <View style={styles.tableBox}>
             <FlatList
@@ -308,7 +315,6 @@ export default class OwnerMainPage extends Component {
                 drawBarShadow={false}
                 drawValueAboveBar={true}
                 drawHighlightArrow={true}
-                onChange={(event) => console.log(event.nativeEvent)}
             />
           </View>
         </View>

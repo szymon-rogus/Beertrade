@@ -65,6 +65,7 @@ export const styles = StyleSheet.create({
   plotBox: {
     flex: 0.26,
     width: "100%",
+    backgroundColor: "white",
   },
   plotTitle: {
     fontSize: 16, color: "black", fontWeight: "bold"

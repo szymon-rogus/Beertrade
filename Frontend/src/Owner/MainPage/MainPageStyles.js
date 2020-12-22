@@ -69,12 +69,19 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    width: "90%",
   },
   columnLabel: {
     flex: 0.3333,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+  },
+  columnLabelValue: {
+    flex: 0.3333,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   columnLabelText: {
     fontSize: 16,
@@ -93,12 +100,21 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: "black",
   },
+  titleBox: {
+    marginTop: 10,
+    marginBottom: 10,
+    width: "90%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   tableBox: {
     flex: 0.23,
-    width: "100%",
+    width: "90%",
   },
   plotBox: {
     flex: 0.38,
     flexDirection: "row",
+    backgroundColor: "white",
+    width: "90%",
   },
 });
