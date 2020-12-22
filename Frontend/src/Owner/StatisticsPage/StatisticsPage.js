@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, processColor } from "react-native";
+import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import DatePicker from "react-native-datepicker-yaya";
 import moment from "moment";
 import { LineChart } from "react-native-charts-wrapper";
@@ -14,26 +15,40 @@ import {iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
 const YEAR_MONTH_DAY_FORMAT = "YYYY-MM-DD";
 const DATE_WITH_HOUR_FORMAT = "MM/dd/YYYY HH:mm:ss";
 const HOUR_FORMAT = "HH:mm";
+const DATE_WITH_HOUR_FORMAT_2 = "MM/DD/YYYY HH:mm:ss";
+const MONTH_DAY_HOUR_FORMAT = "MM/dd HH:mm"
 
 export default class StatisticsPage extends Component {
   state = {
-    date: moment(new Date()).format(YEAR_MONTH_DAY_FORMAT),
+    fromDate: moment(new Date()).format(YEAR_MONTH_DAY_FORMAT),
+    toDate: moment(new Date()).format(YEAR_MONTH_DAY_FORMAT),
     overallIncome: 0.0,
     overallAlgorithmIncome: 0.0,
     pricesAndTime: [],
     demandAndTime: [],
     fetchedData: false,
+    sameDay: true
   };
 
-  onDateChange = (selectedDate) => {
-    this.fetchData(moment(selectedDate).format(YEAR_MONTH_DAY_FORMAT));
+  onFromDateChange = (selectedDate) => {
+    this.fetchData(
+        moment(selectedDate).format(YEAR_MONTH_DAY_FORMAT),
+        this.state.toDate
+    );
   };
 
-  fetchData = (date) => {
+  onToDateChange = (selectedDate) => {
+    this.fetchData(
+        this.state.fromDate,
+        moment(selectedDate).format(YEAR_MONTH_DAY_FORMAT)
+    );
+  };
+
+  fetchData = (fromDate, toDate) => {
     http
       .post(
         "/statistics/product/" + this.props.route.params.productId,
-        { date: date },
+        {dateFrom: fromDate, dateTo: toDate},
         { headers: { "Content-Type": "application/json" } }
       )
       .then((response) => {
@@ -43,7 +58,9 @@ export default class StatisticsPage extends Component {
             response.data.productFinancialStats.algorithmIncome,
           pricesAndTime: response.data.archivedPriceInfoList,
           demandAndTime: response.data.archivedDemandInfoList,
-          date: date,
+          fromDate: fromDate,
+          toDate: toDate,
+          sameDay: fromDate == toDate,
           fetchedData: true,
         });
       })
@@ -51,7 +68,7 @@ export default class StatisticsPage extends Component {
   };
 
   componentDidMount = () => {
-    this.fetchData(this.state.date);
+    this.fetchData(this.state.fromDate, this.state.toDate);
   };
 
   renderDatePicker = (date, onClickFunc) => {
@@ -114,8 +131,8 @@ export default class StatisticsPage extends Component {
           values: this.state.demandAndTime.map((item) => {
             return {
               x:
-                moment(item.time, DATE_WITH_HOUR_FORMAT).hours() +
-                moment(item.time, DATE_WITH_HOUR_FORMAT).minutes() / 60,
+                this.state.sameDay ? moment(item.time, DATE_WITH_HOUR_FORMAT).hours() +
+                moment(item.time, DATE_WITH_HOUR_FORMAT).minutes() / 60 : moment(item.time, DATE_WITH_HOUR_FORMAT_2).valueOf(),
               y: item.demandValue,
             };
           }),
@@ -131,8 +148,8 @@ export default class StatisticsPage extends Component {
             values: this.state.pricesAndTime.map((item) => {
               return {
                 x:
-                  moment(item.time, DATE_WITH_HOUR_FORMAT).hours() +
-                  moment(item.time, DATE_WITH_HOUR_FORMAT).minutes() / 60,
+                this.state.sameDay ? moment(item.time, DATE_WITH_HOUR_FORMAT).hours() +
+                moment(item.time, DATE_WITH_HOUR_FORMAT).minutes() / 60 : moment(item.time, DATE_WITH_HOUR_FORMAT_2).valueOf(),
                 y: item.priceValue,
               };
             }),
@@ -141,10 +158,8 @@ export default class StatisticsPage extends Component {
         ],
       };
     }
-
     const marker = {
       enabled: true,
-      markerColor: 4,
     };
 
     const xAxis = {
@@ -152,8 +167,8 @@ export default class StatisticsPage extends Component {
       granularity: 1,
       position: "BOTTOM",
       valueFormatter: "date",
-      valueFormatterPattern: HOUR_FORMAT,
-      timeUnit: "HOURS",
+      valueFormatterPattern: this.state.sameDay ? HOUR_FORMAT : MONTH_DAY_HOUR_FORMAT,
+      timeUnit: this.state.sameDay ? "HOURS" : "MILLISECONDS",
     };
     if (this.state.fetchedData) {
       return (
@@ -166,8 +181,10 @@ export default class StatisticsPage extends Component {
 
           </View>
           <View style={styles.dateSection}>
-            <Text style={styles.dateSectionLabel}>Date:</Text>
-            {this.renderDatePicker(this.state.date, this.onDateChange)}
+            <Text style={styles.dateSectionLabel}>From:</Text>
+            {this.renderDatePicker(this.state.fromDate, this.onFromDateChange)}
+            <Text style={[styles.dateSectionLabel, {marginLeft: 10}]}>To:</Text>
+            {this.renderDatePicker(this.state.toDate, this.onToDateChange)}
           </View>
           <View style={styles.overallStatsValuesBox}>
             {this.renderOverallStatsValues(this.state.overallIncome)}

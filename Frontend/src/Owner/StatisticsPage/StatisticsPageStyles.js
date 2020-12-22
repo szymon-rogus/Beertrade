@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     marginRight: 10,
   },
   datePickerStyle: {
-    width: "80%",
+    width: "35%",
     marginTop: 10,
     marginRight: "0%",
   },
