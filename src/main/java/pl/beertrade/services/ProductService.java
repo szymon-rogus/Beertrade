@@ -13,6 +13,7 @@ import pl.beertrade.model.order.enums.OrderState;
 import pl.beertrade.model.user.Client;
 import pl.beertrade.repositories.OrderRepository;
 import pl.beertrade.repositories.ProductRepository;
+import pl.beertrade.services.prices.BorderPrices;
 
 import javax.annotation.PostConstruct;
 import java.time.Instant;
@@ -173,4 +174,12 @@ public class ProductService {
         return Optional.empty();
     }
 
+    public Map<UUID, BorderPrices> getBorderPrices() {
+        Map<UUID, BorderPrices> borderPrices = new HashMap<>();
+        List<Beer> products = productRepository.findAll();
+        for (Beer product : products) {
+            borderPrices.put(product.getId(), BorderPrices.apply(product.getMinPrice(), product.getMaxPrice()));
+        }
+        return borderPrices;
+    }
 }
