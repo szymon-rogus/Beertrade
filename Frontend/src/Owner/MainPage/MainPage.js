@@ -255,7 +255,6 @@ export default class OwnerMainPage extends Component {
                 drawBarShadow={false}
                 drawValueAboveBar={true}
                 drawHighlightArrow={true}
-                onChange={(event) => console.log(event.nativeEvent)}
             />
           </View>
         </View>

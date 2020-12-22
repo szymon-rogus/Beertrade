@@ -3,7 +3,7 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { launchImageLibrary } from "react-native-image-picker/src/index";
 
-import { http, TopBar } from "../../../Global";
+import { asMoneyString, http, TopBar } from "../../../Global";
 import { globalStyles, iconColor, iconSize, topBarIconStyle } from "../../../GlobalStyles";
 import { loginStyles } from "../../Authentication/Login/LoginPageStyles";
 import { bgColor } from "../../Authentication/Registration/RegistrationPageStyles";
@@ -12,11 +12,13 @@ import { Item } from "../AddProduct/OwnerAddProduct";
 export default class OwnerEditProduct extends Component {
   constructor(props) {
     super(props);
-    const {id, ctx} = props.route.params;
+    const {id, ctx, update} = props.route.params;
     this.state = {
       productId: id,
       ctx: ctx
     }
+    if(update)
+      this.setProduct(this.state.id)
   }
 
   componentDidMount() {
@@ -28,16 +30,16 @@ export default class OwnerEditProduct extends Component {
       this.setState({
         id: id,
         name: r.name,
-        alcoholPercentage: r.alcoholPercentage,
+        alcoholPercentage: asMoneyString(r.alcoholPercentage),
         amortizationFactor: r.amortizationFactor,
-        basePrice: r.basePrice,
-        blg: r.blg,
+        basePrice: asMoneyString(r.basePrice),
+        blg: asMoneyString(r.blg.toString()),
         brewery: r.brewery,
         description: r.description,
-        ebc: r.ebc,
-        ibu: r.ibu,
-        maxPrice: r.maxPrice,
-        minPrice: r.minPrice,
+        ebc: r.ebc.toString(),
+        ibu: r.ibu.toString(),
+        maxPrice: asMoneyString(r.maxPrice),
+        minPrice: asMoneyString(r.minPrice),
         onStore: r.onStore,
         origin: r.origin,
         photo: r.encodedPhoto,
@@ -46,7 +48,6 @@ export default class OwnerEditProduct extends Component {
         productState: r.productState
       })
     })
-
   }
 
   onSave() {
@@ -69,7 +70,7 @@ export default class OwnerEditProduct extends Component {
       type: this.state.type,
       year: this.state.year,
       productState: this.state.productState
-    }).catch((_) => alert("Failed to add the product")).then(() => {
+    }).catch((_) => alert("Failed to edit the product")).then(() => {
       this.state.ctx.setProducts()
       this.props.navigation.navigate("ownerProductList")
     });
@@ -140,7 +141,7 @@ export default class OwnerEditProduct extends Component {
               defaultValue={this.state.name}
             />
             <Item
-              name="Alcohol percantage"
+              name="Alcohol percantage (%)"
               onChange={(text) => {
                 this.setState({alcoholPercentage: text});
               }}
