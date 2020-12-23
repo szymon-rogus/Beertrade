@@ -5,10 +5,14 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.hibernate.annotations.GenericGenerator;
 import pl.beertrade.model.beer.enums.ProductState;
 import pl.beertrade.model.beer.jto.*;
+import pl.beertrade.model.order.Order;
+import pl.beertrade.model.order.enums.OrderState;
+import pl.beertrade.model.user.Client;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Random;
+import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -140,6 +144,18 @@ public class Beer {
                 .minPrice(minPrice)
                 .maxPrice(maxPrice)
                 .amortizationFactor(amortizationFactor)
+                .build();
+    }
+
+    public Order saveAsOrder(Client client, Float price, Integer amount, int counter) {
+        return Order.builder()
+                .client(client)
+                .product(this)
+                .price(price*amount)
+                .boughtDate(Date.from(Instant.now()))
+                .orderViewId(counter)
+                .orderState(OrderState.WAITING)
+                .amount(amount)
                 .build();
     }
 }
