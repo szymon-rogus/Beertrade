@@ -10,14 +10,13 @@ import { bgColor } from "../../Authentication/Registration/RegistrationPageStyle
 import { loginStyles } from "../../Authentication/Login/LoginPageStyles";
 
 
-export const Item = ({name, onChange, example, defaultValue, multiline}) => (
+export const Item = ({name, onChange, defaultValue, multiline}) => (
   <View>
     <Text style={globalStyles.blackInputLabel}> {name} </Text>
     <TextInput
       multiline={multiline}
       style={multiline ? [globalStyles.blackInput, {height: 60}] : globalStyles.blackInput}
       underlineColorAndroid="transparent"
-      // placeholder={example}
       defaultValue={defaultValue ? defaultValue : ""}
       placeholderTextColor={"#000"}
       autoCapitalize="none"

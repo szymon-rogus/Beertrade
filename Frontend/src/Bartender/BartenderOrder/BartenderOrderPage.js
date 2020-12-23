@@ -6,11 +6,11 @@ import {AntDesign} from "@expo/vector-icons";
 import * as Progress from "react-native-progress";
 import SlidingUpPanel from "rn-sliding-up-panel";
 
-import {http, TopBar, logout} from "../../../Global.js";
-import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles.js";
-import {styles, statisticsValueStyle} from "./BartenderOrderPageStyles.js";
-import BartenderSettingsPage from "../BartenderSettings/BartenderSettingsPage.js";
-import {OrderItem} from "./OrderItem.js";
+import {http, TopBar, logout} from "../../../Global";
+import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
+import {styles, statisticsValueStyle} from "./BartenderOrderPageStyles";
+import BartenderSettingsPage from "../BartenderSettings/BartenderSettingsPage";
+import {OrderItem} from "./OrderItem";
 
 export default class BartenderOrderPage extends Component {
   state = {

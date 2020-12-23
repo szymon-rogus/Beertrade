@@ -3,11 +3,13 @@ import {View, Text, TouchableOpacity, Image} from "react-native";
 import {Tooltip} from "react-native-elements";
 import {Ionicons} from "@expo/vector-icons";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import DialogInput from "react-native-dialog-input";
 
 import {beerPhoto, http, TopBar, CURRENCY, asMoney, snackBar} from "../../../Global";
 import {detailButtonStyleSheet, detailStyles} from "./ProductDetailsPageStyles";
 import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
-import DialogInput from "react-native-dialog-input";
+import {getProductDetails} from "../../Services/ProductService";
+import {getSession} from "../../Services/SessionService";
 
 const B = (props) => (
     <Text style={{fontWeight: "bold"}}>{props.children}</Text>
@@ -153,24 +155,19 @@ export default class ProductDetailsPage extends Component {
         .catch((err) => console.log(err));
   }
 
-  checkSession() {
-    http.get("/session").then((response) => {
-      if (response.data === "START") {
-        this.setState({
-          sessionEnabled: true
-        });
-      } else {
-        this.setState({
-          sessionEnabled: false
-        });
-      }
-    });
-  }
-
-  setProductDetails() {
-    http
-        .get("/product/details/" + this.props.route.params.itemId)
-        .then((response) => this.setState({product: response.data}))
+  setProductDetailsAndSession() {
+    getProductDetails(this.props.route.params.itemId)
+        .then((product) => {
+          this.setState({product: product})
+        })
+        .catch((err) => console.log(err));
+    getSession()
+        .then(sessionStatus => {
+          this.setState({
+            sessionEnabled: sessionStatus,
+            dataLoaded: true,
+          });
+        })
         .catch((err) => console.log(err));
   }
 
@@ -192,8 +189,7 @@ export default class ProductDetailsPage extends Component {
 
   async componentDidMount() {
     await this.setPrice();
-    this.setProductDetails();
-    this.checkSession();
+    this.setProductDetailsAndSession();
     this.interval = setInterval(
         function (self) {
           self.setPrice();

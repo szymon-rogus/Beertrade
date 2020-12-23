@@ -5,10 +5,10 @@ import DatePicker from "react-native-datepicker-yaya";
 import moment from "moment";
 import {BarChart} from "react-native-charts-wrapper";
 
-import {http, TopBar, logout, asMoney} from "../../../Global.js";
-import {styles} from "./MainPageStyles.js";
-import {globalStyles, topBarIconStyle} from "../../../GlobalStyles.js";
-import { tr } from "../../../text";
+import {http, TopBar, logout, asMoney} from "../../../Global";
+import {styles} from "./MainPageStyles";
+import {globalStyles, topBarIconStyle} from "../../../GlobalStyles";
+import {tr} from "../../../text";
 
 const SORT_TYPE_ASC = "ASC";
 const SORT_TYPE_DESC = "DESC";
@@ -85,8 +85,8 @@ export default class OwnerMainPage extends Component {
   };
 
   setSortStateIfPossible = (sortWith, state) => {
-    if (sortWith == state) {
-      if(this.state.sortAttribute != state || this.state.sortType == SORT_TYPE_DESC) {
+    if (sortWith === state) {
+      if (this.state.sortAttribute !== state || this.state.sortType === SORT_TYPE_DESC) {
         this.setState({
           sortType: SORT_TYPE_ASC,
         })
@@ -107,19 +107,19 @@ export default class OwnerMainPage extends Component {
     this.setSortStateIfPossible(sortWith, PRODUCT_NAME_SORT);
     this.state.productsStats.sort((a, b) => {
       if (sortWith === PRODUCT_NAME_SORT) {
-        return this.state.sortType == SORT_TYPE_DESC
-          ? a.productName.toLowerCase() > b.productName.toLowerCase()
-          : a.productName.toLowerCase() < b.productName.toLowerCase();
+        return this.state.sortType === SORT_TYPE_DESC
+            ? a.productName.toLowerCase() > b.productName.toLowerCase()
+            : a.productName.toLowerCase() < b.productName.toLowerCase();
       }
       if (sortWith === INCOME_SORT) {
-        return this.state.sortType == SORT_TYPE_DESC
-          ? a.productIncome > b.productIncome 
-          : a.productIncome < b.productIncome;
+        return this.state.sortType === SORT_TYPE_DESC
+            ? a.productIncome > b.productIncome
+            : a.productIncome < b.productIncome;
       }
       if (sortWith === SAVED_SORT) {
-        return this.state.sortType == SORT_TYPE_DESC
-          ? a.algorithmIncome > b.algorithmIncome
-          : a.algorithmIncome < b.algorithmIncome;
+        return this.state.sortType === SORT_TYPE_DESC
+            ? a.algorithmIncome > b.algorithmIncome
+            : a.algorithmIncome < b.algorithmIncome;
       }
     });
   }
@@ -179,17 +179,21 @@ export default class OwnerMainPage extends Component {
 
   renderColumnLabel = (text, sortedByThis, sortWith, toLeft) => {
     let arrow = null;
-    if(sortedByThis) {
-      arrow = this.state.sortType === SORT_TYPE_ASC ? <AntDesign name="arrowup" style={{marginTop: '2%'}} size={16} color="lightblue" /> : <AntDesign name="arrowdown" size={16} color="lightblue" style={{marginTop: '2%'}} />;
+    if (sortedByThis) {
+      arrow = this.state.sortType === SORT_TYPE_ASC ?
+          <AntDesign name="arrowup" style={{marginTop: '2%'}} size={16} color="lightblue"/> :
+          <AntDesign name="arrowdown" size={16} color="lightblue" style={{marginTop: '2%'}}/>;
     }
     return toLeft ? (
         <View style={styles.columnLabel}>
-          <Text onPress={() => this.sortWith(sortWith)} style={[styles.columnLabelText, {color: sortedByThis ? "lightblue" : "black"}]}>{text}</Text>
+          <Text onPress={() => this.sortWith(sortWith)}
+                style={[styles.columnLabelText, {color: sortedByThis ? "lightblue" : "black"}]}>{text}</Text>
           {arrow}
         </View>
     ) : (
         <View style={styles.columnLabelValue}>
-          <Text onPress={() => this.sortWith(sortWith)} style={[styles.columnLabelText, {color: sortedByThis ? "lightblue" : "black"}]}>{text}</Text>
+          <Text onPress={() => this.sortWith(sortWith)}
+                style={[styles.columnLabelText, {color: sortedByThis ? "lightblue" : "black"}]}>{text}</Text>
           {arrow}
         </View>
     );

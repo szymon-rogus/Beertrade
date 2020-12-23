@@ -4,9 +4,9 @@ import {AntDesign, MaterialCommunityIcons} from "@expo/vector-icons";
 
 import {asMoney, asMoneyString, CURRENCY, http, TopBar} from "../../Global";
 import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../GlobalStyles";
-import {bartStyles} from "../Bartender/BartenderProductManagement/BartenderManagementPageStyles.js";
+import {bartStyles} from "../Bartender/BartenderProductManagement/BartenderManagementPageStyles";
 import {ownerStyles} from "./OwnerProductListStyles"
-import {getSession} from "../services/SessionService";
+import {getSession} from "../Services/SessionService";
 import {changesSaver} from "./SaveChangesComponent/SaveChangesComponentStyles";
 
 const Button = ({text, onPressButton, item}) => (

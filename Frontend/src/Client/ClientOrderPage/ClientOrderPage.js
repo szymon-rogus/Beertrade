@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import {FlatList, SafeAreaView, View, Text} from "react-native";
+import {FlatList, SafeAreaView, View} from "react-native";
 import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 
-import {http} from '../../../Global.js'
-import {globalStyles} from '../../../GlobalStyles.js'
+import {http, EmptyView, logout, TopBar} from '../../../Global'
+import {globalStyles, iconColor, iconSize, topBarIconStyle} from '../../../GlobalStyles'
 import {ClientOrderItem} from "./ClientOrderItem";
-import {EmptyView, logout, TopBar} from "../../../Global";
-import {iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
 import {clientOrderStyles} from "./ClientOrderPageStyles";
 
 const ALL = "ALL";

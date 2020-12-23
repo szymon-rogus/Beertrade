@@ -1,8 +1,8 @@
 import React from "react";
 import {View, Text, Image} from "react-native";
 
-import {bartStyles} from "./BartenderManagementPageStyles.js";
-import {listStyles} from "../../../ListStyles.js";
+import {bartStyles} from "./BartenderManagementPageStyles";
+import {listStyles} from "../../../ListStyles";
 
 export const ProductListItem = ({item, actionIcon, photo}) => (
     <View style={listStyles.item}>

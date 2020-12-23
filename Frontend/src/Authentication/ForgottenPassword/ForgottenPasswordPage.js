@@ -1,10 +1,9 @@
 import React, {Component} from "react";
 import {Text, View, TouchableOpacity, TextInput} from "react-native";
 
-import {http} from "../../../Global.js";
+import {http, getErrorMessage, snackBar} from "../../../Global";
 import {globalStyles} from "../../../GlobalStyles";
-import {styles, fontColor, bgColor} from "./ForgottenPasswordPageStyles.js";
-import {getErrorMessage, NETWORK_ERROR, snackBar} from "../../../Global";
+import {styles, fontColor, bgColor} from "./ForgottenPasswordPageStyles";
 
 export default class ForgottenPasswordPage extends Component {
   state = {

@@ -10,6 +10,9 @@ import {buttonStyleSheet, styles} from "./ProductsPageStyles";
 import {ChooseTableBar} from "./ClientModals/TablePicker/ChooseTableBar";
 import {Sorter} from "./ClientModals/Sorter/Sorter";
 import {Filter} from "./ClientModals/Filter/Filter";
+import Product from "../Model/Product";
+import {getProductList} from "../../Services/ProductService";
+import {getSession} from "../../Services/SessionService";
 
 const Item = ({item, onPress, navigation, buttonEnabled, isTableSet, price,}) => (
     <View style={styles.item}>
@@ -116,9 +119,7 @@ export default class ProductsPage extends Component {
   }
 
   setProductsAndSession() {
-    http
-        .get("/product/onStore")
-        .then((response) => response.data)
+    getProductList()
         .then((data) => {
           this.setState({allProducts: data});
           return data;
@@ -137,20 +138,14 @@ export default class ProductsPage extends Component {
         })
         .then((data) => this.setState({products: data}))
         .catch((err) => console.log(err));
-    // todo use SessionService#getSession
-    http.get("/session").then((response) => {
-      if (response.data === "START") {
-        this.setState({
-          sessionEnabled: true,
-          dataLoaded: true,
-        });
-      } else {
-        this.setState({
-          sessionEnabled: false,
-          dataLoaded: true,
-        });
-      }
-    });
+    getSession()
+        .then(sessionStatus => {
+          this.setState({
+            sessionEnabled: sessionStatus,
+            dataLoaded: true,
+          });
+        })
+        .catch((err) => console.log(err));
   }
 
   setPrices = async () => {

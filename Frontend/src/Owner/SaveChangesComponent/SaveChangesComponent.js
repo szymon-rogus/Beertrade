@@ -3,7 +3,6 @@ import {Text, TouchableOpacity, View} from "react-native";
 
 import {changesSaver} from "./SaveChangesComponentStyles";
 
-// const SAVING = "SAVING";
 export const SAVED = "SAVED";
 export const UNSAVED = "UNSAVED";
 
