@@ -8,6 +8,7 @@ import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../Globa
 import {loginStyles} from "../../Authentication/Login/LoginPageStyles";
 import {bgColor} from "../../Authentication/Registration/RegistrationPageStyles";
 import {Item} from "../AddProduct/OwnerAddProduct";
+import {getFullProductInfo} from "../../Services/ProductService";
 
 export default class OwnerEditProduct extends Component {
   constructor(props) {
@@ -26,26 +27,26 @@ export default class OwnerEditProduct extends Component {
   }
 
   setProduct(id) {
-    http.get("/product/" + id).then(r => r.data).then(r => {
+    getFullProductInfo().then(product => {
       this.setState({
         id: id,
-        name: r.name,
-        alcoholPercentage: asMoneyString(r.alcoholPercentage),
-        amortizationFactor: r.amortizationFactor,
-        basePrice: asMoneyString(r.basePrice),
-        blg: asMoneyString(r.blg.toString()),
-        brewery: r.brewery,
-        description: r.description,
-        ebc: r.ebc.toString(),
-        ibu: r.ibu.toString(),
-        maxPrice: asMoneyString(r.maxPrice),
-        minPrice: asMoneyString(r.minPrice),
-        onStore: r.onStore,
-        origin: r.origin,
-        photo: r.encodedPhoto,
-        type: r.type,
-        year: r.year,
-        productState: r.productState
+        name: product.name,
+        alcoholPercentage: asMoneyString(product.alcoholPercentage),
+        amortizationFactor: product.amortizationFactor,
+        basePrice: asMoneyString(product.basePrice),
+        blg: asMoneyString(product.blg.toString()),
+        brewery: product.brewery,
+        description: product.description,
+        ebc: product.ebc.toString(),
+        ibu: product.ibu.toString(),
+        maxPrice: asMoneyString(product.maxPrice),
+        minPrice: asMoneyString(product.minPrice),
+        onStore: product.onStore,
+        origin: product.origin,
+        photo: product.encodedPhoto,
+        type: product.type,
+        year: product.year,
+        productState: product.productState
       })
     })
   }
@@ -217,7 +218,6 @@ export default class OwnerEditProduct extends Component {
                 <Text style={{color: bgColor, textAlign: "center"}}>Save</Text>
               </TouchableOpacity>
             </ScrollView>
-
           </View>
         </View>
     )

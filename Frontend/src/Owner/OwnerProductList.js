@@ -8,6 +8,7 @@ import {bartStyles} from "../Bartender/BartenderProductManagement/BartenderManag
 import {ownerStyles} from "./OwnerProductListStyles"
 import {getSession} from "../Services/SessionService";
 import {changesSaver} from "./SaveChangesComponent/SaveChangesComponentStyles";
+import {getProductsConfiguration} from "../Services/ProductService";
 
 const Button = ({text, onPressButton, item}) => (
     <TouchableOpacity style={ownerStyles.button} onPress={() => onPressButton(item)}>
@@ -71,15 +72,11 @@ export default class OwnerProductList extends Component {
   }
 
   setProducts() {
-    console.log("refreshing products")
-    http
-      .get("/product/configure/all")
-      .then((response) => response.data)
-      .then((data) => {
-        return data;
-      })
-      .then((data) => this.setState({ products: data }))
-      .catch((err) => console.log(err));
+    getProductsConfiguration()
+        .then(products => {
+          this.setState({products: products})
+        })
+        .catch((err) => console.log(err));
   }
 
   componentDidMount() {
@@ -116,8 +113,6 @@ export default class OwnerProductList extends Component {
         />
     )
   }
-
-
 
   render() {
     const topBarIcons = [

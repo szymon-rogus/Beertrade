@@ -10,9 +10,9 @@ import {buttonStyleSheet, styles} from "./ProductsPageStyles";
 import {ChooseTableBar} from "./ClientModals/TablePicker/ChooseTableBar";
 import {Sorter} from "./ClientModals/Sorter/Sorter";
 import {Filter} from "./ClientModals/Filter/Filter";
-import Product from "../Model/Product";
 import {getProductList} from "../../Services/ProductService";
 import {getSession} from "../../Services/SessionService";
+import {getPrices} from "../../Services/PriceService";
 
 const Item = ({item, onPress, navigation, buttonEnabled, isTableSet, price,}) => (
     <View style={styles.item}>
@@ -149,19 +149,14 @@ export default class ProductsPage extends Component {
   }
 
   setPrices = async () => {
-    let responseCheckStamp = null;
-    let prices = {};
-    http
-        .get("/price/all")
-        .then((response) => {
-          responseCheckStamp = response.data.checkStamp;
-          prices = response.data.prices;
-          if (responseCheckStamp === this.state.pricesCheckStamp) {
+    getPrices()
+        .then((prices) => {
+          if (prices.checkStamp === this.state.pricesCheckStamp) {
             this.setPrices();
           } else {
             this.setState({
-              pricesCheckStamp: responseCheckStamp,
-              prices: prices,
+              pricesCheckStamp: prices.checkStamp,
+              prices: prices.prices,
             });
           }
         })

@@ -10,6 +10,7 @@ import {detailButtonStyleSheet, detailStyles} from "./ProductDetailsPageStyles";
 import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
 import {getProductDetails} from "../../Services/ProductService";
 import {getSession} from "../../Services/SessionService";
+import {getPrice} from "../../Services/PriceService";
 
 const B = (props) => (
     <Text style={{fontWeight: "bold"}}>{props.children}</Text>
@@ -172,14 +173,14 @@ export default class ProductDetailsPage extends Component {
   }
 
   setPrice = async () => {
-    http.get("/price/" + this.props.route.params.itemId)
-        .then((response) => {
-          if (response.data.checkStamp === this.state.checkStamp) {
+    getPrice(this.props.route.params.itemId)
+        .then((price) => {
+          if (price.checkStamp === this.state.checkStamp) {
             this.setPrice();
           } else {
             this.setState({
-              price: response.data.price,
-              checkStamp: response.data.checkStamp,
+              price: price.price,
+              checkStamp: price.checkStamp,
             });
           }
         })

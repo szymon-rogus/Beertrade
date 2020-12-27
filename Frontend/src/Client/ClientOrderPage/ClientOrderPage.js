@@ -7,6 +7,7 @@ import {http, EmptyView, logout, TopBar} from '../../../Global'
 import {globalStyles, iconColor, iconSize, topBarIconStyle} from '../../../GlobalStyles'
 import {ClientOrderItem} from "./ClientOrderItem";
 import {clientOrderStyles} from "./ClientOrderPageStyles";
+import {getClientOrders} from "../../Services/OrderService";
 
 const ALL = "ALL";
 const WAITING = "WAITING";
@@ -34,13 +35,9 @@ export default class ClientOrderPage extends Component {
   }
 
   updateItems = async () => {
-    http.get('/order/myOrders').then((response) => {
-      let fetchedList = [];
-      for (let order of response.data) {
-        fetchedList.push(order);
-      }
+    getClientOrders().then((orderList) => {
       this.setState({
-        items: fetchedList,
+        items: orderList,
       });
     }).catch(err => console.log(err));
   }

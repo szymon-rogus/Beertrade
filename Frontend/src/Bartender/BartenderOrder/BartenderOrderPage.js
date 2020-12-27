@@ -11,6 +11,7 @@ import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../Globa
 import {styles, statisticsValueStyle} from "./BartenderOrderPageStyles";
 import BartenderSettingsPage from "../BartenderSettings/BartenderSettingsPage";
 import {OrderItem} from "./OrderItem";
+import {getBartenderStats, getWaitingOrders} from "../../Services/OrderService";
 
 export default class BartenderOrderPage extends Component {
   state = {
@@ -33,11 +34,8 @@ export default class BartenderOrderPage extends Component {
   }
 
   updateItems = async () => {
-    http
-        .get("/order/waiting")
-        .then((response) => {
-          let fetchedList = [];
-          fetchedList.push(...response.data);
+    getWaitingOrders()
+        .then((fetchedList) => {
           this.state.deletedOrders.forEach((deletedId) => {
             fetchedList = fetchedList.filter((item) => item.id !== deletedId);
           });
@@ -63,10 +61,10 @@ export default class BartenderOrderPage extends Component {
   };
 
   updateStatistics = async () => {
-    http.get("/order/bartenderStats").then((response) => {
+    getBartenderStats().then((bartenderStats) => {
       this.setState({
-        done: response.data.done,
-        cancelled: response.data.cancelled,
+        done: bartenderStats.done,
+        cancelled: bartenderStats.cancelled,
       });
     });
   };

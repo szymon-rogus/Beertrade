@@ -21,11 +21,9 @@ export const Item = ({name, onChange, defaultValue, multiline}) => (
       placeholderTextColor={"#000"}
       autoCapitalize="none"
       onChangeText={(text) => onChange(text)}
-
     />
   </View>
 )
-
 
 export default class OwnerAddProduct extends Component {
   constructor(props) {

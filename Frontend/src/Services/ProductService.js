@@ -1,16 +1,16 @@
 import { http } from "../../Global";
 
-export function getProductList(): Array<Product>  {
+export function getProductList() {
   return http.get("/product/onStore")
       .then(response => response.data)
 }
 
-export function getProductDetails(id: string): ProductDetails {
+export function getProductDetails(id) {
   return http.get("/product/details/" + id)
       .then(response => response.data)
 }
 
-export function getManageProductList(): Array<ManageProduct> {
+export function getManageProductList() {
   return http.get("/product/manage/all")
       .then(response => response.data)
       .then(productList => {
@@ -24,6 +24,16 @@ export function getManageProductList(): Array<ManageProduct> {
         );
         return {enabled, disabled}
       })
+}
+
+export function getFullProductInfo(id) {
+  return http.get("/product/" + id)
+      .then(response => response.data)
+}
+
+export function getProductsConfiguration() {
+  return http.get("/product/configure/all")
+      .then(response => response.data)
 }
 
 
