@@ -2,7 +2,6 @@ package pl.beertrade.model.table;
 
 import lombok.*;
 import pl.beertrade.exception.TableException;
-import pl.beertrade.model.table.jto.TableClientViewJTO;
 import pl.beertrade.model.user.Client;
 
 import javax.persistence.*;

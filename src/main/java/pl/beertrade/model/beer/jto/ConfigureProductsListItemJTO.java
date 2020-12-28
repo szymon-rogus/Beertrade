@@ -3,7 +3,6 @@ package pl.beertrade.model.beer.jto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.NonNull;
-import pl.beertrade.model.beer.enums.ProductState;
 
 import javax.validation.constraints.NotNull;
 import java.util.UUID;

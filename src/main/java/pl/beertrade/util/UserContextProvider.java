@@ -32,6 +32,7 @@ public class UserContextProvider {
         return userService.getClientByUsername(userDetails.getUsername());
     }
 
+    /// TODO safe delete - we don't use it
     public List<GrantedAuthority> getUserRoles() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         final UserDetails userDetails = (UserDetails) authentication.getPrincipal();

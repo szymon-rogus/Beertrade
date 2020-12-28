@@ -17,7 +17,4 @@ public class JwtTokenRequest implements Serializable {
 
     private String password;
 
-    public JwtTokenRequest() {
-        super();
-    }
 }

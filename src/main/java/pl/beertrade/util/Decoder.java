@@ -1,6 +1,6 @@
 package pl.beertrade.util;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64; // TODO java api instead of sun?
 import lombok.experimental.UtilityClass;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.beertrade.model.user.Client;
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 @UtilityClass
 public class Decoder {
 
-    private final BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder bCrypt = new BCryptPasswordEncoder();
 
     public Client decodeClient(User user) {
         return Client.builder()
                 .login(decode(user.getLogin()))
-                .password(bcrypt.encode(decode(user.getPassword())))
+                .password(bCrypt.encode(decode(user.getPassword())))
                 .firstName(decode(user.getFirstName()))
                 .lastName(decode(user.getLastName()))
                 .email(decode(user.getEmail()))
@@ -27,7 +27,7 @@ public class Decoder {
     }
 
     public String encodeBcrypt(String value) {
-        return bcrypt.encode(value);
+        return bCrypt.encode(value);
     }
 
     private String decode(String encodedString) {
