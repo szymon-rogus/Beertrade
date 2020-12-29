@@ -47,7 +47,7 @@ export default class OwnerEditProduct extends Component {
         year: r.year,
         productState: r.productState
       })
-    })
+    }).catch(_ => console.log("can't fetch product"))
   }
 
   onSave() {
