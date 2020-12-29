@@ -14,7 +14,7 @@ import {Filter} from "./ClientModals/Filter/Filter";
 const Item = ({item, onPress, navigation, buttonEnabled, isTableSet, price,}) => (
     <View style={styles.item}>
       <View style={styles.itemLeft}>
-        <Image style={styles.beerImage} source={{uri: beerPhoto}}/>
+        <Image style={styles.beerImage} source={{uri: item.encodedPhoto ? "data:image/jpeg;base64," + item.encodedPhoto : beerPhoto}}/>
       </View>
       <View style={styles.itemCenter}>
         <Text style={styles.title}>{item.name}</Text>

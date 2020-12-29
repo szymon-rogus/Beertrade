@@ -85,6 +85,7 @@ public class Beer {
                 .ibu(ibu)
                 .alcoholPercentage(alcoholPercentage)
                 .basePrice(basePrice)
+                .encodedPhoto(Base64.encodeBase64String(photo))
                 .build();
     }
 
@@ -100,6 +101,7 @@ public class Beer {
                 .year(year)
                 .origin(origin)
                 .description(description)
+                .encodedPhoto(Base64.encodeBase64String(photo))
                 .build();
     }
 

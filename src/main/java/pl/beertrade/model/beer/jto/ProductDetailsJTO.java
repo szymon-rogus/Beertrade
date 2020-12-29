@@ -40,4 +40,7 @@ public class ProductDetailsJTO {
     @JsonProperty
     private final Double alcoholPercentage;
 
+    @JsonProperty
+    private final String encodedPhoto;
+
 }

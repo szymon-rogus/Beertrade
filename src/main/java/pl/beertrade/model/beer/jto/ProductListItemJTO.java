@@ -30,4 +30,7 @@ public class ProductListItemJTO {
     @JsonProperty
     private final double basePrice;
 
+    @JsonProperty
+    private final String encodedPhoto;
+
 }

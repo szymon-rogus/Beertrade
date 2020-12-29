@@ -55,7 +55,7 @@ const ItemDetails = ({context, product, price, onPress, buttonEnabled, topBarIco
       </View>
       <View style={detailStyles.infoBlock}>
         <View style={detailStyles.photo}>
-          <Image style={detailStyles.beerImage} source={{uri: beerPhoto}}/>
+          <Image style={detailStyles.beerImage} source={{uri: product.encodedPhoto ? "data:image/jpeg;base64," + product.encodedPhoto : beerPhoto}}/>
         </View>
         <View style={detailStyles.rightBlock}>
           <Attribute
