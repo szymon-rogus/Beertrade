@@ -24,7 +24,7 @@ function BarText(props) {
   if (!props.sessionEnabled) {
     return (
         <Text style={props.tableBar.title}>
-          Bar is closed for today. Come back tomorrow!
+          Bar is closed for today.
         </Text>
     );
   } else if (table != null && table.tableNumber != null) {
