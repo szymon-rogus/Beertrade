@@ -110,7 +110,7 @@ public class StatisticsService {
             final Date dateAfter = nextCalendarDate.getTime();
             for (int j = historicalOrdersIterator; j < historicalOrders.size() && historicalOrderDateInRange(historicalOrders.get(j), iterDate, dateAfter); j++) {
                 number += historicalOrders.get(j).getAmount();
-                historicalOrdersIterator = j;
+                historicalOrdersIterator = j + 1;
             }
 
             for (int j = historicalPricesIterator; j < historicalPricesList.size() && historicalPriceDateInRange(historicalPricesList.get(j), iterDate, dateAfter); j++) {
@@ -149,7 +149,7 @@ public class StatisticsService {
     }
 
     private boolean historicalOrderDateInRange(HistoricalOrder historicalOrder, Date dateBefore, Date dateAfter) {
-        return historicalOrder.getBoughtDate().before(dateAfter) && historicalOrder.getBoughtDate().after(dateBefore);
+        return historicalOrder.getBoughtDate().before(dateAfter) && (historicalOrder.getBoughtDate().after(dateBefore) || dateBefore.toInstant().getEpochSecond() == historicalOrder.getBoughtDate().toInstant().getEpochSecond());
     }
 
     private boolean historicalPriceDateInRange(HistoricalPrices historicalPrices, Date dateBefore, Date dateAfter) {
@@ -184,8 +184,8 @@ public class StatisticsService {
         double productIncome = 0.0;
         double baseProductIncome = 0.0;
         for (HistoricalOrder historicalOrder : historicalOrders) {
-            productIncome += historicalOrder.getPrice() * historicalOrder.getAmount();
-            baseProductIncome += historicalOrder.getBasePrice() * historicalOrder.getAmount();
+            productIncome += historicalOrder.getPrice();
+            baseProductIncome += historicalOrder.getProduct().getMinPrice() * historicalOrder.getAmount();
         }
         final Beer product = historicalOrders.get(0)
                 .getProduct();
