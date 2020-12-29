@@ -40,6 +40,7 @@ export const globalStyles = StyleSheet.create({
     color: "#000",
     borderWidth: 1,
     borderRadius: 3,
+    backgroundColor: "#fff",
   },
   blackInputLabel: {
     color: "#000",
