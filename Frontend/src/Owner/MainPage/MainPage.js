@@ -290,7 +290,7 @@ export default class OwnerMainPage extends Component {
             <View style={styles.columnLabelsBox}>
               {this.renderColumnLabel("Product name", this.state.sortAttribute === PRODUCT_NAME_SORT, PRODUCT_NAME_SORT, true)}
               {this.renderColumnLabel("Income", this.state.sortAttribute === INCOME_SORT, INCOME_SORT, false)}
-              {this.renderColumnLabel("Saved", this.state.sortAttribute === SAVED_SORT, SAVED_SORT, false)}
+              {this.renderColumnLabel("Balance", this.state.sortAttribute === SAVED_SORT, SAVED_SORT, false)}
             </View>
           </View>
           <View style={styles.tableBox}>
