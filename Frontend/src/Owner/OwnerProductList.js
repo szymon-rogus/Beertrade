@@ -4,10 +4,11 @@ import {AntDesign, MaterialCommunityIcons} from "@expo/vector-icons";
 
 import {asMoney, asMoneyString, CURRENCY, http, TopBar} from "../../Global";
 import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../GlobalStyles";
-import {bartStyles} from "../Bartender/BartenderProductManagement/BartenderManagementPageStyles.js";
+import {bartStyles} from "../Bartender/BartenderProductManagement/BartenderManagementPageStyles";
 import {ownerStyles} from "./OwnerProductListStyles"
-import {getSession} from "../services/SessionService";
+import {getSession} from "../Services/SessionService";
 import {changesSaver} from "./SaveChangesComponent/SaveChangesComponentStyles";
+import {getProductsConfiguration} from "../Services/ProductService";
 
 const Button = ({text, onPressButton, item}) => (
     <TouchableOpacity style={ownerStyles.button} onPress={() => onPressButton(item)}>
@@ -71,15 +72,11 @@ export default class OwnerProductList extends Component {
   }
 
   setProducts() {
-    console.log("refreshing products")
-    http
-      .get("/product/configure/all")
-      .then((response) => response.data)
-      .then((data) => {
-        return data;
-      })
-      .then((data) => this.setState({ products: data }))
-      .catch((err) => console.log(err));
+    getProductsConfiguration()
+        .then(products => {
+          this.setState({products: products})
+        })
+        .catch((err) => console.log(err));
   }
 
   componentDidMount() {
@@ -116,8 +113,6 @@ export default class OwnerProductList extends Component {
         />
     )
   }
-
-
 
   render() {
     const topBarIcons = [

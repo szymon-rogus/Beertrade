@@ -1,10 +1,9 @@
 import React, {Component} from "react";
 import {Text, View, TouchableOpacity, TextInput} from "react-native";
 
-import {http, setAuthorizationToken, APP_TITLE} from "../../../Global.js";
-import {globalStyles} from "../../../GlobalStyles.js";
-import {loginStyles, fontColor, bgColor} from "./LoginPageStyles.js";
-import {getErrorMessage, NETWORK_ERROR, snackBar} from "../../../Global";
+import {http, setAuthorizationToken, APP_TITLE, getErrorMessage} from "../../../Global";
+import {globalStyles} from "../../../GlobalStyles";
+import {loginStyles, fontColor, bgColor} from "./LoginPageStyles";
 
 export default class LoginPage extends Component {
   state = {

@@ -3,7 +3,6 @@ package pl.beertrade.model.statistics;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import pl.beertrade.model.beer.Beer;
-import pl.beertrade.model.order.Order;
 import pl.beertrade.model.user.Client;
 
 import javax.persistence.*;

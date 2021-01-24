@@ -2,9 +2,9 @@ import React from "react";
 import {View, Text} from "react-native";
 import {AntDesign} from "@expo/vector-icons";
 
-import {listItemAttributeTextStyle} from "../../../GlobalStyles.js";
-import {listStyles} from "../../../ListStyles.js";
-import {styles} from "./BartenderOrderPageStyles.js";
+import {listItemAttributeTextStyle} from "../../../GlobalStyles";
+import {listStyles} from "../../../ListStyles";
+import {styles} from "./BartenderOrderPageStyles";
 
 const orderItemIconSize = 40;
 const orderItemIconColor = "black";

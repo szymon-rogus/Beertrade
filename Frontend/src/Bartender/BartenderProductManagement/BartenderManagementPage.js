@@ -5,10 +5,11 @@ import {AntDesign} from "@expo/vector-icons";
 import {FontAwesome5} from "@expo/vector-icons";
 import SwitchSelector from "react-native-switch-selector";
 
-import {http, TopBar, logout, beerPhoto} from "../../../Global.js";
-import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles.js";
-import {bartStyles} from "./BartenderManagementPageStyles.js";
-import {ProductListItem} from "./ProductListItem.js";
+import {http, TopBar, logout, beerPhoto} from "../../../Global";
+import {globalStyles, iconColor, iconSize, topBarIconStyle} from "../../../GlobalStyles";
+import {bartStyles} from "./BartenderManagementPageStyles";
+import {ProductListItem} from "./ProductListItem";
+import {getManageProductList} from "../../Services/ProductService";
 
 const ENABLED = "enabled";
 const DISABLED = "disabled";
@@ -26,24 +27,17 @@ export default class BartenderManagementPage extends Component {
   }
 
   getItems = async () => {
-    http
-        .get("/product/manage/all")
-        .then((response) => {
-          let fetchedList = [];
-          fetchedList.push(...response.data);
-          const enabled = fetchedList.filter(
-              (item) => item.productState === "ON_STORE"
-          );
-          const disabled = fetchedList.filter(
-              (item) => item.productState !== "ON_STORE"
-          );
+    getManageProductList()
+        .then((productList) => {
           this.setState({
-            enabledItems: enabled,
-            disabledItems: disabled,
+            enabledItems: productList.enabled,
+            disabledItems: productList.disabled,
             chosenItems: ENABLED,
           });
         })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+          console.log(error)
+        })
   };
 
   sendRequestEnableItem = (id) => {

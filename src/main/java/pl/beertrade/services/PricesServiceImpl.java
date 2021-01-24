@@ -149,8 +149,8 @@ public class PricesServiceImpl implements PricesService {
             }
             readUnlock();
             return PriceJTO.builder()
-                    .price(clonedPrice)
-                    .checkStamp(clonedCheckStamp)
+                    .price(clonedPrice) // TODO assert not null
+                    .checkStamp(clonedCheckStamp) // TODO assert not null
                     .build();
         } catch (InterruptedException e) {
             log.error("Error in thread managing in PriceServie: ", e);

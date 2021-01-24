@@ -45,8 +45,7 @@ public class ProductController {
 
     @GetMapping("/configure/all")
     public List<ConfigureProductsListItemJTO> getConfigureProductsList() {
-        final List<ConfigureProductsListItemJTO> productList = productService.getConfigureProductsList();
-        return productList;
+        return productService.getConfigureProductsList();
     }
 
     @PostMapping("/state/{id}/{state}")

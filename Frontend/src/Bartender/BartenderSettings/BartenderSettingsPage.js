@@ -2,9 +2,10 @@ import React, {Component} from "react";
 import {View, Text, TouchableOpacity} from "react-native";
 import SwitchSelector from "react-native-switch-selector";
 
-import {http} from "../../../Global.js";
-import {globalStyles} from "../../../GlobalStyles.js";
-import {styles} from "./BartenderSettingsPageStyles.js";
+import {http} from "../../../Global";
+import {globalStyles} from "../../../GlobalStyles";
+import {styles} from "./BartenderSettingsPageStyles";
+import {getSession} from "../../Services/SessionService";
 
 export default class BartenderSettingsPage extends Component {
   state = {
@@ -18,13 +19,10 @@ export default class BartenderSettingsPage extends Component {
   }
 
   getSessionState = () => {
-    http
-        .get("/session")
-        .then((response) => {
-          const sessionState = response.data;
-          const isSessionDisabled = sessionState !== "START";
+    getSession()
+        .then(sessionStatus => {
           this.setState({
-            isSessionDisabled: isSessionDisabled,
+            isSessionDisabled: !sessionStatus,
             isLoading: false,
           });
         })

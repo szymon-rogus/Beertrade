@@ -5,6 +5,7 @@ import Modal from "react-native-modal";
 import {http} from "../../../../../Global";
 import {listStyles} from "../../../../../ListStyles";
 import {chooseTablePopupStyles, tableStyles} from "./TableStyles";
+import {getAllTables, getTable} from "../../../../Services/TableService";
 
 const Item = ({item, onPress, style}) => (
     <TouchableOpacity onPress={onPress} style={style}>
@@ -168,10 +169,8 @@ export class ChooseTableBar extends Component {
   }
 
   setTables() {
-    http
-        .get("/table/reservable/")
-        .then((response) => response.data)
-        .then((data) => this.setState({tables: data}))
+    getAllTables()
+        .then((tables) => this.setState({tables: tables}))
         .catch((err) => console.log(err));
   }
 
@@ -190,19 +189,14 @@ export class ChooseTableBar extends Component {
   }
 
   setTable() {
-    return http
-        .get("/table/")
-        .then((response) => {
+    getTable()
+        .then((tableInfo) => {
           this.setState({
-            selectedTable: response.data,
+            selectedTable: tableInfo.table,
             tableDataLoaded: true,
           });
-          let isTableSet = true;
-          if (response.data.tableNumber === null) {
-            isTableSet = false;
-          }
           this.props.context.setState({
-            isTableSet: isTableSet,
+            isTableSet: tableInfo.isTableSet,
           });
         })
         .catch((err) => console.log(err));

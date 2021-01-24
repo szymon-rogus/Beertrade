@@ -2,10 +2,9 @@ import React, {Component} from "react";
 import {Text, View, TouchableOpacity, TextInput} from "react-native";
 import base64 from "react-native-base64";
 
-import {http} from "../../../Global.js";
+import {http, getErrorMessage, snackBar} from "../../../Global";
 import {globalStyles} from "../../../GlobalStyles";
-import {styles, fontColor, bgColor} from "./RegistrationPageStyles.js";
-import {getErrorMessage, NETWORK_ERROR, snackBar} from "../../../Global";
+import {styles, fontColor, bgColor} from "./RegistrationPageStyles";
 
 export default class RegistrationPage extends Component {
   state = {

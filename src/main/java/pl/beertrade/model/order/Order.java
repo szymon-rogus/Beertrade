@@ -76,6 +76,7 @@ public class Order {
     }
 
     public BartenderOrderProductJTO toBartenderOrderProductJTO() {
+        assert client.getTable() != null;
         return BartenderOrderProductJTO.builder()
                 .id(id)
                 .orderViewId(orderViewId)
